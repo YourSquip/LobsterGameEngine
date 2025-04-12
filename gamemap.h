@@ -11,6 +11,7 @@
 #include <QSharedDataPointer>
 #include <QSharedData>
 #include <QString>
+#include <QGraphicsScene>
 
 #include "mapgridborders.h"
 
