@@ -6,12 +6,42 @@
 #include <QGridLayout>
 #include <QImage>
 #include <QList>
+#include <QHash>
+#include <QSharedPointer>
+#include <QSharedDataPointer>
+#include <QSharedData>
+#include <QString>
+
+#include "mapgridborders.h"
 
 class TileType
 {
 
 };
 
+//typedef Tile*() create_tile;
+
+class TileFactory
+{
+public:
+    TileFactory get_instance()
+    {
+        if(instance == nullptr)
+        {
+            instance = new TileFactory();
+        }
+        else
+        {
+            return *instance;
+        }
+    }
+
+
+private:
+
+    TileFactory* instance;
+    TileFactory() = default;
+};
 
 class Tile:public QLabel
 {
@@ -51,6 +81,9 @@ public:
         m_grid = new QGridLayout(this);
         m_grid->addWidget(new Tile());
         m_grid->addWidget(new QLabel("ASS"));
+
+        //MapGridBorders* borders = new MapGridBorders(this);
+
     }
 
 private:
@@ -60,7 +93,8 @@ private:
     size_t m_grid_width;
 
 
-    QList<Tile*> tiles;
+    //QList<Tile*> tiles;
+    QHash<QString, QSharedPointer<Tile>> tiles;
 
 };
 
