@@ -21,6 +21,10 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QStyle>
 #include "mapgridborders.h"
+#include "centralview.h"
+
+
+
 
 class TileType
 {

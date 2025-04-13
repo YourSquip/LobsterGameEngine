@@ -9,6 +9,7 @@
 #include <QString>
 #include <QDebug>
 #include <QHashIterator>
+#include <QRandomGenerator>
 #include "gamemap.h"
 
 enum SceneMode{
@@ -23,35 +24,63 @@ enum WalkPossibility{
     NotAble = 3
 };
 
+
+
+
 class MapTile
 {
 public:
     MapTile()
     {
         m_name = 0;
-        can_walk_on = On;
+        m_can_walk = On;
 
     }
-    virtual ~MapTile()
+
+    MapTile( QString p_name, QPixmap p_pixmap, WalkPossibility p_can_walk)
+    {
+        m_name = p_name;
+        m_pixmap = p_pixmap;
+        m_can_walk = p_can_walk;
+        m_item =  new QGraphicsPixmapItem(p_pixmap);
+    }
+
+
+    ~MapTile()
     {
         delete m_item;
     }
 
+
+    void set_position(int p_x, int p_y)
+    {
+        m_item->setOffset(p_x,p_y);
+    }
+
+    QGraphicsPixmapItem* get_graphics_item()
+    {
+        return m_item;
+    };
+
 private:
+    int m_x;
+    int m_y;
+
     QString m_name;
-    bool can_walk_on;
     QPixmap m_pixmap;
     QGraphicsPixmapItem* m_item;
     WalkPossibility m_can_walk;
+
 };
-//typedef MapTile*()(QString p_name, QPixmap p_pixmap, WalkPossibility p_walk_mod) CreateTile;
-//typedef MapTile* (*CreateTileFunc)(QString p_name, QPixmap p_pixmap, WalkPossibility p_walk_mod);
+
+
+
 typedef MapTile* (*CreateTileFunc)();
 
 class MapTileFactory
 {
 public:
-    MapTileFactory get_instance()
+    static MapTileFactory* get_instance()
     {
         if(instance == nullptr)
         {
@@ -59,7 +88,7 @@ public:
         }
         else
         {
-            return *instance;
+            return instance;
         }
     }
 
@@ -87,10 +116,27 @@ public:
 
 private:
 
-    MapTileFactory* instance;
+    static MapTileFactory* instance;
     MapTileFactory() = default;
     QHash<QString, CreateTileFunc> registered_tiles;
 };
+
+
+MapTile* create_grass_tile()
+{
+    QString tile_name = "grass";
+    QPixmap m_pixmap = QPixmap("D:/QtProjects/LobsterGameEngine/sprites/grass_tile.png");
+    WalkPossibility m_can_walk = On;
+    return new MapTile(tile_name,m_pixmap,m_can_walk);
+}
+
+MapTile* create_water_tile()
+{
+    QString tile_name = "water";
+    QPixmap m_pixmap = QPixmap("D:/QtProjects/LobsterGameEngine/sprites/water_tile.png");
+    WalkPossibility m_can_walk = NotAble;
+    return new MapTile(tile_name,m_pixmap,m_can_walk);
+}
 
 
 
@@ -99,19 +145,43 @@ class MapTiles
 public:
     MapTiles()
     {
+        MapTileFactory::get_instance()->register_tile(QString("grass"),create_grass_tile);
+        MapTileFactory::get_instance()->register_tile(QString("water"),create_water_tile);
+        for(int x = 0; x < m_height; x++)
+        {
+            QVector<MapTile*> row;
+            for(int y = 0; y < m_width; y++)
+            {
+
+                if(QRandomGenerator().bounded(1,2) == 1)
+                {
+                    row.append(MapTileFactory::get_instance()->create_spec_tile("grass"));
+                }
+                else
+                {
+                    row.append(MapTileFactory::get_instance()->create_spec_tile("water"));
+                }
+            }
+            m_tiles.append(row);
+        }
 
     }
-private:
-    QVector<QVector<QGraphicsPixmapItem*>> m_tiles;
-};
 
+    QVector<QVector<MapTile*>> m_tiles;
+
+private:
+    //QVector<QVector<QGraphicsPixmapItem*>> m_tiles;
+    int m_height;
+    int m_width;
+
+};
 class CentralView: public QGraphicsView
 {
 public:
     CentralView(QWidget* parent = 0):QGraphicsView(parent)
     {
-        m_scene_mode = MapEditor;
-        curr_scene_dep_on_mode();
+        m_map_tiles = new MapTiles();
+        change_curr_scene(create_map_editor_scene());
         show_curr_scene();
     }
 
@@ -121,22 +191,25 @@ public:
         QGraphicsScene* scene = new QGraphicsScene();;
 
         //QString filename = "D:/QtProjects/LobsterGameEngine/sprites/grass_tile.png";
-        QString filename = "D:/QtProjects/LobsterGameEngine/sprites/water_tile1.jpg";
-        QPixmap pix;
-        if(pix.load(filename)){
-            pix = pix.scaled(QSize(32,32),Qt::KeepAspectRatio);
-        }
+        //QString filename = "D:/QtProjects/LobsterGameEngine/sprites/water_tile1.jpg";
+        //QPixmap pix;
+        //if(pix.load(filename)){
+        //    pix = pix.scaled(QSize(32,32),Qt::KeepAspectRatio);
+        //}
 
-
+        int i = 0;
+        int j = 0;
         for(int x = 0; x <= 320; x+=32)
         {
             for(int y = 0; y <= 320; y+=32)
             {
-                QGraphicsPixmapItem* pix_item = new QGraphicsPixmapItem(pix);
+                QGraphicsPixmapItem* pix_item = m_map_tiles->m_tiles[i][j]->get_graphics_item();
+                //QGraphicsPixmapItem* pix_item = new QGraphicsPixmapItem(pix);
                 pix_item->setOffset(x,y);
                 scene->addItem(pix_item);
+                j++;
             }
-
+            i++;
         }
         for (int x=0; x<=320; x+=32)
         {
@@ -153,6 +226,9 @@ public:
     ~CentralView()
     {
         delete m_curr_scene;
+        delete m_game_scene;
+        delete m_map_editor_scene;
+        delete m_game_editor_scene;
     }
 
 private:
@@ -164,22 +240,18 @@ private:
 
     void show_curr_scene()
     {
+
         setScene(m_curr_scene);
     }
 
-    void curr_scene_dep_on_mode()
-    {
-        if(m_scene_mode == MapEditor)
-        {
-            m_curr_scene = create_map_editor_scene();
-        }
-        else m_curr_scene = nullptr;
-    }
+
     QGraphicsScene* m_curr_scene;
-    SceneMode m_scene_mode;
-    //QGraphicsScene* m_game_scene;
-    //QGraphicsScene* m_map_editor_scene;
-    //QGraphicsScene* m_game_editor_scene;
+
+    QGraphicsScene* m_game_scene;
+    QGraphicsScene* m_map_editor_scene;
+    QGraphicsScene* m_game_editor_scene;
+
+    MapTiles* m_map_tiles;
 };
 
-#endif // CENTRALVIEW_H
+#endif //CENTRALVIEW_H
