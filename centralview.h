@@ -80,16 +80,11 @@ typedef MapTile* (*CreateTileFunc)();
 class MapTileFactory
 {
 public:
-    static MapTileFactory* get_instance()
+    static MapTileFactory& get_instance()
     {
-        if(instance == nullptr)
-        {
-            instance = new MapTileFactory();
-        }
-        else
-        {
-            return instance;
-        }
+        static MapTileFactory instance = MapTileFactory();
+        return instance;
+
     }
 
     void register_tile(QString p_tile_name, CreateTileFunc p_create_func)
@@ -116,28 +111,19 @@ public:
 
 private:
 
-    static MapTileFactory* instance;
-    MapTileFactory() = default;
+    //static MapTileFactory* instance;
+    MapTileFactory(){}
+    ~MapTileFactory(){}
     QHash<QString, CreateTileFunc> registered_tiles;
+
+    MapTileFactory(MapTileFactory const&) = delete;
+    MapTileFactory& operator= (MapTileFactory const&) = delete;
 };
 
 
-MapTile* create_grass_tile()
-{
-    QString tile_name = "grass";
-    QPixmap m_pixmap = QPixmap("D:/QtProjects/LobsterGameEngine/sprites/grass_tile.png");
-    WalkPossibility m_can_walk = On;
-    return new MapTile(tile_name,m_pixmap,m_can_walk);
-}
+MapTile* create_grass_tile();
 
-MapTile* create_water_tile()
-{
-    QString tile_name = "water";
-    QPixmap m_pixmap = QPixmap("D:/QtProjects/LobsterGameEngine/sprites/water_tile.png");
-    WalkPossibility m_can_walk = NotAble;
-    return new MapTile(tile_name,m_pixmap,m_can_walk);
-}
-
+MapTile* create_water_tile();
 
 
 class MapTiles
@@ -145,8 +131,9 @@ class MapTiles
 public:
     MapTiles()
     {
-        MapTileFactory::get_instance()->register_tile(QString("grass"),create_grass_tile);
-        MapTileFactory::get_instance()->register_tile(QString("water"),create_water_tile);
+        //MapTileFactory factory;
+        MapTileFactory::get_instance().register_tile(QString("grass"),create_grass_tile);
+        MapTileFactory::get_instance().register_tile(QString("water"),create_water_tile);
         for(int x = 0; x < m_height; x++)
         {
             QVector<MapTile*> row;
@@ -155,11 +142,11 @@ public:
 
                 if(QRandomGenerator().bounded(1,2) == 1)
                 {
-                    row.append(MapTileFactory::get_instance()->create_spec_tile("grass"));
+                    row.append(MapTileFactory::get_instance().create_spec_tile("grass"));
                 }
                 else
                 {
-                    row.append(MapTileFactory::get_instance()->create_spec_tile("water"));
+                    row.append(MapTileFactory::get_instance().create_spec_tile("water"));
                 }
             }
             m_tiles.append(row);
@@ -197,19 +184,18 @@ public:
         //    pix = pix.scaled(QSize(32,32),Qt::KeepAspectRatio);
         //}
 
-        int i = 0;
-        int j = 0;
+
         for(int x = 0; x <= 320; x+=32)
         {
             for(int y = 0; y <= 320; y+=32)
             {
-                QGraphicsPixmapItem* pix_item = m_map_tiles->m_tiles[i][j]->get_graphics_item();
+                QGraphicsPixmapItem* pix_item = m_map_tiles->m_tiles[x/32][y/32]->get_graphics_item();
                 //QGraphicsPixmapItem* pix_item = new QGraphicsPixmapItem(pix);
                 pix_item->setOffset(x,y);
                 scene->addItem(pix_item);
-                j++;
+
             }
-            i++;
+
         }
         for (int x=0; x<=320; x+=32)
         {
