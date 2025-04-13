@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     QWidget* central_widget = new QWidget(main_widget);
     central_widget->setMinimumSize(200,200);
     //central_widget->setMaximumHeight(700);
-    central_widget->setStyleSheet("background-color:black;");
+    central_widget->setStyleSheet("background-color:grey;");
     QWidget* left_widget = new QWidget(main_widget);
     left_widget->setMinimumSize(200,300);
     left_widget->setMaximumWidth(400);
