@@ -12,7 +12,14 @@
 #include <QSharedData>
 #include <QString>
 #include <QGraphicsScene>
-
+#include <QGraphicsItem>
+#include <QGraphicsPixmapItem>
+#include <QGraphicsGridLayout>
+#include <QGraphicsLayoutItem>
+#include <QColor>
+#include <QStyleOptionGraphicsItem>
+#include <QGraphicsSceneMouseEvent>
+#include <QStyle>
 #include "mapgridborders.h"
 
 class TileType
@@ -44,18 +51,40 @@ private:
     TileFactory() = default;
 };
 
-class Tile:public QLabel
+class Tile: public QLabel
 {
 public:
+
     Tile(QWidget* parent = nullptr):QLabel(parent)
     {
-        m_texture = QPixmap("D:/QtProjects/LobsterGameEngine/sprites/grass32.png");
+        //m_texture = QPixmap("D:/QtProjects/LobsterGameEngine/sprites/grass32.png");
+        //m_texture = QPixmap("D:/QtProjects/LobsterGameEngine/sprites/grass_tile.png");
+        //m_can_walk_on = true;
+        //this->setPixmap(m_texture);
+        //this->setWindowFlag(Qt::FramelessWindowHint);
+        //this->setAttribute(Qt::WA_NoSystemBackground); // No background
+        //this->setAttribute(Qt::WA_TranslucentBackground);
+        QString filename = "D:/QtProjects/LobsterGameEngine/sprites/grass_tile.png";
+        //QLabel* lbl = new QLabel(this);
+        /** set content to show center in label */
+        QPixmap pix;
+
+        /** to check wether load ok */
+        if(pix.load(filename)){
+            /** scale pixmap to fit in label'size and keep ratio of pixmap */
+            pix = pix.scaled(this->size(),Qt::KeepAspectRatio);
+            this->setPixmap(pix);
+        }
+        m_texture = pix;
         m_can_walk_on = true;
-        this->setPixmap(m_texture);
+        this->setAlignment(Qt::AlignLeft);
+        this->setAlignment(Qt::AlignTop);
     }
 private:
     QPixmap m_texture;
     bool m_can_walk_on;
+    int x;
+    int y;
 };
 
 
@@ -68,6 +97,10 @@ public:
         m_grid_height = 0;
         m_grid_width = 0;
         m_grid = 0;
+        this->setAttribute(Qt::WA_NoSystemBackground); // No background
+        this->setAttribute(Qt::WA_TranslucentBackground);
+
+        //m_la
     }
 
     void set_grid_size(size_t height, size_t width)
@@ -78,12 +111,19 @@ public:
 
     void make_grid(size_t height, size_t width)
     {
+
         set_grid_size(height,width);
         m_grid = new QGridLayout(this);
-        m_grid->addWidget(new Tile());
-        m_grid->addWidget(new QLabel("ASS"));
+        //m_grid->addWidget(new Tile(this),0,0);
+        for(int i = 0; i < m_grid_height; i++)
+        {
+            for(int j = 0; j < m_grid_width; j++)
+            {
+                m_grid->addWidget(new Tile(this),i,j);
+            }
+        }
+        //m_grid->addItem(new QGraphicsLayoutItem(Tile(this)),1,1);
 
-        //MapGridBorders* borders = new MapGridBorders(this);
 
     }
 

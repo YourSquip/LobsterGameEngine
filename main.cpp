@@ -9,6 +9,7 @@
 #include <QGraphicsScene>
 
 #include "centralview.h"
+#include "gamemap.h"
 
 int main(int argc, char *argv[])
 {
@@ -43,6 +44,7 @@ int main(int argc, char *argv[])
      CentralView* view = new CentralView(central_widget);
      central_layout->addWidget(view);
      central_layout->addWidget(central_down);
+     central_layout->addWidget(new Tile(central_widget));
 
      QGraphicsScene scene;
      //scene.add
