@@ -45,6 +45,8 @@ public:
 
         int i = 0;
         int j = 0;
+        qDebug()<<"size[]"<<m_map_tiles->m_tiles.size();
+        qDebug()<<"size[][]"<<m_map_tiles->m_tiles.size();
         for(int x = 0; x <= 320 && i<m_map_tiles->m_tiles.size(); x+=32)
         {
             for(int y = 0; y <= 320 && j<m_map_tiles->m_tiles.at(0).size(); y+=32)
@@ -52,6 +54,8 @@ public:
                 QGraphicsPixmapItem* pix_item = m_map_tiles->m_tiles[i][j]->get_graphics_item();
                 //QGraphicsPixmapItem* pix_item = new QGraphicsPixmapItem(pix);
                 pix_item->setOffset(x,y);
+                if(pix_item == nullptr) qDebug()<<"ITS NULL!";
+                else qDebug()<<"ITS NOT NULL!";
                 scene->addItem(pix_item);
                 j++;
 
@@ -74,9 +78,9 @@ public:
     ~CentralView()
     {
         delete m_curr_scene;
-        delete m_game_scene;
-        delete m_map_editor_scene;
-        delete m_game_editor_scene;
+        //delete m_game_scene;
+        //delete m_map_editor_scene;
+        //delete m_game_editor_scene;
     }
 
 private:
