@@ -19,16 +19,16 @@ public:
         //MapTileFactory factory;
         MapTileFactory::get_instance().register_tile(QString("grass"),create_grass_tile);
         MapTileFactory::get_instance().register_tile(QString("water"),create_water_tile);
-        m_height = 10;
-        m_width = 10;
-        for(int x = 0; x < m_height; x++)
+        m_height = 9;
+        m_width = 9;
+        for(int x = 0; x <m_width; x++)
         {
             QVector<MapTile*> row;
-            for(int y = 0; y < m_width; y++)
+            for(int y = 0; y < m_height; y++)
             {
-                int rand_num = QRandomGenerator::global()->bounded(0,3);
+                int rand_num = QRandomGenerator::global()->bounded(1,3);
                 qDebug()<<"rand_num="<<rand_num;
-
+                //rand_num = 1;
                 if(rand_num == 1)
                 {
 
@@ -45,7 +45,23 @@ public:
                     row.push_back(tile);
                 }
             }
-            m_tiles.append(row);
+            m_tiles.push_back(row);
+            for(auto tile_row: m_tiles)
+            {
+                for(auto tile: tile_row)
+                    if(tile->get_name().toStdString() == "grass")
+                    {
+                        qDebug()<<"grass tile";
+                    }
+                    else if(tile->get_name().toStdString() == "water")
+                    {
+                        qDebug()<<"water tile";
+                    }
+                    else
+                    {
+                        qDebug()<<"UKNOWN TILE";
+                    }
+            }
         }
 
     }

@@ -32,6 +32,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         maptile.h maptile.cpp
         maptilefactory.h maptilefactory.cpp
         maptiles.h maptiles.cpp
+        gameobject.h gameobject.cpp
+        Components.h
+        Systems.h Systems.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET LobsterGameEngine APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

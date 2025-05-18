@@ -46,6 +46,11 @@ public:
         return m_item;
     }
 
+    QString get_name()
+    {
+        return m_name;
+    }
+
 private:
 
     int m_x;

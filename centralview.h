@@ -47,9 +47,9 @@ public:
         int j = 0;
         qDebug()<<"size[]"<<m_map_tiles->m_tiles.size();
         qDebug()<<"size[][]"<<m_map_tiles->m_tiles.size();
-        for(int x = 0; x <= 320 && i<m_map_tiles->m_tiles.size(); x+=32)
+        for(int x = 0; i<m_map_tiles->m_tiles.size(); x+=32)
         {
-            for(int y = 0; y <= 320 && j<m_map_tiles->m_tiles.at(0).size(); y+=32)
+            for(int y = 0;j<m_map_tiles->m_tiles.at(0).size(); y+=32)
             {
                 QGraphicsPixmapItem* pix_item = m_map_tiles->m_tiles[i][j]->get_graphics_item();
                 //QGraphicsPixmapItem* pix_item = new QGraphicsPixmapItem(pix);
@@ -60,17 +60,19 @@ public:
                 j++;
 
             }
+            j=0;
             i++;
 
         }
-        for (int x=0; x<=320; x+=32)
+        i=0;
+        /*for (int x=0; x<=320; x+=32)
         {
             scene->addLine(x,0,x,320, QPen(Qt::red));
         }
         for (int y=0; y<=320; y+=32)
         {
             scene->addLine(0,y,320,y, QPen(Qt::green));
-        }
+        }*/
 
         return scene;
     }
