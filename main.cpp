@@ -3,13 +3,16 @@
 
 #include <QApplication>
 #include <QWidget>
+#include <QLabel>
 #include <QLayout>
 #include <QMenu>
 #include <QMenuBar>
+#include <QPushButton>
 #include <QGraphicsScene>
 
 #include "centralview.h"
 #include "gamemap.h"
+#include "runstopwindow.h"
 
 int main(int argc, char *argv[])
 {
@@ -42,9 +45,18 @@ int main(int argc, char *argv[])
      QWidget* central_down = new QWidget(central_widget);
      central_down->setStyleSheet("background-color:green;");
      CentralView* view = new CentralView(central_widget);
+     RunStopWindow* run_stop_window = new RunStopWindow();
+     QLabel* game_loop_is_running_lbl = new QLabel("game loop is not running");
+     run_stop_window->setMinimumSize(200,200);
+
+     central_layout->addWidget(game_loop_is_running_lbl);
+     central_layout->addWidget(run_stop_window);
      central_layout->addWidget(view);
      central_layout->addWidget(central_down);
      central_layout->addWidget(new Tile(central_widget));
+
+     //QPushButton run_game_loop_bttn = new QPushButton("RUN GAME");
+
 
      QGraphicsScene scene;
      //scene.add
@@ -76,6 +88,20 @@ int main(int argc, char *argv[])
     borders->resize(400,400);*/
     w.setCentralWidget(main_widget);
 
-    w.show();
-    return a.exec();
+    while(true)
+    {
+        if(run_stop_window->is_game_running())
+        {
+            game_loop_is_running_lbl->setText("game loop is running");
+        }
+
+        w.show();
+        /*while(true)
+        {
+            game_loop_is_running_lbl->setText("game loop is running");
+            w.update();
+        }*/
+        return a.exec();
+    }
+
 }
