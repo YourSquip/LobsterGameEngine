@@ -6,6 +6,8 @@
 #include <QLabel>
 #include <QPushButton>
 
+#include "gamewindow.h"
+
 class RunStopWindow: public QWidget
 {
 public:
@@ -28,11 +30,17 @@ public:
     {
         return run_button_pressed;
     }
+
+    void set_game_window(QWidget* game_window)
+    {
+        m_game_window = game_window;
+    }
 private:
     QPushButton* m_run_bttn;
     QPushButton* m_stop_bttn;
     QLabel* m_game_state_lbl;
     QHBoxLayout* m_layout;
+    QWidget* m_game_window;
     bool run_button_pressed;
 
 private slots:
@@ -40,11 +48,19 @@ private slots:
     {
         m_game_state_lbl->setText("Game mod");
         run_button_pressed = true;
+        if(run_button_pressed)
+        {
+            QLabel* lbl = new QLabel("bipka",m_game_window);
+            m_game_window->show();
+        }
+        //m_game_window->show();//сюда бы копию вьюпорт окна
     }
     void stop_game()
     {
+        //а здесь бы это окно закрывать
         m_game_state_lbl->setText("Engine mod");
         run_button_pressed = false;
+        //m_game_window->close();
     }
 };
 

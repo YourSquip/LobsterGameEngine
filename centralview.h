@@ -34,14 +34,7 @@ public:
 
     QGraphicsScene* create_map_editor_scene()
     {
-        QGraphicsScene* scene = new QGraphicsScene();;
-
-        //QString filename = "D:/QtProjects/LobsterGameEngine/sprites/grass_tile.png";
-        //QString filename = "D:/QtProjects/LobsterGameEngine/sprites/water_tile1.jpg";
-        //QPixmap pix;
-        //if(pix.load(filename)){
-        //    pix = pix.scaled(QSize(32,32),Qt::KeepAspectRatio);
-        //}
+        QGraphicsScene* scene = new QGraphicsScene();
 
         int i = 0;
         int j = 0;
@@ -52,7 +45,6 @@ public:
             for(int y = 0;j<m_map_tiles->m_tiles.at(0).size(); y+=32)
             {
                 QGraphicsPixmapItem* pix_item = m_map_tiles->m_tiles[i][j]->get_graphics_item();
-                //QGraphicsPixmapItem* pix_item = new QGraphicsPixmapItem(pix);
                 pix_item->setOffset(x,y);
                 if(pix_item == nullptr) qDebug()<<"ITS NULL!";
                 else qDebug()<<"ITS NOT NULL!";
@@ -65,16 +57,20 @@ public:
 
         }
         i=0;
-        /*for (int x=0; x<=320; x+=32)
+
+        return scene;
+    }
+
+    void draw_grid()
+    {
+        for (int x=0; x<=320; x+=32)
         {
             scene->addLine(x,0,x,320, QPen(Qt::red));
         }
         for (int y=0; y<=320; y+=32)
         {
             scene->addLine(0,y,320,y, QPen(Qt::green));
-        }*/
-
-        return scene;
+        }
     }
 
     ~CentralView()
@@ -85,6 +81,19 @@ public:
         //delete m_game_editor_scene;
     }
 
+public slots:
+    void show_grid()
+    {
+        if(is_grid_shown)
+        {
+            is_grid_shown = false;
+            update();//может обновиться где-то ещё
+        }
+        else
+        {
+            draw_grid();
+        }
+    }
 private:
 
     void change_curr_scene(QGraphicsScene* p_scene)
@@ -98,6 +107,7 @@ private:
         setScene(m_curr_scene);
     }
 
+    bool is_grid_shown;
 
     QGraphicsScene* m_curr_scene;
 
@@ -106,6 +116,7 @@ private:
     QGraphicsScene* m_game_editor_scene;
 
     MapTiles* m_map_tiles;
+
 };
 
 #endif //CENTRALVIEW_H

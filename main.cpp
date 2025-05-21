@@ -13,6 +13,7 @@
 #include "centralview.h"
 #include "gamemap.h"
 #include "runstopwindow.h"
+#include "gamewindow.h"
 
 int main(int argc, char *argv[])
 {
@@ -46,6 +47,7 @@ int main(int argc, char *argv[])
      central_down->setStyleSheet("background-color:green;");
      CentralView* view = new CentralView(central_widget);
      RunStopWindow* run_stop_window = new RunStopWindow();
+     run_stop_window->set_game_window(central_widget);
      QLabel* game_loop_is_running_lbl = new QLabel("game loop is not running");
      run_stop_window->setMinimumSize(200,200);
 
@@ -87,13 +89,13 @@ int main(int argc, char *argv[])
     //MapGridBorders* borders = new MapGridBorders(central_widget);
     borders->resize(400,400);*/
     w.setCentralWidget(main_widget);
-
+    //GameWindow* game_window = new GameWindow();
     while(true)
     {
-        if(run_stop_window->is_game_running())
+        /*if(run_stop_window->is_game_running())
         {
-            game_loop_is_running_lbl->setText("game loop is running");
-        }
+            game_window->show();
+        }*/
 
         w.show();
         /*while(true)
