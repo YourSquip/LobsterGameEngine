@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include "gamemap.h"
 
 #include <QApplication>
 #include <QWidget>
@@ -10,15 +9,16 @@
 #include <QPushButton>
 #include <QGraphicsScene>
 
-#include "centralview.h"
-#include "gamemap.h"
-#include "runstopwindow.h"
+#include "levelgraphicsview.h"
+#include "runstopgamewidget.h"
 #include "gamewindow.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
+    w.setWindowTitle("Lobster Engine");
+    w.setStyleSheet("background-color: grey;" );
     QWidget* main_widget = new QWidget(&w);
     QWidget* central_widget = new QWidget(main_widget);
     central_widget->setMinimumSize(200,200);
@@ -45,8 +45,8 @@ int main(int argc, char *argv[])
      QVBoxLayout* central_layout = new QVBoxLayout(central_widget);
      QWidget* central_down = new QWidget(central_widget);
      central_down->setStyleSheet("background-color:green;");
-     CentralView* view = new CentralView(central_widget);
-     RunStopWindow* run_stop_window = new RunStopWindow();
+     LevelGraphicsView* view = new LevelGraphicsView(central_widget);
+     RunStopGameWidget* run_stop_window = new RunStopGameWidget();
      run_stop_window->set_game_window(central_widget);
      QLabel* game_loop_is_running_lbl = new QLabel("game loop is not running");
      run_stop_window->setMinimumSize(200,200);
@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
      central_layout->addWidget(run_stop_window);
      central_layout->addWidget(view);
      central_layout->addWidget(central_down);
-     central_layout->addWidget(new Tile(central_widget));
+    // central_layout->addWidget(new MapTile(central_widget));
 
      //QPushButton run_game_loop_bttn = new QPushButton("RUN GAME");
 

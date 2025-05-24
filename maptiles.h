@@ -16,7 +16,7 @@ class MapTiles
 public:
     MapTiles()
     {
-        //MapTileFactory factory;
+
         MapTileFactory::get_instance().register_tile(QString("grass"),create_grass_tile);
         MapTileFactory::get_instance().register_tile(QString("water"),create_water_tile);
         m_height = 9;
@@ -70,11 +70,10 @@ public:
     {
 
     }
-
     QVector<QVector<MapTile*>> m_tiles;
 
 private:
-    //QVector<QVector<QGraphicsPixmapItem*>> m_tiles;
+
     int m_height;
     int m_width;
 

@@ -1,5 +1,5 @@
-#ifndef CENTRALVIEW_H
-#define CENTRALVIEW_H
+#ifndef LEVELGRAPHICSVIEW_H
+#define LEVELGRAPHICSVIEW_H
 
 
 #include <QGraphicsView>
@@ -10,7 +10,6 @@
 #include <QDebug>
 #include <QHashIterator>
 #include <QRandomGenerator>
-#include "gamemap.h"
 #include "maptile.h"
 #include "maptiles.h"
 
@@ -21,10 +20,10 @@ enum SceneMode{
 };
 
 
-class CentralView: public QGraphicsView
+class LevelGraphicsView: public QGraphicsView
 {
 public:
-    CentralView(QWidget* parent = 0):QGraphicsView(parent)
+    LevelGraphicsView(QWidget* parent = 0):QGraphicsView(parent)
     {
         m_map_tiles = new MapTiles();
         change_curr_scene(create_map_editor_scene());
@@ -65,20 +64,17 @@ public:
     {
         for (int x=0; x<=320; x+=32)
         {
-            scene->addLine(x,0,x,320, QPen(Qt::red));
+            m_curr_scene->addLine(x,0,x,320, QPen(Qt::red));
         }
         for (int y=0; y<=320; y+=32)
         {
-            scene->addLine(0,y,320,y, QPen(Qt::green));
+            m_curr_scene->addLine(0,y,320,y, QPen(Qt::green));
         }
     }
 
-    ~CentralView()
+    ~LevelGraphicsView()
     {
         delete m_curr_scene;
-        //delete m_game_scene;
-        //delete m_map_editor_scene;
-        //delete m_game_editor_scene;
     }
 
 public slots:
@@ -119,4 +115,4 @@ private:
 
 };
 
-#endif //CENTRALVIEW_H
+#endif // LEVELGRAPHICSVIEW_H

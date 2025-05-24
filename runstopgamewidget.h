@@ -1,17 +1,16 @@
-#ifndef RUNSTOPWINDOW_H
-#define RUNSTOPWINDOW_H
+#ifndef RUNSTOPGAMEWIDGET_H
+#define RUNSTOPGAMEWIDGET_H
 
 #include <QWidget>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QPushButton>
-
 #include "gamewindow.h"
 
-class RunStopWindow: public QWidget
+class RunStopGameWidget: public QWidget
 {
 public:
-    RunStopWindow(QWidget* parent = nullptr):QWidget(parent)
+    RunStopGameWidget(QWidget* parent = nullptr):QWidget(parent)
     {
         run_button_pressed = false;
         m_run_bttn = new QPushButton("Run",this);
@@ -64,4 +63,5 @@ private slots:
     }
 };
 
-#endif // RUNSTOPWINDOW_H
+
+#endif // RUNSTOPGAMEWIDGET_H

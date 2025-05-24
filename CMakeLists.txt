@@ -24,22 +24,24 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(LobsterGameEngine
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        gamemap.h gamemap.cpp
-        mapgridborders.h mapgridborders.cpp
-        centralview.h centralview.cpp
+
+
+
         mapeditorscene.h mapeditorscene.cpp
-        graphicsview.h graphicsview.cpp
+
         maptile.h maptile.cpp
         maptilefactory.h maptilefactory.cpp
         maptiles.h maptiles.cpp
         gameobject.h gameobject.cpp
         Components.h
         Systems.h Systems.cpp
-        runstopwindow.h runstopwindow.cpp
+
         game.h game.cpp
         level.h level.cpp
         gamewindow.h gamewindow.cpp
         viewport.h viewport.cpp
+        levelgraphicsview.h levelgraphicsview.cpp
+        runstopgamewidget.h runstopgamewidget.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET LobsterGameEngine APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

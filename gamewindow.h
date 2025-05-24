@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QLabel>
 
+#include "game.h"
+
 class GameWindow : public QWidget
 {
     Q_OBJECT

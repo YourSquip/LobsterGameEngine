@@ -1,5 +1,0 @@
-#ifndef GRAPHICSVIEW_H
-#define GRAPHICSVIEW_H
-
-
-#endif // GRAPHICSVIEW_H

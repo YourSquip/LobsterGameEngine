@@ -39,7 +39,6 @@ public:
 
 private:
 
-    //static MapTileFactory* instance;
     MapTileFactory(){}
     ~MapTileFactory(){}
     QHash<QString, CreateTileFunc> registered_tiles;

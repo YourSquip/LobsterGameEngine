@@ -4,7 +4,6 @@
 #include <QWidget>
 #include <QCheckBox>
 
-#include "centralview.h"
 
 class Viewport : public QWidget
 {

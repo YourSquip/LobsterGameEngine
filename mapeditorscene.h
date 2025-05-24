@@ -2,9 +2,9 @@
 #define MAPEDITORSCENE_H
 
 #include<QGraphicsScene>
-#include"mapgridborders.h"
+//#include"mapgridborders.h"
 
-class MapEditorScene: public QGraphicsScene
+/*class MapEditorScene: public QGraphicsScene
 {
 public:
     MapEditorScene(QWidget* parent = nullptr):QGraphicsScene(parent)
@@ -12,6 +12,6 @@ public:
 
 
     }
-};
+};*/
 
 #endif // MAPEDITORSCENE_H

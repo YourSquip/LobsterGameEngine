@@ -18,7 +18,6 @@ public:
     {
         m_name = 0;
         m_can_walk = On;
-
     }
 
     MapTile( QString p_name, QPixmap p_pixmap, WalkPossibility p_can_walk)
