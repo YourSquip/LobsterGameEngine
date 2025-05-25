@@ -1,3 +1,3 @@
 #include "gameobjectstreewidget.h"
 
-GameObjectsTreeWidget::GameObjectsTreeWidget() {}
+//GameObjectsTreeWidget::GameObjectsTreeWidget() {}

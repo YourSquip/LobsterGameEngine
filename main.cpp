@@ -9,6 +9,7 @@
 #include <QPushButton>
 #include <QGraphicsScene>
 
+#include "gameobjectstreewidget.h"
 #include "levelgraphicsview.h"
 #include "runstopgamewidget.h"
 #include "gamewindow.h"
@@ -25,6 +26,7 @@ int main(int argc, char *argv[])
     //central_widget->setMaximumHeight(700);
     central_widget->setStyleSheet("background-color:grey;");
     QWidget* left_widget = new QWidget(main_widget);
+    //GameObjectsTreeWidget
     left_widget->setMinimumSize(200,300);
     left_widget->setMaximumWidth(400);
     left_widget->setStyleSheet("background-color:blue;");
@@ -37,7 +39,9 @@ int main(int argc, char *argv[])
     QVBoxLayout* left_layout = new QVBoxLayout(left_widget);
     QMenuBar*  left_menu_bar = new QMenuBar();
     QMenu *file_menu = new QMenu("File");
+    QMenu *create_menu = new QMenu("Create");
     left_menu_bar->addMenu(file_menu);
+    left_menu_bar->addMenu(create_menu);
     left_layout->setMenuBar(left_menu_bar);
 
     //----------------

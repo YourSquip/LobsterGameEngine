@@ -3,6 +3,8 @@
 
 #include <QString>
 #include <QVector>
+#include <iostream>
+
 #include "Components.h"
 
 
@@ -21,8 +23,8 @@ public:
 
     ~GameObject()
     {
-        delete parent;
-        delete[] children;
+        delete m_parent;
+        //delete[] m_children;
     }
 
     void add_child(GameObject* game_object)
@@ -46,12 +48,22 @@ public:
         return m_children;
     }
 
+    GameObject* get_parent()
+    {
+        return m_parent;
+    }
+
     unsigned int get_id()
     {
         return m_id;
     }
 
-private:
+    QString get_name()
+    {
+        return m_name;
+    }
+
+protected:
 
     unsigned int m_id;
     QString m_name;
@@ -64,7 +76,7 @@ class Player: public GameObject
 {
     Player():GameObject()
     {
-        m_name = QString("player" + std::to_string(m_id));
+        m_name = QString::fromStdString("player" + std::to_string(m_id));
     }
 };
 

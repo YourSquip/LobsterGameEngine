@@ -11,6 +11,7 @@ public:
 private:
     QString m_title;
 
+
     //GameSettings* m_settings;
     //Controls* m_controls;
     //QStack<Level> m_levels;

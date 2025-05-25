@@ -28,9 +28,9 @@ using Healths = ComponentMap<Health>;
 
 struct Components
 {
-    Positions positions;
-    Velocities velocities;
-    Healths healths;
+    static Positions positions;
+    static Velocities velocities;
+    static Healths healths;
 };
 
 #endif // COMPONENTS_H
