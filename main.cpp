@@ -25,11 +25,11 @@ int main(int argc, char *argv[])
     central_widget->setMinimumSize(200,200);
     //central_widget->setMaximumHeight(700);
     central_widget->setStyleSheet("background-color:grey;");
-    QWidget* left_widget = new QWidget(main_widget);
-    //GameObjectsTreeWidget
+    //QWidget* left_widget = new QWidget(main_widget);
+    GameObjectsTreeWidget* left_widget = new GameObjectsTreeWidget(nullptr,main_widget);
     left_widget->setMinimumSize(200,300);
     left_widget->setMaximumWidth(400);
-    left_widget->setStyleSheet("background-color:blue;");
+    //left_widget->setStyleSheet("background-color:blue;");
     QWidget* right_widget = new QWidget(main_widget);
     right_widget->setMinimumSize(200,300);
     right_widget->setMaximumWidth(400);

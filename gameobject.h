@@ -17,7 +17,9 @@ public:
         m_id = next_id;
         next_id++;
         m_name = QString::fromStdString("untitled" + std::to_string(m_id));
-        Components::positions[m_id] = Position{0.0f,0.0f};
+        //Components::positions[m_id] = Position{0.0f,0.0f};
+        //Components::positions[m_id] = Position{0.0f,0.0f};
+        COMPONENTS.positions[m_id] = Position{0.0f,0.0f};
         m_parent = parent;
     }
 

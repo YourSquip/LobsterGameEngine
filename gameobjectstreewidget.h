@@ -2,6 +2,7 @@
 #define GAMEOBJECTSTREEWIDGET_H
 
 #include <QTreeWidget>
+#include <QPushButton>
 #include <QTreeWidgetItem>
 #include <QVBoxLayout>
 #include <iostream>
@@ -21,20 +22,25 @@ class GameObjectsTreeWidget: public QWidget
 {
     Q_OBJECT
 public:
-    GameObjectsTreeWidget( const Level* level , QWidget* parent = nullptr):QWidget(parent)
+    GameObjectsTreeWidget(Level* level = nullptr , QWidget* parent = nullptr):QWidget(parent)
     {
         init_tree(level);
     }
-    void init_tree(const Level* level)
+    void init_tree(Level* level = nullptr)
     {
+        m_level = level;
         m_tree_widget = new QTreeWidget(this);
         QObject::connect(m_tree_widget, &QTreeWidget::itemSelectionChanged, this, &GameObjectsTreeWidget::select_tree_item);
+
+        m_new_object_bttn = new QPushButton("+");
+        QObject::connect(m_new_object_bttn, &QPushButton::clicked, this, &GameObjectsTreeWidget::create_empty_object_in_tree);
 
         m_tree_widget->resize(600, 400);
         m_tree_widget->setHeaderHidden(true);
 
         m_layout = new QVBoxLayout(this);
         m_layout->addWidget(m_tree_widget);
+        m_layout->addWidget(m_new_object_bttn);
     }
 
     void create_game_object_tree_widget()
@@ -107,9 +113,19 @@ public slots:
         }
     }
 
+    void create_empty_object_in_tree()
+    {
+        GameObject* new_object = new GameObject();
+        GameObjectTreeItem* item = new GameObjectTreeItem();
+        item->setText(0, QString(new_object->get_name()));
+        item->m_game_object = new_object;
+        m_tree_widget->insertTopLevelItem(0, item);
+    }
+
 private:
 
     Level* m_level;
+    QPushButton* m_new_object_bttn;
     QTreeWidget* m_tree_widget;
     QVBoxLayout* m_layout;
 };
