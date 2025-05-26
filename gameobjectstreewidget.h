@@ -13,6 +13,10 @@
 class GameObjectTreeItem: public QTreeWidgetItem
 {
 public:
+    GameObjectTreeItem():QTreeWidgetItem()
+    {
+        this->setFlags(Qt::ItemIsEditable | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+    }
     GameObject* m_game_object;
     virtual ~GameObjectTreeItem(){}
 };
@@ -31,16 +35,18 @@ public:
         m_level = level;
         m_tree_widget = new QTreeWidget(this);
         QObject::connect(m_tree_widget, &QTreeWidget::itemSelectionChanged, this, &GameObjectsTreeWidget::select_tree_item);
+        QObject::connect(m_tree_widget, &QTreeWidget::itemChanged, this, &GameObjectsTreeWidget::select_tree_item);
 
-        m_new_object_bttn = new QPushButton("+");
+        m_new_object_bttn = new QPushButton("New Game Object");
         QObject::connect(m_new_object_bttn, &QPushButton::clicked, this, &GameObjectsTreeWidget::create_empty_object_in_tree);
 
         m_tree_widget->resize(600, 400);
         m_tree_widget->setHeaderHidden(true);
 
         m_layout = new QVBoxLayout(this);
-        m_layout->addWidget(m_tree_widget);
+
         m_layout->addWidget(m_new_object_bttn);
+        m_layout->addWidget(m_tree_widget);
     }
 
     void create_game_object_tree_widget()
@@ -65,6 +71,12 @@ public:
     {
         GameObjectTreeItem* item = static_cast<GameObjectTreeItem*>(get_tree_widget()->selectedItems().front());
         return item->m_game_object;
+    }
+
+    GameObjectTreeItem* get_selected_item()
+    {
+        GameObjectTreeItem* item = static_cast<GameObjectTreeItem*>(get_tree_widget()->selectedItems().front());
+        return item;
     }
 
     GameObjectTreeItem* create_game_object_hierarchy(GameObject* game_object)
@@ -119,8 +131,15 @@ public slots:
         GameObjectTreeItem* item = new GameObjectTreeItem();
         item->setText(0, QString(new_object->get_name()));
         item->m_game_object = new_object;
+
         m_tree_widget->insertTopLevelItem(0, item);
     }
+
+   /* void update_item_data()
+    {
+        item->setText(0, QString(new_object->get_name()));
+        item->m_game_object = new_object;
+    }*///!!!!!!!!!!!!!!!!!!!
 
 private:
 

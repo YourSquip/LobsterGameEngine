@@ -17,8 +17,6 @@ public:
         m_id = next_id;
         next_id++;
         m_name = QString::fromStdString("untitled" + std::to_string(m_id));
-        //Components::positions[m_id] = Position{0.0f,0.0f};
-        //Components::positions[m_id] = Position{0.0f,0.0f};
         COMPONENTS.positions[m_id] = Position{0.0f,0.0f};
         m_parent = parent;
     }
@@ -26,7 +24,6 @@ public:
     ~GameObject()
     {
         delete m_parent;
-        //delete[] m_children;
     }
 
     void add_child(GameObject* game_object)
@@ -53,6 +50,11 @@ public:
     GameObject* get_parent()
     {
         return m_parent;
+    }
+
+    void set_parent(GameObject* parent)
+    {
+        m_parent = parent;
     }
 
     unsigned int get_id()
