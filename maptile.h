@@ -45,6 +45,11 @@ public:
         return m_item;
     }
 
+    QPixmap get_pixmap()
+    {
+        return m_pixmap;
+    }
+
     QString get_name()
     {
         return m_name;

@@ -1,6 +1,7 @@
 #ifndef MAPTILEFACTORY_H
 #define MAPTILEFACTORY_H
 
+#include <QVector>
 #include "maptile.h"
 
 typedef MapTile* (*CreateTileFunc)();
@@ -20,6 +21,7 @@ public:
         if(!registered_tiles.contains(p_tile_name))
         {
             registered_tiles.emplace(p_tile_name,p_create_func);
+            names_of_tiles.push_back(p_tile_name);
         }
     }
 
@@ -37,11 +39,16 @@ public:
         return nullptr;
     }
 
+    QVector<QString> get_all_tiles_names()
+    {
+        return names_of_tiles;
+    }
 private:
 
     MapTileFactory(){}
     ~MapTileFactory(){}
     QHash<QString, CreateTileFunc> registered_tiles;
+    QVector<QString> names_of_tiles;
 
     MapTileFactory(MapTileFactory const&) = delete;
     MapTileFactory& operator= (MapTileFactory const&) = delete;

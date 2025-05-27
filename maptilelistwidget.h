@@ -1,0 +1,36 @@
+#ifndef MAPTILELISTWIDGET_H
+#define MAPTILELISTWIDGET_H
+
+#include <QWidget>
+#include <QHBoxLayout>
+#include <QLabel>
+
+#include "maptiles.h"
+
+class MapTileListWidget : public QWidget
+{
+    Q_OBJECT
+public:
+    MapTileListWidget(QWidget *parent = nullptr)
+    {
+
+        MapTileFactory::get_instance().register_tile(QString("grass"),create_grass_tile);
+        MapTileFactory::get_instance().register_tile(QString("water"),create_water_tile);
+        m_layout = new QHBoxLayout(this);
+        QLabel* tile_label = new QLabel("Tiles list:",this);
+        m_layout->addWidget(tile_label);
+        for(auto tile_name: MapTileFactory::get_instance().get_all_tiles_names())
+        {
+            QLabel* tile_label = new QLabel(this);
+            tile_label->setPixmap(MapTileFactory::get_instance().create_spec_tile(tile_name)->get_pixmap().scaled(32,32));
+            //tile_label-;
+            m_layout->addWidget(tile_label);
+        }
+    }
+private:
+    QHBoxLayout* m_layout;
+signals:
+
+};
+
+#endif // MAPTILELISTWIDGET_H

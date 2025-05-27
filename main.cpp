@@ -13,6 +13,7 @@
 #include "levelgraphicsview.h"
 #include "runstopgamewidget.h"
 #include "gamewindow.h"
+#include "maptilelistwidget.h"
 
 int main(int argc, char *argv[])
 {
@@ -47,7 +48,8 @@ int main(int argc, char *argv[])
     //----------------
 
      QVBoxLayout* central_layout = new QVBoxLayout(central_widget);
-     QWidget* central_down = new QWidget(central_widget);
+     //QWidget* central_down = new QWidget(central_widget);
+     MapTileListWidget* central_down = new MapTileListWidget(central_widget);
      central_down->setStyleSheet("background-color:green;");
      LevelGraphicsView* view = new LevelGraphicsView(central_widget);
      RunStopGameWidget* run_stop_window = new RunStopGameWidget();
