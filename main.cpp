@@ -20,7 +20,9 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     MainWindow w;
     w.setWindowTitle("Lobster Engine");
-    w.setStyleSheet("background-color: #3d3d45; color : white;" );
+    w.setStyleSheet("background-color: #3d3d45; color : white; border-color: black;" );
+    QIcon icon(":/sprites/app_icon.png");
+    a.setWindowIcon(icon);
     QWidget* main_widget = new QWidget(&w);
     QWidget* central_widget = new QWidget(main_widget);
     central_widget->setMinimumSize(200,200);
