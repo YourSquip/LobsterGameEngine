@@ -20,12 +20,12 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     MainWindow w;
     w.setWindowTitle("Lobster Engine");
-    w.setStyleSheet("background-color: grey;" );
+    w.setStyleSheet("background-color: #3d3d45; color : white;" );
     QWidget* main_widget = new QWidget(&w);
     QWidget* central_widget = new QWidget(main_widget);
     central_widget->setMinimumSize(200,200);
     //central_widget->setMaximumHeight(700);
-    central_widget->setStyleSheet("background-color:grey;");
+    central_widget->setStyleSheet("background-color:#3d3d45;");
     //QWidget* left_widget = new QWidget(main_widget);
     GameObjectsTreeWidget* left_widget = new GameObjectsTreeWidget(nullptr,main_widget);
     left_widget->setMinimumSize(200,300);
@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
      QVBoxLayout* central_layout = new QVBoxLayout(central_widget);
      //QWidget* central_down = new QWidget(central_widget);
      MapTileListWidget* central_down = new MapTileListWidget(central_widget);
-     central_down->setStyleSheet("background-color:green;");
+     //central_down->setStyleSheet("background-color:green;");
      LevelGraphicsView* view = new LevelGraphicsView(central_widget);
      RunStopGameWidget* run_stop_window = new RunStopGameWidget();
      run_stop_window->set_game_window(central_widget);
