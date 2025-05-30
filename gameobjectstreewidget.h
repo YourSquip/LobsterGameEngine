@@ -40,7 +40,9 @@ public:
         m_new_object_bttn = new QPushButton("New Game Object");
         QObject::connect(m_new_object_bttn, &QPushButton::clicked, this, &GameObjectsTreeWidget::create_empty_object_in_tree);
 
-        m_tree_widget->resize(600, 400);
+       // m_tree_widget->setMinimumSize(600,200);
+        //m_tree_widget->setMaximumWidth(400);
+        //m_tree_widget->resize(600, 400);
         m_tree_widget->setHeaderHidden(true);
 
         m_layout = new QVBoxLayout(this);

@@ -8,9 +8,13 @@ class Game
 {
 public:
     Game();
+    bool is_game_running()
+    {
+        return m_is_running;
+    }
 private:
     QString m_title;
-
+    bool m_is_running;
 
     //GameSettings* m_settings;
     //Controls* m_controls;
