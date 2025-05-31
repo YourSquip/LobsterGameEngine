@@ -2,6 +2,20 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QWidget>
+#include <QLabel>
+#include <QLayout>
+#include <QMenu>
+#include <QMenuBar>
+#include <QPushButton>
+#include <QGraphicsScene>
+
+#include "gameobjectstreewidget.h"
+#include "levelgraphicsview.h"
+#include "runstopgamewidget.h"
+#include "gamewindow.h"
+#include "maptilelistwidget.h"
+#include "componentwidget.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,5 +33,6 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
 };
 #endif // MAINWINDOW_H
