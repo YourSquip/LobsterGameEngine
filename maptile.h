@@ -57,11 +57,18 @@ public:
         return m_name;
     }
 
-    /*void mousePressEvent(QGraphicsSceneMouseEvent *event) override {
-        qDebug() << "Item clicked!";
-        if(this->is)
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override {
+        qDebug() << "Item clicked! It was"<< m_name;
+        if(this->isVisible())
+        {
+            this->setVisible(false);
+        }
+        else
+        {
+            this->setVisible(true);
+        }
         QGraphicsItem::mousePressEvent(event); // вызов базового обработчика, если нужно
-    }*/
+    }
 
 signals:
     /*void tile_was_clicked()
