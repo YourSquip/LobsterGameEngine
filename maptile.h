@@ -6,6 +6,8 @@
 #include <QGraphicsPixmapItem>
 #include <QGraphicsItem>
 
+#include "editor.h"
+
 enum WalkPossibility{
     On = 1,
     Under = 2,
@@ -58,15 +60,18 @@ public:
     }
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override {
+
+
         qDebug() << "Item clicked! It was"<< m_name;
-        if(this->isVisible())
+        Editor::get_editor_tool()->use_tool(this);
+        /*if(this->isVisible())
         {
             this->setVisible(false);
         }
         else
         {
             this->setVisible(true);
-        }
+        }*/
         QGraphicsItem::mousePressEvent(event); // вызов базового обработчика, если нужно
     }
 
