@@ -5,6 +5,10 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    //registering
+    MapTileFactory::register_tile(QString("grass"),create_grass_tile);
+    MapTileFactory::register_tile(QString("water"),create_water_tile);
+
     ui->setupUi(this);
     this->setWindowTitle("Lobster Engine");
     this->setStyleSheet("background-color: #3d3d45; color : white; border-color: black;" );

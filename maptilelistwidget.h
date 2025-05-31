@@ -21,8 +21,8 @@ public:
 
     void init_tiles()
     {
-        MapTileFactory::get_instance().register_tile(QString("grass"),create_grass_tile);
-        MapTileFactory::get_instance().register_tile(QString("water"),create_water_tile);
+        //MapTileFactory::get_instance().register_tile(QString("grass"),create_grass_tile);
+        //MapTileFactory::get_instance().register_tile(QString("water"),create_water_tile);
         m_layout = new QHBoxLayout(this);
         QLabel* tile_label = new QLabel("Tiles list:",this);
         m_layout->addWidget(tile_label);

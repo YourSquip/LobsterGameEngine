@@ -16,7 +16,7 @@ public:
 
     }
 
-    void register_tile(QString p_tile_name, CreateTileFunc p_create_func)
+    static void register_tile(QString p_tile_name, CreateTileFunc p_create_func)
     {
         if(!registered_tiles.contains(p_tile_name))
         {
@@ -39,7 +39,7 @@ public:
         return nullptr;
     }
 
-    QVector<QString> get_all_tiles_names()
+    static QVector<QString> get_all_tiles_names()
     {
         return names_of_tiles;
     }
@@ -47,8 +47,8 @@ private:
 
     MapTileFactory(){}
     ~MapTileFactory(){}
-    QHash<QString, CreateTileFunc> registered_tiles;
-    QVector<QString> names_of_tiles;
+    static QHash<QString, CreateTileFunc> registered_tiles;
+    static QVector<QString> names_of_tiles;
 
     MapTileFactory(MapTileFactory const&) = delete;
     MapTileFactory& operator= (MapTileFactory const&) = delete;

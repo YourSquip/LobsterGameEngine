@@ -17,8 +17,6 @@ public:
     MapTiles()
     {
 
-        MapTileFactory::get_instance().register_tile(QString("grass"),create_grass_tile);
-        MapTileFactory::get_instance().register_tile(QString("water"),create_water_tile);
         m_height = 9;
         m_width = 9;
         for(int x = 0; x <m_width; x++)
