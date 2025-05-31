@@ -4,6 +4,7 @@
 #include <QString>
 #include <QPixmap>
 #include <QGraphicsPixmapItem>
+#include <QGraphicsItem>
 
 enum WalkPossibility{
     On = 1,
@@ -11,22 +12,22 @@ enum WalkPossibility{
     NotAble = 3
 };
 
-class MapTile
+class MapTile: public QGraphicsPixmapItem
 {
 public:
-    MapTile()
+    MapTile(QGraphicsItem* parent=nullptr):QGraphicsPixmapItem(parent)
     {
         m_name = 0;
         m_can_walk = On;
     }
 
-    MapTile( QString p_name, QPixmap p_pixmap, WalkPossibility p_can_walk)
+    MapTile( QString p_name, QPixmap p_pixmap, WalkPossibility p_can_walk,QGraphicsPixmapItem* parent=nullptr):QGraphicsPixmapItem(parent)
     {
         m_name = p_name;
         m_pixmap = p_pixmap;
         m_can_walk = p_can_walk;
+        this->setPixmap(p_pixmap);
         m_item =  new QGraphicsPixmapItem(p_pixmap);
-        m_item->setSelected(true);
     }
 
 
@@ -38,12 +39,12 @@ public:
 
     void set_position(int p_x, int p_y)
     {
-        m_item->setOffset(p_x,p_y);
+        this->setOffset(p_x,p_y);
     }
 
     QGraphicsPixmapItem* get_graphics_item()
     {
-        return m_item;
+        return this;
     }
 
     QPixmap get_pixmap()
@@ -55,6 +56,13 @@ public:
     {
         return m_name;
     }
+
+    /*void mousePressEvent(QGraphicsSceneMouseEvent *event) override {
+        qDebug() << "Item clicked!";
+        if(this->is)
+        QGraphicsItem::mousePressEvent(event); // вызов базового обработчика, если нужно
+    }*/
+
 signals:
     /*void tile_was_clicked()
     {

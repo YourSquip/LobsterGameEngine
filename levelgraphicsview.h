@@ -5,6 +5,7 @@
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
+#include <QGraphicsSceneMouseEvent>
 #include <QVector.h>
 #include <QString>
 #include <QDebug>
@@ -50,11 +51,13 @@ public:
         {
             for(int y = 0;j<m_map_tiles->m_tiles.at(0).size(); y+=32)
             {
-                QGraphicsPixmapItem* pix_item = m_map_tiles->m_tiles[i][j]->get_graphics_item();
-                pix_item->setOffset(x,y);
-                if(pix_item == nullptr) qDebug()<<"ITS NULL!";
-                else qDebug()<<"ITS NOT NULL!";
-                scene->addItem(pix_item);
+               // QGraphicsPixmapItem* pix_item = m_map_tiles->m_tiles[i][j]->get_graphics_item();
+                //pix_item->setOffset(x,y);
+               // m_map_tiles->m_tiles[i][j]->setOffset(x,y);
+                //if(pix_item == nullptr) qDebug()<<"ITS NULL!";
+                //else qDebug()<<"ITS NOT NULL!";
+                m_map_tiles->m_tiles[i][j]->setOffset(x,y);
+                scene->addItem(m_map_tiles->m_tiles[i][j]);
                 j++;
 
             }
@@ -66,6 +69,19 @@ public:
 
         return scene;
     }
+
+    void mousePressEvent(QMouseEvent *event) {
+        //QGraphicsItem *item = m_curr_scene->itemAt(event->scenePos(), QTransform());
+        //if (item) {
+            // Клик был по этому item
+          //  item->setSelected(true);
+         //   m_curr_scene->removeItem(item);
+         //   qDebug()<<"ITEM CLICKED";
+        //}
+        qDebug()<<"ITEM CLICKED";
+        QGraphicsView::mousePressEvent(event);
+    }
+
 
     ~LevelGraphicsView()
     {
