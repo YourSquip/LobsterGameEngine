@@ -20,12 +20,6 @@ struct Health
     int current;
 };
 
-struct Health
-{
-    int max;
-    int current;
-};
-
 struct Sprite
 {
     QPixmap* pixmap;

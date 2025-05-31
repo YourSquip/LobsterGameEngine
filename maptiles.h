@@ -11,6 +11,8 @@ MapTile* create_grass_tile();
 
 MapTile* create_water_tile();
 
+MapTile* create_ground_tile();
+
 class MapTiles
 {
 public:

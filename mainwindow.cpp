@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     //registering
     MapTileFactory::register_tile(QString("grass"),create_grass_tile);
     MapTileFactory::register_tile(QString("water"),create_water_tile);
+    MapTileFactory::register_tile(QString("ground"),create_ground_tile);
 
     ui->setupUi(this);
     this->setWindowTitle("Lobster Engine");
