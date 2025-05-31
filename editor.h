@@ -20,7 +20,7 @@ public:
 private:
     Editor();
     static EditorTool* m_editor_tool;
-    Editor(Editor const&) = delete;
+    //Editor(Editor const&) = delete;
     Editor& operator= (Editor const&) = delete;
 };
 

@@ -75,11 +75,6 @@ public:
         QGraphicsItem::mousePressEvent(event); // вызов базового обработчика, если нужно
     }
 
-signals:
-    /*void tile_was_clicked()
-    {
-        if()
-    }*/
 private:
 
     int m_x;
