@@ -1,10 +1,22 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
-#include "editortool.h"
-
+//#include "editortool.h"
+enum EditorToolType
+{
+    Coursor = 0,
+    PaintBrush = 1,
+    Eraser = 2,
+    MoveObjectXY = 3
+};
+enum UseArea
+{
+    MapTilesArea = 1,
+    GameObjectsArea = 2
+};
 class Editor
 {
+
 public:
     static Editor get_instance()
     {
@@ -12,15 +24,19 @@ public:
         return instance;
     }
 
-    static EditorTool* get_editor_tool()
+    EditorToolType get_editor_tool_type()
     {
-        return m_editor_tool;
+        return m_editor_tool_type;
     }
 
+
 private:
-    Editor();
-    static EditorTool* m_editor_tool;
-    Editor(Editor const&) = delete;
+    Editor(){
+        m_editor_tool_type = PaintBrush;
+        m_use_area = MapTilesArea;
+    }
+    EditorToolType m_editor_tool_type;
+    UseArea m_use_area;
     Editor& operator= (Editor const&) = delete;
 };
 

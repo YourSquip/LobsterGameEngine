@@ -3,15 +3,30 @@
 
 #include<QGraphicsItem>
 #include "editor.h"
-#include "maptile.h"
-#include "maptilefactory.h"
+//#include "maptile.h"
+//#include "maptiles.h"
+//class MapTileFactory;
 
 class EditorTool
 {
+private:
+
+    enum EditorToolType
+    {
+        Coursor = 0,
+        PaintBrush = 1,
+        Eraser = 2,
+        MoveObjectXY = 3
+    };
+    enum UseArea
+    {
+        MapTiles = 1,
+        GameObjects = 2
+    };
 public:
     EditorTool()
     {
-        change_tool(EditorToolType::PaintBrush );
+        change_tool(EditorToolType::PaintBrush);
     }
 
     void use_tool(QGraphicsItem* item)
@@ -51,7 +66,7 @@ public:
             m_use_area = MapTiles;
             if(tool_type == PaintBrush)
             {
-                m_curr_paint_tile = MapTileFactory::create_spec_tile("grass");
+               m_curr_paint_tile = MapTileFactory::get_instance().create_spec_tile("grass");
             }
         }
         else
@@ -62,21 +77,8 @@ public:
 
 private:
 
-    enum EditorToolType
-    {
-        Coursor = 0,
-        PaintBrush = 1,
-        Eraser = 2,
-        MoveObjectXY = 3
-    };
-    enum UseArea
-    {
-        MapTiles = 1,
-        GameObjects = 2
-    };
-
     EditorToolType m_curr_tool;
-    EditorToolType m_use_area;
+    UseArea m_use_area;
     QGraphicsItem* m_curr_paint_tile;
 };
 

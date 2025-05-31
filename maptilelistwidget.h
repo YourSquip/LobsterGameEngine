@@ -7,7 +7,7 @@
 #include <QLabel>
 #include <QCheckBox>
 
-#include "maptiles.h"
+#include "maptile.h"
 #include "levelgraphicsview.h"
 
 class MapTileListWidget : public QWidget

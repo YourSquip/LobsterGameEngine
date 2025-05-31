@@ -13,7 +13,6 @@
 #include <QRandomGenerator>
 #include <QCheckBox>
 
-#include "maptile.h"
 #include "maptiles.h"
 #include "grid.h"
 

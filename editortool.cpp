@@ -1,3 +1,3 @@
-#include "editortool.h"
+//#include "editortool.h"
 
-EditorTool::EditorTool() {}
+//EditorTool::EditorTool() {}
