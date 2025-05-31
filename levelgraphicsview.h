@@ -32,8 +32,8 @@ public:
         m_map_tiles = new MapTiles();
         is_grid_shown = false;
         m_grid = new Grid(m_map_tiles->m_tiles.size(),m_map_tiles->m_tiles.at(0).size(),32);
-        m_show_grid_check_box = new QCheckBox("show grid",this);
-        connect(m_show_grid_check_box,&QCheckBox::stateChanged, this,show_grid);
+        //m_show_grid_check_box = new QCheckBox("show grid",this);
+        //connect(m_show_grid_check_box,&QCheckBox::stateChanged, this,show_grid);
         change_curr_scene(create_map_editor_scene());
         show_curr_scene();
     }
@@ -68,18 +68,6 @@ public:
         i=0;
 
         return scene;
-    }
-
-    void mousePressEvent(QMouseEvent *event) {
-        //QGraphicsItem *item = m_curr_scene->itemAt(event->scenePos(), QTransform());
-        //if (item) {
-            // Клик был по этому item
-          //  item->setSelected(true);
-         //   m_curr_scene->removeItem(item);
-         //   qDebug()<<"ITEM CLICKED";
-        //}
-        qDebug()<<"ITEM CLICKED";
-        QGraphicsView::mousePressEvent(event);
     }
 
 
@@ -125,7 +113,7 @@ private:
 
     MapTiles* m_map_tiles;
     Grid* m_grid;
-    QCheckBox* m_show_grid_check_box;
+    //QCheckBox* m_show_grid_check_box;
 
 };
 

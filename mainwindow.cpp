@@ -44,10 +44,12 @@ MainWindow::MainWindow(QWidget *parent)
     MapTileListWidget* central_down = new MapTileListWidget(central_widget);
 
     LevelGraphicsView* view = new LevelGraphicsView(central_widget);
+    EditorToolsWidget* editor_tools = new EditorToolsWidget(view,nullptr);
     RunStopGameWidget* run_stop_window = new RunStopGameWidget();
     run_stop_window->set_game_window(central_widget);
 
     central_layout->addWidget(run_stop_window);
+    central_layout->addWidget(editor_tools);
     central_layout->addWidget(view);
     central_layout->addWidget(central_down);
 
