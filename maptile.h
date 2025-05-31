@@ -35,14 +35,19 @@ public:
         qDebug() << "Item clicked! It was"<< m_name;
         //Editor::get_instance().get_editor_tool_type();
         //EditorTool* tool = new EditorTool();
-        EditorToolType tool_type = Editor::get_instance().get_editor_tool_type();
+        EditorToolType tool_type = Editor::get_instance()->get_editor_tool_type();
 
         if(tool_type == PaintBrush)
         {
-            QString tile_name = "grass";
-            QPixmap pixmap = QPixmap("D:/QtProjects/LobsterGameEngine/sprites/grass_tile.png");
-            WalkPossibility can_walk = On;
-            copy_tile(new MapTile(tile_name,pixmap,can_walk));
+            m_name = "grass";
+            m_pixmap = QPixmap("D:/QtProjects/LobsterGameEngine/sprites/grass_tile.png");
+            m_can_walk = On;
+            this->setPixmap(m_pixmap);
+            this->setVisible(true);
+        }
+        if(tool_type == Eraser)
+        {
+            this->setVisible(false);
         }
         QGraphicsItem::mousePressEvent(event); // вызов базового обработчика, если нужно
     }

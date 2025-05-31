@@ -1,6 +1,7 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
+#include <QObject>
 //#include "editortool.h"
 enum EditorToolType
 {
@@ -16,11 +17,13 @@ enum UseArea
 };
 class Editor
 {
-
 public:
-    static Editor get_instance()
+    static Editor* get_instance()
     {
-        static Editor instance;
+        if(!instance)
+        {
+            instance = new Editor();
+        }
         return instance;
     }
 
@@ -28,16 +31,21 @@ public:
     {
         return m_editor_tool_type;
     }
-
+    void change_editor_tool_type(EditorToolType tool_type)
+    {
+        m_editor_tool_type = tool_type;
+    }
 
 private:
     Editor(){
-        m_editor_tool_type = PaintBrush;
+        m_editor_tool_type = Eraser;
         m_use_area = MapTilesArea;
     }
+    static Editor* instance;
     EditorToolType m_editor_tool_type;
     UseArea m_use_area;
-    Editor& operator= (Editor const&) = delete;
+    //Editor& operator= (Editor const&) = delete;
+
 };
 
 
