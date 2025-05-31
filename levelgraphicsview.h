@@ -62,31 +62,19 @@ public:
         }
         i=0;
 
-        scene->addItem(new Grid(10,10,32));
+
         //draw_grid();
 
 
         return scene;
     }
 
-    void draw_grid()
-    {
-       // m_curr_scene->addLine(0,0,1,1, QPen(Qt::red));
-        /*for (int x=0; x<=m_map_tiles->m_tiles.size(); x+=32)
-        {
-            m_curr_scene->addLine(x,0,x,m_map_tiles->m_tiles.size(), QPen(Qt::red));
-        }
-        for (int y=0; y<=m_map_tiles->m_tiles.at(0).size(); y+=32)
-        {
-            m_curr_scene->addLine(0,y,m_map_tiles->m_tiles.at(0).size(),y, QPen(Qt::green));
-        }*/
-    }
 
-    void update_curr_scene()
+    /*void update_curr_scene()
     {
         change_curr_scene(create_map_editor_scene());
         show_curr_scene();
-    }
+    }*/
 
     ~LevelGraphicsView()
     {
@@ -96,13 +84,16 @@ public:
 public slots:
     void show_grid()
     {
-        if(is_grid_shown)
+        if(is_grid_shown && m_grid)
         {
             is_grid_shown = false;
+            m_curr_scene->removeItem(m_grid);
         }
         else
         {
             is_grid_shown = true;
+            m_grid = new Grid(10,10,32);
+            m_curr_scene->addItem(m_grid);
         }
         //update_curr_scene();
     }
@@ -128,7 +119,7 @@ private:
     QGraphicsScene* m_game_editor_scene;
 
     MapTiles* m_map_tiles;
-
+    Grid* m_grid;
     QCheckBox* m_show_grid_check_box;
 
 };
