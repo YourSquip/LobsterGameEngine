@@ -10,8 +10,11 @@
 #include <QDebug>
 #include <QHashIterator>
 #include <QRandomGenerator>
+#include <QCheckBox>
+
 #include "maptile.h"
 #include "maptiles.h"
+#include "grid.h"
 
 enum SceneMode{
     MapEditor = 1,
@@ -26,10 +29,12 @@ public:
     LevelGraphicsView(QWidget* parent = 0):QGraphicsView(parent)
     {
         m_map_tiles = new MapTiles();
+        is_grid_shown = false;
+        m_show_grid_check_box = new QCheckBox("show grid",this);
+        connect(m_show_grid_check_box,&QCheckBox::stateChanged, this,show_grid);
         change_curr_scene(create_map_editor_scene());
         show_curr_scene();
     }
-
 
     QGraphicsScene* create_map_editor_scene()
     {
@@ -57,19 +62,30 @@ public:
         }
         i=0;
 
+        scene->addItem(new Grid(10,10,32));
+        //draw_grid();
+
+
         return scene;
     }
 
     void draw_grid()
     {
-        for (int x=0; x<=320; x+=32)
+       // m_curr_scene->addLine(0,0,1,1, QPen(Qt::red));
+        /*for (int x=0; x<=m_map_tiles->m_tiles.size(); x+=32)
         {
-            m_curr_scene->addLine(x,0,x,320, QPen(Qt::red));
+            m_curr_scene->addLine(x,0,x,m_map_tiles->m_tiles.size(), QPen(Qt::red));
         }
-        for (int y=0; y<=320; y+=32)
+        for (int y=0; y<=m_map_tiles->m_tiles.at(0).size(); y+=32)
         {
-            m_curr_scene->addLine(0,y,320,y, QPen(Qt::green));
-        }
+            m_curr_scene->addLine(0,y,m_map_tiles->m_tiles.at(0).size(),y, QPen(Qt::green));
+        }*/
+    }
+
+    void update_curr_scene()
+    {
+        change_curr_scene(create_map_editor_scene());
+        show_curr_scene();
     }
 
     ~LevelGraphicsView()
@@ -83,13 +99,14 @@ public slots:
         if(is_grid_shown)
         {
             is_grid_shown = false;
-            update();//может обновиться где-то ещё
         }
         else
         {
-            draw_grid();
+            is_grid_shown = true;
         }
+        //update_curr_scene();
     }
+
 private:
 
     void change_curr_scene(QGraphicsScene* p_scene)
@@ -99,7 +116,6 @@ private:
 
     void show_curr_scene()
     {
-
         setScene(m_curr_scene);
     }
 
@@ -112,6 +128,8 @@ private:
     QGraphicsScene* m_game_editor_scene;
 
     MapTiles* m_map_tiles;
+
+    QCheckBox* m_show_grid_check_box;
 
 };
 

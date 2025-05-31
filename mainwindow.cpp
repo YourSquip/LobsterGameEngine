@@ -55,7 +55,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->setCentralWidget(main_widget);
 
-
 }
 
 

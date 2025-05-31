@@ -5,8 +5,10 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QLabel>
+#include <QCheckBox>
 
 #include "maptiles.h"
+#include "levelgraphicsview.h"
 
 class MapTileListWidget : public QWidget
 {
@@ -14,7 +16,11 @@ class MapTileListWidget : public QWidget
 public:
     MapTileListWidget(QWidget *parent = nullptr)
     {
+        init_tiles();
+    }
 
+    void init_tiles()
+    {
         MapTileFactory::get_instance().register_tile(QString("grass"),create_grass_tile);
         MapTileFactory::get_instance().register_tile(QString("water"),create_water_tile);
         m_layout = new QHBoxLayout(this);
@@ -34,9 +40,9 @@ public:
             m_layout->addLayout(tile_info);
         }
     }
+
 private:
     QHBoxLayout* m_layout;
-signals:
 
 };
 
