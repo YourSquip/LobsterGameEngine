@@ -30,11 +30,13 @@ public:
     {
         m_map_tiles = new MapTiles();
         is_grid_shown = false;
+        m_grid = new Grid(m_map_tiles->m_tiles.size(),m_map_tiles->m_tiles.at(0).size(),32);
         m_show_grid_check_box = new QCheckBox("show grid",this);
         connect(m_show_grid_check_box,&QCheckBox::stateChanged, this,show_grid);
         change_curr_scene(create_map_editor_scene());
         show_curr_scene();
     }
+
 
     QGraphicsScene* create_map_editor_scene()
     {
@@ -62,19 +64,8 @@ public:
         }
         i=0;
 
-
-        //draw_grid();
-
-
         return scene;
     }
-
-
-    /*void update_curr_scene()
-    {
-        change_curr_scene(create_map_editor_scene());
-        show_curr_scene();
-    }*/
 
     ~LevelGraphicsView()
     {
@@ -92,10 +83,8 @@ public slots:
         else
         {
             is_grid_shown = true;
-            m_grid = new Grid(10,10,32);
             m_curr_scene->addItem(m_grid);
         }
-        //update_curr_scene();
     }
 
 private:

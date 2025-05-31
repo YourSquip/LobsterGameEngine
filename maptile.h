@@ -26,6 +26,7 @@ public:
         m_pixmap = p_pixmap;
         m_can_walk = p_can_walk;
         m_item =  new QGraphicsPixmapItem(p_pixmap);
+        m_item->setSelected(true);
     }
 
 
@@ -54,7 +55,11 @@ public:
     {
         return m_name;
     }
-
+signals:
+    /*void tile_was_clicked()
+    {
+        if()
+    }*/
 private:
 
     int m_x;

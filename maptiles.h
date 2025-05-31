@@ -26,21 +26,16 @@ public:
             QVector<MapTile*> row;
             for(int y = 0; y < m_height; y++)
             {
-                int rand_num = QRandomGenerator::global()->bounded(1,3);
-                qDebug()<<"rand_num="<<rand_num;
-                //rand_num = 1;
-                if(rand_num == 1)
+                if(x >= 3 && x<=6 && y >= 3 && y <= 6)
                 {
 
                     MapTile* tile = MapTileFactory::get_instance().create_spec_tile("grass");
-                    if(tile == nullptr) qDebug()<<"TILE IS NULL!!!!";
                     tile->set_position(x,y);
                     row.push_back(tile);
                 }
                 else
                 {
                     MapTile* tile = MapTileFactory::get_instance().create_spec_tile("water");
-                    if(tile == nullptr) qDebug()<<"TILE IS NULL!!!!";
                     tile->set_position(x,y);
                     row.push_back(tile);
                 }
@@ -70,6 +65,7 @@ public:
     {
 
     }
+
     QVector<QVector<MapTile*>> m_tiles;
 
 private:
