@@ -19,6 +19,8 @@
 #include <QPoint>
 #include <QPointF>
 #include <QObject>
+#include <QElapsedTimer>
+
 #include "level.h"
 #include "editor.h"
 #include "Components.h"
@@ -85,6 +87,7 @@ public:
 
         this->setFlag(QGraphicsItem::ItemIsSelectable,true);
         this->setFlag(QGraphicsItem::ItemIsMovable,true);
+        this->setFlag(QGraphicsItem::ItemIsFocusable,true);
         this->setAcceptDrops(true);
     }
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override {
@@ -102,6 +105,42 @@ public:
             //this->setFlag(QGraphicsItem::Item);
             this->setAcceptDrops(false);
         }
+    }
+
+    void keyPressEvent(QKeyEvent *event) override
+    {
+        if(m_game_object->get_name().contains("player"))
+        {
+            //QElapsedTimer timer;
+            //timer.start();
+            //timer.
+            qreal x = this->pos().x();
+            qreal y = this->pos().y();
+            if(event->key() == Qt::Key_W)
+            {
+                this->setPos(x, y - COMPONENTS.velocities[m_game_object->get_id()].y);
+                //Do something when 'R' key is pressed
+            }
+            if(event->key() == Qt::Key_A)
+            {
+                this->setPos(x - COMPONENTS.velocities[m_game_object->get_id()].x, y);
+                //Do something when 'R' key is pressed
+            }
+            if(event->key() == Qt::Key_S)
+            {
+                 this->setPos(x, y + COMPONENTS.velocities[m_game_object->get_id()].y);
+                //Do something when 'R' key is pressed
+            }
+            if(event->key() == Qt::Key_D)
+            {
+                this->setPos(x + COMPONENTS.velocities[m_game_object->get_id()].x, y);
+                //Do something when 'R' key is pressed
+            }
+            QGraphicsItem::keyPressEvent(event);
+
+        }
+
+
     }
 
 private:

@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QVector>
+#include <QElapsedTimer>
 #include "level.h"
 
 class Game
@@ -34,6 +35,7 @@ private:
     QVector<Level*> m_levels;
     unsigned int m_curr_level_id;
     Level* m_curr_level;
+    //QElapsedTimer*
     //GameSettings* m_settings;
     //Controls* m_controls;
     //QStack<Level> m_levels;
