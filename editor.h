@@ -51,6 +51,10 @@ private:
         m_use_area = MapTilesArea;
 
         m_game = new Game();
+        if(COMPONENTS.positions.empty())
+        {
+            qDebug()<<"components are EMPTY in Editor";
+        }
     }
     static Editor* instance;
     EditorToolType m_editor_tool_type;

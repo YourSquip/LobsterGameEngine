@@ -20,6 +20,12 @@ public:
         m_name = QString::fromStdString("game_object" + std::to_string(m_id));
         COMPONENTS.positions[m_id] = Position{6.0f,6.0f};
         m_parent = parent;
+        if(COMPONENTS.positions.empty())qDebug()<<"Position components are empty after adding";
+        else
+        {
+            qDebug()<<this->get_name()<<"Position components are not empty after adding";
+
+        }
     }
 
     GameObject(QString name, GameObject* parent = nullptr)
@@ -29,8 +35,14 @@ public:
         m_name = name;
         COMPONENTS.positions[m_id] = Position{0.0f,0.0f};
         m_parent = parent;
+        if(COMPONENTS.positions.empty())qDebug()<<"Position components are empty after adding";
+        else qDebug()<<this->get_name()<<this->get_id()<<"Position components are not empty after adding";
     }
 
+    void update_components()
+    {
+        COMPONENTS.positions[m_id] = Position{6.0f,6.0f};
+    }
     ~GameObject()
     {
         delete m_parent;

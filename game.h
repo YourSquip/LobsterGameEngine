@@ -15,6 +15,10 @@ public:
         m_curr_level = m_levels[0];
         if(m_curr_level)qDebug()<<"level was created in game";
         else qDebug()<<"level was NOT created in game";
+        if(COMPONENTS.positions.empty())
+        {
+            qDebug()<<"components are EMPTY in Game";
+        }
     }
     bool is_game_running()
     {
