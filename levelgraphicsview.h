@@ -42,8 +42,8 @@ public:
 
         int i = 0;
         int j = 0;
-        qDebug()<<"size[]"<<m_map_tiles->m_tiles.size();
-        qDebug()<<"size[][]"<<m_map_tiles->m_tiles.size();
+        //qDebug()<<"size[]"<<m_map_tiles->m_tiles.size();
+        //qDebug()<<"size[][]"<<m_map_tiles->m_tiles.size();
         for(int x = 0; i<m_map_tiles->m_tiles.size(); x+=32)
         {
             for(int y = 0;j<m_map_tiles->m_tiles.at(0).size(); y+=32)

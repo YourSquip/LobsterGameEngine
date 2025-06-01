@@ -15,6 +15,8 @@ public:
         next_id++;
         m_name = QString::fromStdString("level" + std::to_string(m_id));
         add_game_object(new GameObject(QString("basic_object")));
+        if(!m_game_objects.empty()) qDebug()<<"game_objects in level are not empty";
+        else qDebug()<<"game_objects in level are EMPTY";
     }
     void add_game_object(GameObject* game_object)
     {

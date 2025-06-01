@@ -25,7 +25,7 @@ MapTiles::MapTiles()
             }
         }
         m_tiles.push_back(row);
-        for(auto tile_row: m_tiles)
+        /*for(auto tile_row: m_tiles)
         {
             for(auto tile: tile_row)
                 if(tile->get_name().toStdString() == "grass")
@@ -40,7 +40,7 @@ MapTiles::MapTiles()
                 {
                     qDebug()<<"UKNOWN TILE";
                 }
-        }
+        }*/
     }
 
 }

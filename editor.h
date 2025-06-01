@@ -41,6 +41,8 @@ public:
     }
     Game* get_game()
     {
+        if(m_game)qDebug()<<"game was created in editor";
+        else qDebug()<<"game was NOT created in editor";
         return m_game;
     }
 private:

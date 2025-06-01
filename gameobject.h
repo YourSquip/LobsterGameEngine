@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QVector>
+#include <QDebug>
 #include <iostream>
 
 #include "Components.h"
@@ -17,7 +18,7 @@ public:
         m_id = next_id;
         next_id++;
         m_name = QString::fromStdString("game_object" + std::to_string(m_id));
-        COMPONENTS.positions[m_id] = Position{0.0f,0.0f};
+        COMPONENTS.positions[m_id] = Position{6.0f,6.0f};
         m_parent = parent;
     }
 
