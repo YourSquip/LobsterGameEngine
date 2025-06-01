@@ -1,11 +1,24 @@
 #ifndef GAMEOBJECTLAYER_H
 #define GAMEOBJECTLAYER_H
 
-
+#include <QWidget>
+#include <QApplication>
+#include <QObject>
 #include <QGraphicsItem>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsItemGroup>
-
+#include <QGraphicsSceneDragDropEvent>
+#include <QGraphicsSceneMouseEvent>
+#include <QGraphicsSceneHoverEvent>
+#include <QGraphicsScene>
+#include <QDrag>
+#include <QByteArray>
+#include <QDataStream>
+#include <QMouseEvent>
+#include <QMimeData>
+#include <QPoint>
+#include <QPointF>
+#include <QObject>
 #include "level.h"
 #include "editor.h"
 #include "Components.h"
@@ -15,6 +28,7 @@ class GameObjectItem: public QGraphicsPixmapItem
 public:
     GameObjectItem(GameObject* game_object, QGraphicsItem* parent = nullptr):QGraphicsPixmapItem(parent)
     {
+
         m_game_object = game_object;
         qDebug()<<"game object item:"<<m_game_object->get_name()<<m_game_object->get_id();
 
@@ -43,15 +57,38 @@ public:
         if(COMPONENTS.positions.count(game_object->get_id()) != 0)
         {
             this->setOffset(COMPONENTS.positions[game_object->get_id()].x,COMPONENTS.positions[game_object->get_id()].y);
-            //qDebug()<<"has a position component";
         }
         else
         {
-            //qDebug()<<"no position component";
             this->setOffset(5,5);
         }
+
+        this->setFlag(QGraphicsItem::ItemIsSelectable,true);
+        this->setFlag(QGraphicsItem::ItemIsMovable,true);
+        this->setAcceptDrops(true);
     }
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override {
+        if (event->button() == Qt::LeftButton) {
+            m_dragStartPosition = event->scenePos();
+        }
+        QGraphicsPixmapItem::mousePressEvent(event);
+    }
+
+   void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override {
+        if ((event->buttons() & Qt::LeftButton) &&
+            (QLineF(event->scenePos(), m_dragStartPosition).length() > QApplication::startDragDistance())) {
+            QDrag *drag = new QDrag(event->widget());
+            QMimeData *mime = new QMimeData;
+
+            drag->setMimeData(mime);
+            drag->setPixmap(pixmap());
+            drag->exec(Qt::MoveAction);
+        }
+        QGraphicsPixmapItem::mouseMoveEvent(event);
+    }
+
 private:
+    QPointF m_dragStartPosition;
     GameObject* m_game_object;
 };
 
@@ -60,10 +97,10 @@ class GameObjectLayer: public QGraphicsItemGroup
 public:
     GameObjectLayer(Level* level,QGraphicsItem* parent = nullptr):QGraphicsItemGroup(parent)
     {
-        if(COMPONENTS.positions.empty())
-        {
-            qDebug()<<"components are EMPTY in gameobjectlayer";
-        }
+        this->setFlag(QGraphicsItem::ItemIsSelectable,true);
+        this->setFlag(QGraphicsItem::ItemIsMovable,true);
+        this->setAcceptDrops(true);
+
         m_level = level;
 
         m_game_objects = m_level->get_all_game_objects();
@@ -71,7 +108,6 @@ public:
         {
             game_object->update_components();
             this->addToGroup(new GameObjectItem(game_object));
-            qDebug()<<"game objects being added in gameobject layer";
         }
     }
 private:

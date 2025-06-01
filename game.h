@@ -13,12 +13,8 @@ public:
         m_levels.push_back(new Level());
         m_curr_level_id = m_levels[0]->get_id();
         m_curr_level = m_levels[0];
-        if(m_curr_level)qDebug()<<"level was created in game";
-        else qDebug()<<"level was NOT created in game";
-        if(COMPONENTS.positions.empty())
-        {
-            qDebug()<<"components are EMPTY in Game";
-        }
+        //if(m_curr_level)qDebug()<<"level was created in game";
+        //else qDebug()<<"level was NOT created in game";
     }
     bool is_game_running()
     {

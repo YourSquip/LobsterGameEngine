@@ -47,6 +47,7 @@ MainWindow::MainWindow(QWidget *parent)
     LevelGraphicsView* view = new LevelGraphicsView(central_widget);
     GameObjectLayer* game_object_layer = new GameObjectLayer(Editor::get_instance()->get_game()->get_curr_level());
 
+
     view->get_current_scene()->addItem(game_object_layer);
     EditorToolsWidget* editor_tools = new EditorToolsWidget(view,nullptr);
     RunStopGameWidget* run_stop_window = new RunStopGameWidget();

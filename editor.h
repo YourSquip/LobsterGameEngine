@@ -41,26 +41,20 @@ public:
     }
     Game* get_game()
     {
-        if(m_game)qDebug()<<"game was created in editor";
-        else qDebug()<<"game was NOT created in editor";
         return m_game;
     }
 private:
     Editor(){
-        m_editor_tool_type = Eraser;
+        m_editor_tool_type = Coursor;
         m_use_area = MapTilesArea;
 
         m_game = new Game();
-        if(COMPONENTS.positions.empty())
-        {
-            qDebug()<<"components are EMPTY in Editor";
-        }
+
     }
     static Editor* instance;
     EditorToolType m_editor_tool_type;
     UseArea m_use_area;
     Game* m_game;
-    //Editor& operator= (Editor const&) = delete;
 
 };
 

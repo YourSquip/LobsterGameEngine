@@ -32,27 +32,32 @@ public:
     QString get_name();
     WalkPossibility get_walk_possibilty();
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override {
-        qDebug() << "Item clicked! It was"<< m_name;
+
         //Editor::get_instance().get_editor_tool_type();
         //EditorTool* tool = new EditorTool();
         EditorToolType tool_type = Editor::get_instance()->get_editor_tool_type();
+        if(tool_type == PaintBrush || tool_type == Eraser)
+        {
 
-        if(tool_type == PaintBrush)
-        {
-            m_name = "grass";
-            m_pixmap = QPixmap("D:/QtProjects/LobsterGameEngine/sprites/grass_tile.png");
-            m_can_walk = On;
-            this->setPixmap(m_pixmap);
-            //this->setVisible(true);
+            qDebug() << "Item clicked! It was"<< m_name;
+            if(tool_type == PaintBrush)
+            {
+                m_name = "grass";
+                m_pixmap = QPixmap("D:/QtProjects/LobsterGameEngine/sprites/grass_tile.png");
+                m_can_walk = On;
+                this->setPixmap(m_pixmap);
+                //this->setVisible(true);
+            }
+            if(tool_type == Eraser)
+            {
+                m_name = "none";
+                m_pixmap = QPixmap("D:/QtProjects/LobsterGameEngine/sprites/empty_tile.png");
+                m_can_walk = NotAble;
+                this->setPixmap(m_pixmap);
+            }
+            QGraphicsItem::mousePressEvent(event); // вызов базового обработчика, если нужно
         }
-        if(tool_type == Eraser)
-        {
-            m_name = "none";
-            m_pixmap = QPixmap("D:/QtProjects/LobsterGameEngine/sprites/empty_tile.png");
-            m_can_walk = NotAble;
-            this->setPixmap(m_pixmap);
-        }
-        QGraphicsItem::mousePressEvent(event); // вызов базового обработчика, если нужно
+
     }
     void copy_tile(MapTile* map_tile);
 private:
