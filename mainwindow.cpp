@@ -20,7 +20,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     central_widget->setStyleSheet("background-color:#3d3d45;");
 
-    GameObjectsTreeWidget* left_widget = new GameObjectsTreeWidget(nullptr,main_widget);
+    //GameObjectsTreeWidget* left_widget = new GameObjectsTreeWidget(nullptr,main_widget);
+    GameObjectsTreeWidget* left_widget = new GameObjectsTreeWidget(Editor::get_instance()->get_game()->get_curr_level(),main_widget);
     left_widget->setMinimumSize(200,200);
     left_widget->setMaximumWidth(400);
 
@@ -43,7 +44,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     MapTileListWidget* central_down = new MapTileListWidget(central_widget);
 
+    GameObjectLayer* game_object_layer = new GameObjectLayer(Editor::get_instance()->get_game()->get_curr_level());
     LevelGraphicsView* view = new LevelGraphicsView(central_widget);
+    view->get_current_scene()->addItem(game_object_layer);
     EditorToolsWidget* editor_tools = new EditorToolsWidget(view,nullptr);
     RunStopGameWidget* run_stop_window = new RunStopGameWidget();
     run_stop_window->set_game_window(central_widget);

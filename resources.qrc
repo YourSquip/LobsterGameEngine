@@ -2,5 +2,6 @@
 <RCC version="1.0">
   <qresource>
     <file>sprites/app_icon.png</file>
+    <file>sprites/icons/object.png</file>
   </qresource>
 </RCC>

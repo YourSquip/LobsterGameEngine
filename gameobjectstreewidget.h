@@ -5,6 +5,7 @@
 #include <QPushButton>
 #include <QTreeWidgetItem>
 #include <QVBoxLayout>
+#include <QIcon>
 #include <iostream>
 
 #include "level.h"
@@ -16,6 +17,7 @@ public:
     GameObjectTreeItem():QTreeWidgetItem()
     {
         this->setFlags(Qt::ItemIsEditable | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+        this->setIcon(0, QIcon(":/sprites/icons/object.png"));
     }
     GameObject* m_game_object;
     virtual ~GameObjectTreeItem(){}

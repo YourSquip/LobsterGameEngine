@@ -14,6 +14,7 @@
 #include <QCheckBox>
 
 #include "maptiles.h"
+#include "level.h"
 #include "grid.h"
 
 enum SceneMode{
@@ -31,12 +32,9 @@ public:
         m_map_tiles = new MapTiles();
         is_grid_shown = false;
         m_grid = new Grid(m_map_tiles->m_tiles.size(),m_map_tiles->m_tiles.at(0).size(),32);
-        //m_show_grid_check_box = new QCheckBox("show grid",this);
-        //connect(m_show_grid_check_box,&QCheckBox::stateChanged, this,show_grid);
         change_curr_scene(create_map_editor_scene());
         show_curr_scene();
     }
-
 
     QGraphicsScene* create_map_editor_scene()
     {
@@ -50,25 +48,26 @@ public:
         {
             for(int y = 0;j<m_map_tiles->m_tiles.at(0).size(); y+=32)
             {
-               // QGraphicsPixmapItem* pix_item = m_map_tiles->m_tiles[i][j]->get_graphics_item();
-                //pix_item->setOffset(x,y);
-               // m_map_tiles->m_tiles[i][j]->setOffset(x,y);
-                //if(pix_item == nullptr) qDebug()<<"ITS NULL!";
-                //else qDebug()<<"ITS NOT NULL!";
                 m_map_tiles->m_tiles[i][j]->setOffset(x,y);
                 scene->addItem(m_map_tiles->m_tiles[i][j]);
                 j++;
-
             }
             j=0;
             i++;
-
         }
         i=0;
-
         return scene;
     }
 
+    void show_game_objects_layer()
+    {
+
+    }
+
+    QGraphicsScene* get_current_scene()
+    {
+        return m_curr_scene;
+    }
 
     ~LevelGraphicsView()
     {

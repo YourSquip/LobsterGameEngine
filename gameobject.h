@@ -16,7 +16,16 @@ public:
     {
         m_id = next_id;
         next_id++;
-        m_name = QString::fromStdString("untitled" + std::to_string(m_id));
+        m_name = QString::fromStdString("game_object" + std::to_string(m_id));
+        COMPONENTS.positions[m_id] = Position{0.0f,0.0f};
+        m_parent = parent;
+    }
+
+    GameObject(QString name, GameObject* parent = nullptr)
+    {
+        m_id = next_id;
+        next_id++;
+        m_name = name;
         COMPONENTS.positions[m_id] = Position{0.0f,0.0f};
         m_parent = parent;
     }

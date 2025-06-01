@@ -17,6 +17,8 @@
 #include "maptilelistwidget.h"
 #include "componentwidget.h"
 #include "editortoolswidget.h"
+#include "gameobjectlayer.h"
+#include "editor.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

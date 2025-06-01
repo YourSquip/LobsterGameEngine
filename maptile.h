@@ -43,11 +43,14 @@ public:
             m_pixmap = QPixmap("D:/QtProjects/LobsterGameEngine/sprites/grass_tile.png");
             m_can_walk = On;
             this->setPixmap(m_pixmap);
-            this->setVisible(true);
+            //this->setVisible(true);
         }
         if(tool_type == Eraser)
         {
-            this->setVisible(false);
+            m_name = "none";
+            m_pixmap = QPixmap("D:/QtProjects/LobsterGameEngine/sprites/empty_tile.png");
+            m_can_walk = NotAble;
+            this->setPixmap(m_pixmap);
         }
         QGraphicsItem::mousePressEvent(event); // вызов базового обработчика, если нужно
     }

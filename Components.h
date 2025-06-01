@@ -22,7 +22,7 @@ struct Health
 
 struct Sprite
 {
-    QPixmap* pixmap;
+    QPixmap pixmap;
 };
 
 template <typename Type>
