@@ -9,6 +9,7 @@
 #include <QMenuBar>
 #include <QPushButton>
 #include <QGraphicsScene>
+#include <QObject>
 
 #include "gameobjectstreewidget.h"
 #include "levelgraphicsview.h"

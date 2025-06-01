@@ -135,15 +135,13 @@ public slots:
         GameObjectTreeItem* item = new GameObjectTreeItem();
         item->setText(0, QString(new_object->get_name()));
         item->m_game_object = new_object;
-
+        this->m_level->add_game_object(new_object);
+        //COMPONENTS.positions[new_object->get_id()] = Position{15.0f,15.0f};
         m_tree_widget->insertTopLevelItem(0, item);
+        emit object_added(new_object);
     }
-
-   /* void update_item_data()
-    {
-        item->setText(0, QString(new_object->get_name()));
-        item->m_game_object = new_object;
-    }*///!!!!!!!!!!!!!!!!!!!
+signals:
+    void object_added(GameObject* game_object);
 
 private:
 

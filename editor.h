@@ -4,7 +4,6 @@
 #include <QObject>
 
 #include "game.h"
-//#include "editortool.h"
 
 enum EditorToolType
 {

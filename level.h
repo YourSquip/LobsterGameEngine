@@ -36,6 +36,7 @@ public:
     {
         return m_name;
     }
+
 private:
     unsigned int m_id;
     QString m_name;

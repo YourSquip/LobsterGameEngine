@@ -106,13 +106,35 @@ public:
         m_game_objects = m_level->get_all_game_objects();
         for(auto game_object: m_game_objects)
         {
-            game_object->update_components();
-            this->addToGroup(new GameObjectItem(game_object));
+            add_game_object_to_layer(game_object);
         }
     }
+
+    void add_game_object_to_layer(GameObject* game_object)
+    {
+        game_object->update_components();
+        this->addToGroup(new GameObjectItem(game_object));
+    }
+
 private:
     QVector<GameObject*> m_game_objects;
     Level* m_level;
+};
+
+class GameObjectsLayerWidgetWrap:public QWidget
+{
+public:
+    GameObjectsLayerWidgetWrap(GameObjectLayer* layer)
+    {
+        m_layer = layer;
+    }
+    GameObjectLayer* m_layer;
+public slots:
+    void add_new_object_from_level(GameObject* game_object)
+    {
+        m_layer->add_game_object_to_layer(game_object);
+        m_layer->scene()->update();
+    }
 };
 
 #endif // GAMEOBJECTLAYER_H
