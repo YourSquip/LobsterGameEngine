@@ -65,26 +65,15 @@ public:
 
         this->setFlag(QGraphicsItem::ItemIsSelectable,true);
         this->setFlag(QGraphicsItem::ItemIsMovable,true);
+        //this->setFlag(QGraphicsItem::Item);
         this->setAcceptDrops(true);
     }
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override {
+        /*qDebug()<<"mouse press event";
         if (event->button() == Qt::LeftButton) {
             m_dragStartPosition = event->scenePos();
-        }
+        }*/
         QGraphicsPixmapItem::mousePressEvent(event);
-    }
-
-   void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override {
-        if ((event->buttons() & Qt::LeftButton) &&
-            (QLineF(event->scenePos(), m_dragStartPosition).length() > QApplication::startDragDistance())) {
-            QDrag *drag = new QDrag(event->widget());
-            QMimeData *mime = new QMimeData;
-
-            drag->setMimeData(mime);
-            drag->setPixmap(pixmap());
-            drag->exec(Qt::MoveAction);
-        }
-        QGraphicsPixmapItem::mouseMoveEvent(event);
     }
 
 private:
@@ -94,13 +83,19 @@ private:
 
 class GameObjectLayer: public QGraphicsItemGroup
 {
-public:
-    GameObjectLayer(Level* level,QGraphicsItem* parent = nullptr):QGraphicsItemGroup(parent)
-    {
-        this->setFlag(QGraphicsItem::ItemIsSelectable,true);
-        this->setFlag(QGraphicsItem::ItemIsMovable,true);
-        this->setAcceptDrops(true);
 
+};
+
+class GameObjectsLayerWidget:public QWidget
+{
+public:
+
+    GameObjectsLayerWidget(Level* level):QWidget()
+    {
+        //this->setFlag(QGraphicsItem::ItemIsSelectable,true);
+        //this->setFlag(QGraphicsItem::ItemIsMovable,true);
+        //this->setAcceptDrops(true);
+        this->setMinimumSize(512,512);
         m_level = level;
 
         m_game_objects = m_level->get_all_game_objects();
@@ -113,28 +108,27 @@ public:
     void add_game_object_to_layer(GameObject* game_object)
     {
         game_object->update_components();
-        this->addToGroup(new GameObjectItem(game_object));
+        m_game_object_items.push_back(new GameObjectItem(game_object));
     }
 
-private:
-    QVector<GameObject*> m_game_objects;
-    Level* m_level;
-};
-
-class GameObjectsLayerWidgetWrap:public QWidget
-{
-public:
-    GameObjectsLayerWidgetWrap(GameObjectLayer* layer)
+    void add_objects_to_scene(QGraphicsScene* scene)
     {
-        m_layer = layer;
+        for(auto item: m_game_object_items)
+        {
+            scene->addItem(item);
+        }
     }
-    GameObjectLayer* m_layer;
 public slots:
     void add_new_object_from_level(GameObject* game_object)
     {
-        m_layer->add_game_object_to_layer(game_object);
-        m_layer->scene()->update();
+        add_game_object_to_layer(game_object);
+        //scene()->update();
     }
+
+private:
+    QVector<GameObjectItem*> m_game_object_items;
+    QVector<GameObject*> m_game_objects;
+    Level* m_level;
 };
 
 #endif // GAMEOBJECTLAYER_H

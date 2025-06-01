@@ -45,11 +45,11 @@ MainWindow::MainWindow(QWidget *parent)
     MapTileListWidget* central_down = new MapTileListWidget(central_widget);
 
     LevelGraphicsView* view = new LevelGraphicsView(central_widget);
-    GameObjectLayer* game_object_layer = new GameObjectLayer(Editor::get_instance()->get_game()->get_curr_level());
-
+    GameObjectsLayerWidget* game_object_layer = new GameObjectsLayerWidget(Editor::get_instance()->get_game()->get_curr_level());
+    game_object_layer->add_objects_to_scene(view->get_current_scene());
    // connect(left_widget, SIGNAL(&GameObjectsTreeWidget::game_object_was_added_to_level(GameObject*)),game_object_layer,SLOT(&GameObjectLayer::add_game_object_to_layer(GameObject*)));
     //connect(left_widget, SIGNAL(&GameObjectsTreeWidget::game_object_was_added_to_level(GameObject*)),SLOT(&GameObjectLayer::add_game_object_to_layer(GameObject*)));
-    view->get_current_scene()->addItem(game_object_layer);
+    //view->get_current_scene()->addItem(game_object_layer);
     EditorToolsWidget* editor_tools = new EditorToolsWidget(view,nullptr);
     RunStopGameWidget* run_stop_window = new RunStopGameWidget();
     run_stop_window->set_game_window(central_widget);
@@ -68,9 +68,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->setCentralWidget(main_widget);
 
-    GameObjectsLayerWidgetWrap* wrap = new GameObjectsLayerWidgetWrap(game_object_layer);
+    //GameObjectsLayerWidgetWrap* wrap = new GameObjectsLayerWidgetWrap(game_object_layer);
 
-    connect(left_widget, &GameObjectsTreeWidget::object_added, wrap, &GameObjectsLayerWidgetWrap::add_new_object_from_level);
+    connect(left_widget, &GameObjectsTreeWidget::object_added, game_object_layer, &GameObjectsLayerWidget::add_new_object_from_level);
 
 }
 
