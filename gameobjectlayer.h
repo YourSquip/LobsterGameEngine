@@ -73,7 +73,21 @@ public:
         if (event->button() == Qt::LeftButton) {
             m_dragStartPosition = event->scenePos();
         }*/
-        QGraphicsPixmapItem::mousePressEvent(event);
+        if(Editor::get_instance()->get_editor_tool_type() == Coursor || Editor::get_instance()->get_editor_tool_type() == MoveObjectXY  )
+        {
+            this->setFlag(QGraphicsItem::ItemIsSelectable,true);
+            this->setFlag(QGraphicsItem::ItemIsMovable,true);
+            //this->setFlag(QGraphicsItem::Item);
+            this->setAcceptDrops(true);
+            QGraphicsPixmapItem::mousePressEvent(event);
+        }
+        else
+        {
+            this->setFlag(QGraphicsItem::ItemIsSelectable,false);
+            this->setFlag(QGraphicsItem::ItemIsMovable,false);
+            //this->setFlag(QGraphicsItem::Item);
+            this->setAcceptDrops(false);
+        }
     }
 
 private:
@@ -111,12 +125,13 @@ public:
         m_game_object_items.push_back(new GameObjectItem(game_object));
     }
 
-    void add_objects_to_scene(QGraphicsScene* scene)
+    QGraphicsScene* add_objects_to_scene(QGraphicsScene* scene)
     {
         for(auto item: m_game_object_items)
         {
             scene->addItem(item);
         }
+        return scene;
     }
 public slots:
     void add_new_object_from_level(GameObject* game_object)

@@ -89,12 +89,14 @@ public slots:
         }
     }
 
-private:
-
     void change_curr_scene(QGraphicsScene* p_scene)
     {
         m_curr_scene = p_scene;
     }
+
+private:
+
+
 
     void show_curr_scene()
     {
