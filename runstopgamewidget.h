@@ -7,6 +7,7 @@
 #include <QPushButton>
 #include <QStyle>
 #include "gamewindow.h"
+#include "editor.h"
 
 class RunStopGameWidget: public QWidget
 {
@@ -17,11 +18,11 @@ public:
         m_run_bttn = new QPushButton("PLAY", this);
         //m_run_bttn->setIcon(QIcon(QStyle::standardIcon()->));
         m_stop_bttn = new QPushButton("STOP", this);
-        //m_game_state_lbl = new QLabel("Engine mod",this);
+        m_game_state_lbl = new QLabel("Engine mod",this);
         m_layout = new QHBoxLayout(this);
         m_layout->addWidget(m_run_bttn);
         m_layout->addWidget(m_stop_bttn);
-        //m_layout->addWidget(m_game_state_lbl);
+        m_layout->addWidget(m_game_state_lbl);
 
         connect(m_run_bttn, &QPushButton::pressed, this, &run_game);
         connect(m_stop_bttn, &QPushButton::pressed, this, &stop_game);
@@ -53,6 +54,7 @@ private slots:
         {
             QLabel* lbl = new QLabel("bipka",m_game_window);
             m_game_window->show();
+            Editor::get_instance()->get_game()->run_timer();
         }
         //m_game_window->show();//сюда бы копию вьюпорт окна
     }
@@ -61,6 +63,7 @@ private slots:
         //а здесь бы это окно закрывать
         m_game_state_lbl->setText("Engine mod");
         run_button_pressed = false;
+        Editor::get_instance()->get_game()->get_timer().invalidate();
         //m_game_window->close();
     }
 };

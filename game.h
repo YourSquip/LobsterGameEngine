@@ -29,13 +29,21 @@ public:
     {
         return m_curr_level;
     }
+    void run_timer()
+    {
+        timer.start();
+    }
+    QElapsedTimer get_timer()
+    {
+        return timer;
+    }
 private:
     QString m_title;
     bool m_is_running;
     QVector<Level*> m_levels;
     unsigned int m_curr_level_id;
     Level* m_curr_level;
-    //QElapsedTimer*
+    QElapsedTimer timer;
     //GameSettings* m_settings;
     //Controls* m_controls;
     //QStack<Level> m_levels;

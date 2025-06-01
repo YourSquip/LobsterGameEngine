@@ -20,6 +20,9 @@
 #include <QPointF>
 #include <QObject>
 #include <QElapsedTimer>
+#include <QStyleOptionGraphicsItem>
+#include <QPainter>
+#include <QWidget>
 
 #include "level.h"
 #include "editor.h"
@@ -57,6 +60,7 @@ public:
             {
                 QPixmap pixmap("D:/QtProjects/LobsterGameEngineCopy/LobsterGameEngine/sprites/player.png");
                 this->setPixmap(pixmap.scaled(32,32));
+                this->setFocus();
             }
             else if(m_game_object->get_name().contains("chest"))
             {
@@ -107,8 +111,18 @@ public:
         }
     }
 
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override
+    {
+        QStyleOptionGraphicsItem myOption(*option);
+        myOption.state = QStyle::State_None;
+        QGraphicsPixmapItem::paint(painter, &myOption, widget);
+    }
+
     void keyPressEvent(QKeyEvent *event) override
     {
+        this->setFlag(QGraphicsItem::ItemIsSelectable,true);
+        this->setFlag(QGraphicsItem::ItemIsMovable,true);
+        this->setAcceptDrops(true);
         if(m_game_object->get_name().contains("player"))
         {
             //QElapsedTimer timer;
@@ -116,8 +130,10 @@ public:
             //timer.
             qreal x = this->pos().x();
             qreal y = this->pos().y();
+            auto prev_time= Editor::get_instance()->get_game()->get_timer().elapsed();
             if(event->key() == Qt::Key_W)
             {
+                //qDebug()<<"";
                 this->setPos(x, y - COMPONENTS.velocities[m_game_object->get_id()].y);
                 //Do something when 'R' key is pressed
             }

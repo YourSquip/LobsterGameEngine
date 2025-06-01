@@ -43,7 +43,7 @@ public:
     void update_components()
     {
         COMPONENTS.positions[m_id] = Position{6.0f,6.0f};
-        COMPONENTS.velocities[m_id] = Velocity{2.0f,2.0f};
+        COMPONENTS.velocities[m_id] = Velocity{10.0f,10.0f};
     }
     ~GameObject()
     {
