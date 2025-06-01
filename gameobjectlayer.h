@@ -51,8 +51,28 @@ public:
         }
         else
         {
-            QPixmap pixmap("D:/QtProjects/LobsterGameEngineCopy/LobsterGameEngine/sprites/icons/object.png");
-            this->setPixmap(pixmap.scaled(32,32));
+            if(m_game_object->get_name().contains("player"))
+            {
+                QPixmap pixmap("D:/QtProjects/LobsterGameEngineCopy/LobsterGameEngine/sprites/player.png");
+                this->setPixmap(pixmap.scaled(32,32));
+            }
+            else if(m_game_object->get_name().contains("chest"))
+            {
+                QPixmap pixmap("D:/QtProjects/LobsterGameEngineCopy/LobsterGameEngine/sprites/chest.png");
+                this->setPixmap(pixmap.scaled(32,32));
+            }
+            else if(m_game_object->get_name().contains("tree"))
+            {
+                QPixmap pixmap("D:/QtProjects/LobsterGameEngineCopy/LobsterGameEngine/sprites/tree_apples.png");
+                this->setPixmap(pixmap.scaled(64,64));
+            }
+            else
+            {
+                QPixmap pixmap("D:/QtProjects/LobsterGameEngineCopy/LobsterGameEngine/sprites/icons/object.png");
+                this->setPixmap(pixmap.scaled(32,32));
+            }
+
+            //this->setPixmap(pixmap.scaled(32,32));
         }
         if(COMPONENTS.positions.count(game_object->get_id()) != 0)
         {
@@ -65,19 +85,13 @@ public:
 
         this->setFlag(QGraphicsItem::ItemIsSelectable,true);
         this->setFlag(QGraphicsItem::ItemIsMovable,true);
-        //this->setFlag(QGraphicsItem::Item);
         this->setAcceptDrops(true);
     }
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override {
-        /*qDebug()<<"mouse press event";
-        if (event->button() == Qt::LeftButton) {
-            m_dragStartPosition = event->scenePos();
-        }*/
         if(Editor::get_instance()->get_editor_tool_type() == Coursor || Editor::get_instance()->get_editor_tool_type() == MoveObjectXY  )
         {
             this->setFlag(QGraphicsItem::ItemIsSelectable,true);
             this->setFlag(QGraphicsItem::ItemIsMovable,true);
-            //this->setFlag(QGraphicsItem::Item);
             this->setAcceptDrops(true);
             QGraphicsPixmapItem::mousePressEvent(event);
         }
@@ -106,10 +120,6 @@ public:
 
     GameObjectsLayerWidget(Level* level):QWidget()
     {
-        //this->setFlag(QGraphicsItem::ItemIsSelectable,true);
-        //this->setFlag(QGraphicsItem::ItemIsMovable,true);
-        //this->setAcceptDrops(true);
-        this->setMinimumSize(512,512);
         m_level = level;
 
         m_game_objects = m_level->get_all_game_objects();
@@ -137,7 +147,6 @@ public slots:
     void add_new_object_from_level(GameObject* game_object)
     {
         add_game_object_to_layer(game_object);
-        //scene()->update();
     }
 
 private:

@@ -18,6 +18,7 @@ enum UseArea
     GameObjectsArea = 2
 };
 
+
 class Editor
 {
 public:
@@ -42,9 +43,20 @@ public:
     {
         return m_game;
     }
+    QString get_paint_tile_name()
+    {
+        return m_paint_tile_name;
+    }
+
+    void set_paint_tile_name(QString paint_tile_name)
+    {
+        m_paint_tile_name = paint_tile_name;
+    }
+
 private:
     Editor(){
         m_editor_tool_type = Coursor;
+        m_paint_tile_name = "grass";
         m_use_area = MapTilesArea;
 
         m_game = new Game();
@@ -54,7 +66,7 @@ private:
     EditorToolType m_editor_tool_type;
     UseArea m_use_area;
     Game* m_game;
-
+    QString m_paint_tile_name;
 };
 
 

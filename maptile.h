@@ -42,8 +42,9 @@ public:
             qDebug() << "Item clicked! It was"<< m_name;
             if(tool_type == PaintBrush)
             {
-                m_name = "grass";
-                m_pixmap = QPixmap("D:/QtProjects/LobsterGameEngine/sprites/grass_tile.png");
+                m_name = Editor::get_instance()->get_paint_tile_name();
+                m_pixmap = QPixmap("D:/QtProjects/LobsterGameEngineCopy/LobsterGameEngine/sprites/"+Editor::get_instance()->get_paint_tile_name()+"_tile.png");
+                qDebug()<<"paint tile name:"<<Editor::get_instance()->get_paint_tile_name();
                 m_can_walk = On;
                 this->setPixmap(m_pixmap);
                 //this->setVisible(true);
@@ -51,7 +52,7 @@ public:
             if(tool_type == Eraser)
             {
                 m_name = "none";
-                m_pixmap = QPixmap("D:/QtProjects/LobsterGameEngine/sprites/empty_tile.png");
+                m_pixmap = QPixmap("D:/QtProjects/LobsterGameEngineCopy/LobsterGameEngine/sprites/empty_tile.png");
                 m_can_walk = NotAble;
                 this->setPixmap(m_pixmap);
             }
