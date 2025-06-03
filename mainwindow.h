@@ -10,6 +10,9 @@
 #include <QPushButton>
 #include <QGraphicsScene>
 #include <QObject>
+#include <QtOpenGLWidgets/QOpenGLWidget>
+#include <QOpenGLContext>
+#include <QOpenGLFunctions>
 
 #include "gameobjectstreewidget.h"
 #include "levelgraphicsview.h"

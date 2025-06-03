@@ -28,12 +28,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
 
-
-
         mapeditorscene.h mapeditorscene.cpp
-
-
-
         maptile.h maptile.cpp
         gameobject.h gameobject.cpp
         Components.h
