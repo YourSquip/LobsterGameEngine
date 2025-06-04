@@ -7,6 +7,8 @@
 #include <QVBoxLayout>
 #include <QIcon>
 #include <iostream>
+#include <QDropEvent>
+#include <QDragEnterEvent>
 
 #include "level.h"
 #include "editorwidget.h"
@@ -17,7 +19,7 @@ class GameObjectTreeItem: public QTreeWidgetItem
 public:
     GameObjectTreeItem():QTreeWidgetItem()
     {
-        this->setFlags(Qt::ItemIsEditable | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+        this->setFlags(Qt::ItemIsEditable | Qt::ItemIsSelectable | Qt::ItemIsEnabled| Qt::ItemIsDragEnabled|  Qt::ItemIsDropEnabled);
         this->setIcon(0, QIcon(":/sprites/icons/object.png"));
     }
     GameObject* m_game_object;
@@ -42,7 +44,14 @@ public:
     void init_tree(Level* level = nullptr)
     {
         m_level = level;
+
         m_tree_widget = new QTreeWidget(this);
+
+        m_tree_widget->setDragEnabled(true);
+        m_tree_widget->setAcceptDrops(true);
+        m_tree_widget->setDropIndicatorShown(true);
+        m_tree_widget->setDragDropMode(QAbstractItemView::InternalMove);
+
         QObject::connect(m_tree_widget, &QTreeWidget::itemSelectionChanged, this, &GameObjectsTreeWidget::select_tree_item);
         QObject::connect(m_tree_widget, &QTreeWidget::itemChanged, this, &GameObjectsTreeWidget::select_tree_item);
 
@@ -102,7 +111,21 @@ public:
         }
         return item;
     }
+    /*void dragEnterEvent(QDragEnterEvent *event){
+        m_dragged_item = get_selected_item();
+        this->dragEnterEvent(event);
+    }
 
+    void dropEvent(QDropEvent *event){
+        event->position();
+        if(m_dragged_item){
+            GameObjectTreeItem* dParent = static_cast<GameObjectTreeItem*>(m_dragged_item->parent());
+            if(dParent){
+                dParent->removeChild(m_dragged_item);
+                dParent->insertChild(0, m_dragged_item);
+            }
+        }
+    }*/
 signals:
 
     void item_selected(GameObject* game_object);
@@ -143,5 +166,6 @@ private:
     QPushButton* m_new_object_bttn;
     QTreeWidget* m_tree_widget;
     QVBoxLayout* m_layout;
+    //GameObjectTreeItem* m_dragged_item;
 };
 #endif // GAMEOBJECTSTREEWIDGET_H
