@@ -10,8 +10,19 @@
 class Editor
 {
 public:
-    Editor();
+    Editor()
+    {
+        m_game = new Game();
+    }
+    Game* get_game()
+    {
+        return m_game;
+    }
 
+    ~Editor()
+    {
+        delete m_game;
+    }
 private:
     Game* m_game;
 };

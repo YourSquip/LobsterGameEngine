@@ -56,6 +56,10 @@ public:
         m_game_objects.remove(game_object->get_name());
     }
 
+    QMap<QString, GameObject*> get_all_game_objects()
+    {
+        return m_game_objects;
+    }
 
 private:
     unsigned int m_id;

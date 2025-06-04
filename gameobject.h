@@ -11,22 +11,25 @@ class GameObject
 {
 public:
 
-    GameObject()
+    GameObject(GameObject* parent = nullptr)
     {
         m_id = next_id;
         next_id++;
         m_name = QString::fromStdString("game_object" + std::to_string(m_id));
+        m_parent = parent;
     }
-    GameObject( QString name)
+    GameObject( QString name,GameObject* parent = nullptr)
     {
         m_id = next_id;
         next_id++;
         m_name = name;
+        m_parent = parent;
     }
 
     ~GameObject()
     {
         m_components.clear();
+        delete m_parent;
     }
 
     QString get_name()
@@ -59,11 +62,46 @@ public:
         }
         m_components.remove(component->get_name());
     }
+
+
+    void add_child(GameObject* game_object)
+    {
+        m_children.push_back(game_object);
+    }
+
+    void remove_child_by_id(unsigned int id)
+    {
+        for(int i=0; i < m_children.size(); i++)
+        {
+            if(m_children[i]->m_id == id)
+            {
+                m_children.remove(i);
+            }
+        }
+    }
+
+    QVector<GameObject*> get_all_children()
+    {
+        return m_children;
+    }
+
+    GameObject* get_parent()
+    {
+        return m_parent;
+    }
+
+    void set_parent(GameObject* parent)
+    {
+        m_parent = parent;
+    }
+
 private:
     unsigned int m_id;
     QString m_name;
     static unsigned int next_id;
     QHash <QString, Component*> m_components;
+    GameObject* m_parent;
+    QVector<GameObject*> m_children;
 };
 
 #endif // GAMEOBJECT_H

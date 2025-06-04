@@ -35,6 +35,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         game.h game.cpp
         editor.h editor.cpp
         editorwidget.h editorwidget.cpp
+        gameobjectstreewidget.h gameobjectstreewidget.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET LobsterGameEngine APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

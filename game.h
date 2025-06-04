@@ -13,10 +13,19 @@ public:
     Game()
     {
         m_title = "Untitled Game";
+        Level* empty_level = new Level();
+        empty_level->add_game_object(new GameObject());
+        add_level(empty_level);
+        curr_level = empty_level;
     }
-    Game(QString title)
+    Game(QString title):Game()
     {
         m_title = title;
+    }
+    ~Game()
+    {
+        m_levels.clear();
+        delete curr_level;
     }
 
     void add_level(Level* level)
@@ -37,9 +46,15 @@ public:
         }
         m_levels.insert(level->get_name(), level);
     }
+
+    Level* get_curr_level()
+    {
+        return curr_level;
+    }
 private:
     QString m_title;
     QMap<QString, Level*> m_levels;
+    Level* curr_level;
 };
 
 #endif // GAME_H
