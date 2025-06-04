@@ -14,20 +14,12 @@
 #include <QOpenGLContext>
 #include <QOpenGLFunctions>
 
-#include "gameobjectstreewidget.h"
-#include "levelgraphicsview.h"
-#include "runstopgamewidget.h"
-#include "gamewindow.h"
-#include "maptilelistwidget.h"
-#include "componentwidget.h"
-#include "editortoolswidget.h"
-#include "gameobjectlayer.h"
-#include "editor.h"
+#include "editorwidget.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui {
+
 class MainWindow;
-}
+
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
@@ -38,8 +30,6 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-private:
-    Ui::MainWindow *ui;
 
 };
 #endif // MAINWINDOW_H

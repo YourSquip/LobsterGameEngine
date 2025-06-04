@@ -28,30 +28,13 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
 
-        mapeditorscene.h mapeditorscene.cpp
-        maptile.h maptile.cpp
-        gameobject.h gameobject.cpp
-        Components.h
-        Systems.h Systems.cpp
-
-        game.h game.cpp
-        level.h level.cpp
-        gamewindow.h gamewindow.cpp
-        viewport.h viewport.cpp
-        levelgraphicsview.h levelgraphicsview.cpp
-        runstopgamewidget.h runstopgamewidget.cpp
-        gameobjectstreewidget.h gameobjectstreewidget.cpp
-        maptilelistwidget.h maptilelistwidget.cpp
-
         resources.qrc
-        gameloop.h gameloop.cpp
-        componentwidget.h componentwidget.cpp
-        grid.h grid.cpp
-        editortoolswidget.h editortoolswidget.cpp
+        gameobject.h gameobject.cpp
+        component.h component.cpp
+        level.h level.cpp
+        game.h game.cpp
         editor.h editor.cpp
-        editortool.h editortool.cpp
-        maptiles.h maptiles.cpp
-        gameobjectlayer.h gameobjectlayer.cpp
+        editorwidget.h editorwidget.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET LobsterGameEngine APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

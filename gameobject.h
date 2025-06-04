@@ -1,89 +1,32 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
-#include <QString>
-#include <QVector>
 #include <QDebug>
-#include <iostream>
+#include <QString>
+#include <QHash>
 
-#include "Components.h"
-
+#include "component.h"
 
 class GameObject
 {
-
 public:
-    GameObject(GameObject* parent = nullptr)
+
+    GameObject()
     {
         m_id = next_id;
         next_id++;
         m_name = QString::fromStdString("game_object" + std::to_string(m_id));
-        COMPONENTS.positions[m_id] = Position{6.0f,6.0f};
-        COMPONENTS.velocities[m_id] = Velocity{2.0f,2.0f};
-        m_parent = parent;
-        if(COMPONENTS.positions.empty())qDebug()<<"Position components are empty after adding";
-        else
-        {
-            qDebug()<<this->get_name()<<"Position components are not empty after adding";
-
-        }
     }
-
-    GameObject(QString name, GameObject* parent = nullptr)
+    GameObject( QString name)
     {
         m_id = next_id;
         next_id++;
         m_name = name;
-        COMPONENTS.positions[m_id] = Position{0.0f,0.0f};
-        m_parent = parent;
-        if(COMPONENTS.positions.empty())qDebug()<<"Position components are empty after adding";
-        else qDebug()<<this->get_name()<<this->get_id()<<"Position components are not empty after adding";
     }
 
-    void update_components()
-    {
-        COMPONENTS.positions[m_id] = Position{6.0f,6.0f};
-        COMPONENTS.velocities[m_id] = Velocity{10.0f,10.0f};
-    }
     ~GameObject()
     {
-        delete m_parent;
-    }
-
-    void add_child(GameObject* game_object)
-    {
-        m_children.push_back(game_object);
-    }
-
-    void remove_child_by_id(unsigned int id)
-    {
-        for(int i=0; i < m_children.size(); i++)
-        {
-            if(m_children[i]->m_id == id)
-            {
-                m_children.remove(i);
-            }
-        }
-    }
-
-    QVector<GameObject*> get_all_children()
-    {
-        return m_children;
-    }
-
-    GameObject* get_parent()
-    {
-        return m_parent;
-    }
-
-    void set_parent(GameObject* parent)
-    {
-        m_parent = parent;
-    }
-
-    unsigned int get_id()
-    {
-        return m_id;
+        m_components.clear();
     }
 
     QString get_name()
@@ -91,23 +34,36 @@ public:
         return m_name;
     }
 
-protected:
+    void set_name(QString name)
+    {
+        m_name = name;
+    }
 
+    void add_component(Component* component)
+    {
+        if(m_components.contains(component->get_name()))
+        {
+            qDebug()<<"GameObject " << m_name << " already has " << component->get_name() << " component";
+            return;
+        }
+        m_components.insert(component->get_name(), component);
+    }
+
+
+    void remove_component(Component* component)
+    {
+        if(!m_components.contains(component->get_name()))
+        {
+            qDebug()<<"No component with name " << component->get_name();
+            return;
+        }
+        m_components.remove(component->get_name());
+    }
+private:
     unsigned int m_id;
     QString m_name;
     static unsigned int next_id;
-    GameObject* m_parent;
-    QVector<GameObject*> m_children;
+    QHash <QString, Component*> m_components;
 };
-
-class Player: public GameObject
-{
-    Player():GameObject()
-    {
-        m_name = QString::fromStdString("player" + std::to_string(m_id));
-    }
-};
-
-
 
 #endif // GAMEOBJECT_H

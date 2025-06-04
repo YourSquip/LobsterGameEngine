@@ -1,38 +1,29 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
+#include <QDebug>
+#include <QString>
 #include <QVector>
+#include <QMap>
 
 #include "gameobject.h"
-
 
 class Level
 {
 public:
+
     Level()
     {
         m_id = next_id;
         next_id++;
         m_name = QString::fromStdString("level" + std::to_string(m_id));
-        add_game_object(new GameObject(QString("basic_object")));
-        add_game_object(new GameObject(QString("tree")));
-        add_game_object(new GameObject(QString("chest")));
-        add_game_object(new GameObject(QString("player")));
-        //if(!m_game_objects.empty()) qDebug()<<"game_objects in level are not empty" <<m_game_objects[0]->get_name()<<m_game_objects[0]->get_id();
-        //else qDebug()<<"game_objects in level are EMPTY";
+    }
 
-    }
-    void add_game_object(GameObject* game_object)
+    Level(QString name)
     {
-        m_game_objects.push_back(game_object);
-    }
-    QVector<GameObject*> get_all_game_objects()
-    {
-        return  m_game_objects;
-    }
-    unsigned int get_id()
-    {
-        return m_id;
+        m_id = next_id;
+        next_id++;
+        m_name = name;
     }
 
     QString get_name()
@@ -40,11 +31,37 @@ public:
         return m_name;
     }
 
+    void set_name(QString name)
+    {
+       m_name = name;
+    }
+
+    void add_game_object(GameObject* game_object)
+    {
+        if(m_game_objects.contains(game_object->get_name()))
+        {
+            qDebug()<<"Level " << m_name << " already has object with name " << game_object->get_name();
+            return;
+        }
+        m_game_objects.insert(game_object->get_name(), game_object);
+    }
+
+    void remove_game_object(GameObject* game_object)
+    {
+        if(!m_game_objects.contains(game_object->get_name()))
+        {
+            qDebug()<<"No object with name " << game_object->get_name();
+            return;
+        }
+        m_game_objects.remove(game_object->get_name());
+    }
+
+
 private:
     unsigned int m_id;
     QString m_name;
     static unsigned int next_id;
-    QVector<GameObject*> m_game_objects;
+    QMap<QString, GameObject*> m_game_objects;
 };
 
 #endif // LEVEL_H

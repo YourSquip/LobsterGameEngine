@@ -9,12 +9,6 @@
 #include <QPushButton>
 #include <QGraphicsScene>
 
-#include "gameobjectstreewidget.h"
-#include "levelgraphicsview.h"
-#include "runstopgamewidget.h"
-#include "gamewindow.h"
-#include "maptilelistwidget.h"
-#include "componentwidget.h"
 
 int main(int argc, char *argv[])
 {

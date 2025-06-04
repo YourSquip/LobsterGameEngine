@@ -1,9 +1,10 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <QDebug>
 #include <QString>
-#include <QVector>
-#include <QElapsedTimer>
+#include <QMap>
+
 #include "level.h"
 
 class Game
@@ -11,43 +12,34 @@ class Game
 public:
     Game()
     {
-        m_levels.push_back(new Level());
-        m_curr_level_id = m_levels[0]->get_id();
-        m_curr_level = m_levels[0];
-        //if(m_curr_level)qDebug()<<"level was created in game";
-        //else qDebug()<<"level was NOT created in game";
+        m_title = "Untitled Game";
     }
-    bool is_game_running()
+    Game(QString title)
     {
-        return m_is_running;
+        m_title = title;
     }
+
     void add_level(Level* level)
     {
-        m_levels.push_back(level);
+        if(m_levels.contains(level->get_name()))
+        {
+            qDebug()<<"Level with name "<< level->get_name() << " already exists in this game";
+            return;
+        }
+        m_levels.insert(level->get_name(), level);
     }
-    Level* get_curr_level()
+    void remove_level(Level* level)
     {
-        return m_curr_level;
-    }
-    void run_timer()
-    {
-        timer.start();
-    }
-    QElapsedTimer get_timer()
-    {
-        return timer;
+        if(!m_levels.contains(level->get_name()))
+        {
+            qDebug()<<"No level with name"<< level->get_name();
+            return;
+        }
+        m_levels.insert(level->get_name(), level);
     }
 private:
     QString m_title;
-    bool m_is_running;
-    QVector<Level*> m_levels;
-    unsigned int m_curr_level_id;
-    Level* m_curr_level;
-    QElapsedTimer timer;
-    //GameSettings* m_settings;
-    //Controls* m_controls;
-    //QStack<Level> m_levels;
-    //other general game settings
+    QMap<QString, Level*> m_levels;
 };
 
 #endif // GAME_H
