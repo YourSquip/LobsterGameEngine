@@ -40,6 +40,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     //----------------
 
+    QOpenGLWidget opengl_widget();
+
     QVBoxLayout* central_layout = new QVBoxLayout(central_widget);
 
     MapTileListWidget* central_down = new MapTileListWidget(central_widget);
