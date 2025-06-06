@@ -68,22 +68,22 @@ public:
     Sprite()
     {
         m_name = "sprite";
-        m_pixmap = new QPixmap(":/sprites/icons/object.png");
+        m_pixmap = QPixmap(":/sprites/icons/object.png");
     }
 
-    Sprite(QPixmap* pixmap)
+    Sprite(QPixmap pixmap)
     {
         m_name = "sprite";
         m_pixmap = pixmap;
     }
 
 
-    QPixmap* get_pixmap()
+    QPixmap get_pixmap()
     {
         return m_pixmap;
     }
 
-    void set_pixmap(QPixmap* pixmap)
+    void set_pixmap(QPixmap pixmap)
     {
         m_pixmap = pixmap;
     }
@@ -94,7 +94,7 @@ public:
     }
 
 private:
-    QPixmap* m_pixmap;
+    QPixmap m_pixmap;
 };
 
 

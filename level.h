@@ -17,6 +17,7 @@ public:
         m_id = next_id;
         next_id++;
         m_name = QString::fromStdString("level" + std::to_string(m_id));
+        add_game_object(new GameObject());
     }
 
     Level(QString name)

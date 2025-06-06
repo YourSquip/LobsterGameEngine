@@ -11,8 +11,7 @@
 #include <QDragEnterEvent>
 
 #include "level.h"
-#include "editorwidget.h"
-
+#include "editor.h"
 
 class GameObjectTreeItem: public QTreeWidgetItem
 {
@@ -30,9 +29,9 @@ class GameObjectsTreeWidget: public QWidget
 {
     Q_OBJECT
 public:
-    GameObjectsTreeWidget(Editor* editor,QWidget* parent = nullptr):QWidget(parent)
+    GameObjectsTreeWidget(QWidget* parent = nullptr):QWidget(parent)
     {
-        init_tree(editor->get_game()->get_curr_level());
+        init_tree(Editor::get_instance()->get_game()->get_curr_level());
     }
     ~GameObjectsTreeWidget()
     {
@@ -87,8 +86,13 @@ public:
 
     GameObject* get_selected_game_object()
     {
-        GameObjectTreeItem* item = static_cast<GameObjectTreeItem*>(get_tree_widget()->selectedItems().front());
-        return item->m_game_object;
+        if(!get_tree_widget()->selectedItems().empty())
+        {
+            GameObjectTreeItem* item = static_cast<GameObjectTreeItem*>(get_tree_widget()->selectedItems().front());
+
+            return item->m_game_object;
+        }
+        return nullptr;
     }
 
     GameObjectTreeItem* get_selected_item()
@@ -141,10 +145,13 @@ public slots:
             if (item != nullptr && item->m_game_object != nullptr)
             {
                 GameObject* game_object = item->m_game_object;
+                Editor::get_instance()->set_selected_game_obj(game_object);
                 emit item_selected(game_object);
                 std::cout << "\nitem_selected" << std::endl;
+
             }
         }
+
     }
 
     void create_empty_object_in_tree()

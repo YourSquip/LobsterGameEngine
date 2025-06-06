@@ -1,3 +1,3 @@
 #include "editor.h"
 
-//Editor::Editor() {}
+Editor* Editor::instance = nullptr;

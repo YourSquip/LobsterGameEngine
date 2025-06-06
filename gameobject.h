@@ -4,8 +4,10 @@
 #include <QDebug>
 #include <QString>
 #include <QHash>
+#include <QMap>
 
 #include "component.h"
+
 
 class GameObject
 {
@@ -17,6 +19,12 @@ public:
         next_id++;
         m_name = QString::fromStdString("game_object" + std::to_string(m_id));
         m_parent = parent;
+        //add_component(new Position());
+
+        //add_component(new Sprite());
+
+        m_components["position"] = new Position();
+        m_components["sprite"] = new Sprite();
     }
     GameObject( QString name,GameObject* parent = nullptr)
     {
@@ -24,11 +32,16 @@ public:
         next_id++;
         m_name = name;
         m_parent = parent;
+        //add_component(new Position());
+
+        //add_component(new Sprite());
+        m_components["position"] = new Position();
+        m_components["sprite"] = new Sprite();
     }
 
     ~GameObject()
     {
-        m_components.clear();
+        //m_components.clear();
         delete m_parent;
     }
 
@@ -49,7 +62,8 @@ public:
             qDebug()<<"GameObject " << m_name << " already has " << component->get_name() << " component";
             return;
         }
-        m_components.insert(component->get_name(), component);
+        //m_components.insert(component->get_name(), component);
+        m_components[component->get_name()] = component;
     }
 
 
@@ -95,11 +109,18 @@ public:
         m_parent = parent;
     }
 
+    QMap <QString, Component*> get_all_components()
+    {
+        if(!m_components.empty())
+            return m_components;
+        qDebug()<<"m_components are empty";
+    }
+
 private:
     unsigned int m_id;
     QString m_name;
     static unsigned int next_id;
-    QHash <QString, Component*> m_components;
+    QMap <QString, Component*> m_components;
     GameObject* m_parent;
     QVector<GameObject*> m_children;
 };
