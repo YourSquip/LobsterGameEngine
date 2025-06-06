@@ -41,8 +41,8 @@ private:
         this->setMinimumSize(720, 512);
         m_layout = new QHBoxLayout(this);
         // m_editor = new Editor();
-        m_game_objects_tree = new GameObjectsTreeWidget();
-        m_game_object_info = new GameObjectInfoWidget();
+        m_game_objects_tree = new GameObjectsTreeWidget(this);
+        m_game_object_info = new GameObjectInfoWidget(this);
         m_layout->addWidget(m_game_objects_tree);
         m_layout->addWidget(m_game_object_info);
         connect(m_game_objects_tree,m_game_objects_tree->item_selected, m_game_object_info,m_game_object_info->show_obj_info);
