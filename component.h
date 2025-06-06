@@ -92,6 +92,7 @@ public:
     void set_pixmap(QPixmap pixmap)
     {
         m_pixmap = pixmap;
+        emit item_changed(this);
     }
 
     QString get_name() override
