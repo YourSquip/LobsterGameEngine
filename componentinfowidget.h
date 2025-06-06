@@ -58,30 +58,34 @@ public:
         m_layout->addLayout(x_layout);
         m_layout->addLayout(y_layout);
         this->show();
-        connect(m_component,m_component->item_changed,this,this->update_component_info);
-        connect(x_line,x_line->textChanged,this,this->update_component);
-        connect(y_line,y_line->textChanged,this,this->update_component);
+        connect(m_component,m_component->item_changed,this,this->update_x_component_info);
+        connect(m_component,m_component->item_changed,this,this->update_y_component_info);
+        connect(x_line,x_line->textChanged,this,this->update_x_component);
+        connect(y_line,y_line->textChanged,this,this->update_y_component);
     }
 public slots:
 
-    void update_component_info(Component* component)
+    void update_x_component_info(Component* component)
     {
         m_position = dynamic_cast<Position*>(component);
         x_line->setText(QString::number(m_position->x()));
+    }
+    void update_y_component_info(Component* component)
+    {
+        m_position = dynamic_cast<Position*>(component);
         y_line->setText(QString::number(m_position->y()));
-        //component->set_x(x_line->text().toInt());
-        //component->set_y(y_line->text().toInt());
+
     }
 
-    void update_component()
+    void update_x_component()
     {
         m_position->set_x(x_line->text().toInt());
+    }
+
+
+    void update_y_component()
+    {
         m_position->set_y(y_line->text().toInt());
-       // m_position = dynamic_cast<Position*>(component);
-        //x_line->setText(QString(m_position->x()));
-        //y_line->setText(QString(m_position->y()));
-        //component->set_x(x_line->text().toInt());
-        //component->set_y(y_line->text().toInt());
     }
 private:
     QLabel* x_label;

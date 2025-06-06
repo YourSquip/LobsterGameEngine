@@ -45,7 +45,7 @@ public:
     }
     float y()
     {
-        return m_x;
+        return m_y;
     }
 
     void set_x(unsigned int x)
