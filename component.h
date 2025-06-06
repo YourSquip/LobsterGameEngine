@@ -3,9 +3,11 @@
 
 #include <QString>
 #include <QPixmap>
+#include <QObject>
 
-class Component
+class Component: public QObject
 {
+    Q_OBJECT
 public:
     Component()
     {
@@ -17,6 +19,8 @@ public:
     }
     virtual QString get_name()=0;
     QString m_name;
+signals:
+    void item_changed(Component* component);
 };
 
 
@@ -47,10 +51,12 @@ public:
     void set_x(unsigned int x)
     {
         m_x = x;
+        emit item_changed(this);
     }
     void set_y(unsigned int y)
     {
         m_y = y;
+        emit item_changed(this);
     }
 
     QString get_name() override

@@ -26,6 +26,7 @@ public:
         qDebug()<<"ComponentInfoWidget";
         this->setVisible(true);
     }
+
 protected:
     QLabel* m_name;
     QVBoxLayout* m_layout;
@@ -39,9 +40,9 @@ public:
     {
 
         qDebug()<<"PositionComponentInfoWidget";
-        Position* position = dynamic_cast<Position*>(component);
-        x_line = new QLineEdit(QString::fromStdString(std::to_string(position->x())));
-        y_line = new QLineEdit(QString::fromStdString(std::to_string(position->y())));
+        m_position = dynamic_cast<Position*>(component);
+        x_line = new QLineEdit(QString::fromStdString(std::to_string(m_position->x())));
+        y_line = new QLineEdit(QString::fromStdString(std::to_string(m_position->y())));
 
         x_label =  new QLabel("x:",this);
         y_label =  new QLabel("y:",this);
@@ -57,6 +58,30 @@ public:
         m_layout->addLayout(x_layout);
         m_layout->addLayout(y_layout);
         this->show();
+        connect(m_component,m_component->item_changed,this,this->update_component_info);
+        connect(x_line,x_line->textChanged,this,this->update_component);
+        connect(y_line,y_line->textChanged,this,this->update_component);
+    }
+public slots:
+
+    void update_component_info(Component* component)
+    {
+        m_position = dynamic_cast<Position*>(component);
+        x_line->setText(QString::number(m_position->x()));
+        y_line->setText(QString::number(m_position->y()));
+        //component->set_x(x_line->text().toInt());
+        //component->set_y(y_line->text().toInt());
+    }
+
+    void update_component()
+    {
+        m_position->set_x(x_line->text().toInt());
+        m_position->set_y(y_line->text().toInt());
+       // m_position = dynamic_cast<Position*>(component);
+        //x_line->setText(QString(m_position->x()));
+        //y_line->setText(QString(m_position->y()));
+        //component->set_x(x_line->text().toInt());
+        //component->set_y(y_line->text().toInt());
     }
 private:
     QLabel* x_label;
@@ -64,6 +89,7 @@ private:
 
     QLabel* y_label;
     QLineEdit* y_line;
+    Position* m_position;
 };
 
 class SpriteComponentInfoWidget:public ComponentInfoWidget
@@ -85,11 +111,11 @@ public:
 
         m_layout->addLayout(layout);
 
-
     }
 private:
     QLabel* m_label;
     QLabel* m_pixmap;
+    Sprite* sprite;
 
 };
 
