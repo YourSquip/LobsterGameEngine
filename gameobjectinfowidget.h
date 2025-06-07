@@ -23,36 +23,7 @@ public:
         }
         m_layout = new QVBoxLayout(this);
         m_game_object = nullptr;
-        //m_layout->addWidget(new QLabel("BIPKA"));
-        this->setMinimumWidth(512);
-        /*if(selected_obj)
-        {
-            m_game_object = selected_obj;
-            m_layout = new QVBoxLayout(this);
-            //QHash<QString, Component*> map = m_game_object->get_all_components();
-            //QHashIterator<QString, Component*> it(map);
-            QMapIterator<QString, Component*> i(m_game_object->get_all_components());
-            while (i.hasNext()) {
-                i.next();
-                qDebug()<< qPrintable(i.key()) << ": " << i.value();
-            }
-            if(m_game_object==nullptr) qDebug()<<"gameobj is null";
-            if(m_game_object->get_all_components().empty()) qDebug()<<"components container is null";
-
-            /*for (QHash<QString,Component*>::iterator i = m_game_object->get_all_components().begin(); i != m_game_object->get_all_components().end(); ++i)
-            {    //cout << qPrintable(key()) << ": " << i.value() << endl;
-                if (i.key() == "positon")
-                {
-                    m_layout->addWidget(new PositionComponentInfoWidget(i.value()));
-                }
-                if (i.key() == "sprite")
-                {
-                    m_layout->addWidget(new SpriteComponentInfoWidget(i.value()));
-                }
-            }
-        }*/
-
-
+        this->setMinimumWidth(300);
     }
 
 public slots:

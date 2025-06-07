@@ -3,5 +3,6 @@
   <qresource>
     <file>sprites/app_icon.png</file>
     <file>sprites/icons/object.png</file>
+    <file>sprites/grass32.png</file>
   </qresource>
 </RCC>
