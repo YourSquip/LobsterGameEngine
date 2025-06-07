@@ -7,6 +7,7 @@
 #include "gameobjectinfowidget.h"
 #include "editor.h"
 #include "gameobjectstreewidget.h"
+#include "viewport.h"
 
 class EditorWidget : public QWidget
 {
@@ -35,6 +36,7 @@ private:
     QHBoxLayout* m_layout;
     GameObjectsTreeWidget* m_game_objects_tree;
     GameObjectInfoWidget* m_game_object_info;
+    Viewport*  m_viewport;
     static EditorWidget* instance;
     EditorWidget(QWidget *parent=nullptr)
     {
@@ -42,8 +44,10 @@ private:
         m_layout = new QHBoxLayout(this);
         // m_editor = new Editor();
         m_game_objects_tree = new GameObjectsTreeWidget(this);
+        m_viewport = new Viewport(this);
         m_game_object_info = new GameObjectInfoWidget(this);
         m_layout->addWidget(m_game_objects_tree);
+        m_layout->addWidget(m_viewport);
         m_layout->addWidget(m_game_object_info);
         connect(m_game_objects_tree,m_game_objects_tree->item_selected, m_game_object_info,m_game_object_info->show_obj_info);
     }
