@@ -68,6 +68,9 @@ public slots:
             }
         }*/
     }
+
+
+
     ~GameObjectInfoWidget()
     {
         delete m_game_object;

@@ -51,6 +51,12 @@ public:
     {
         return curr_level;
     }
+
+    QMap<QString, Level*> get_all_levels()
+    {
+        return m_levels;
+    }
+
 private:
     QString m_title;
     QMap<QString, Level*> m_levels;

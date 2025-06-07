@@ -56,6 +56,7 @@ public:
 
         m_new_object_bttn = new QPushButton("New Game Object");
         QObject::connect(m_new_object_bttn, &QPushButton::clicked, this, &GameObjectsTreeWidget::create_empty_object_in_tree);
+
         //QObject::connect(, &QPushButton::clicked, this, &GameObjectsTreeWidget::create_empty_object_in_tree);
 
         m_tree_widget->setHeaderHidden(true);

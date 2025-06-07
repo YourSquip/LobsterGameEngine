@@ -127,6 +127,10 @@ public:
         //connect(y_line,y_line->textChanged,this,this->update_y_component);
 
     }
+    Sprite* get_sprite()
+    {
+        return m_sprite;
+    }
 public slots:
     void open_sprite_explorer()
     {
@@ -136,6 +140,7 @@ public slots:
             QPixmap pixmap(fileName);
             m_sprite->set_pixmap(pixmap.scaled(32,32));
             qDebug()<<"file name:"<<fileName;
+            //emit pixmap_was_changed();
         }
     }
     void update_pixmap_component_info(Component* component)
@@ -144,7 +149,8 @@ public slots:
         //x_line->setText(QString::number(m_position->x()));
         m_pixmap->setPixmap(m_sprite->get_pixmap());
     }
-
+signals:
+    void pixmap_was_changed();
 private:
     QLabel* m_label;
     QLabel* m_pixmap;

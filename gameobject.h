@@ -5,12 +5,14 @@
 #include <QString>
 #include <QHash>
 #include <QMap>
+#include <QObject>
 
 #include "component.h"
 
 
-class GameObject
+class GameObject:public QObject
 {
+    Q_OBJECT
 public:
 
     GameObject(GameObject* parent = nullptr)
