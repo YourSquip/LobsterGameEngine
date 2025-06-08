@@ -72,6 +72,14 @@ public:
             return instance;
         }
     }
+    ~EditorWidget()
+    {
+        delete m_editor;
+        delete m_layout;
+        delete m_game_objects_tree;
+        delete m_game_object_info;
+        delete  m_viewport;
+    }
 };
 
 #endif // EDITORWIDGET_H

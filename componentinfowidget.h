@@ -27,7 +27,12 @@ public:
         qDebug()<<"ComponentInfoWidget";
         this->setVisible(true);
     }
-
+    ~ComponentInfoWidget()
+    {
+        delete m_name;
+        delete m_layout;
+        delete m_component;
+    }
 protected:
     QLabel* m_name;
     QVBoxLayout* m_layout;
@@ -88,6 +93,16 @@ public slots:
     {
         m_position->set_y(y_line->text().toInt());
     }
+
+    ~PositionComponentInfoWidget()
+    {
+        delete x_label;
+        delete x_line;
+        delete y_label;
+        delete y_line;
+        delete m_position;
+    }
+
 private:
     QLabel* x_label;
     QLineEdit* x_line;
@@ -131,6 +146,15 @@ public:
     {
         return m_sprite;
     }
+
+    ~SpriteComponentInfoWidget()
+    {
+        delete m_label;
+        delete m_pixmap;
+        delete m_sprite;
+        delete m_open_pixmap_button;
+    }
+
 public slots:
     void open_sprite_explorer()
     {

@@ -21,6 +21,11 @@ public:
        // this->setPixmap(m_pixmap);
         //connect(m_sprite,m_sprite->pixmap_was_changed, this, this->update_pixmap);
     }
+
+    ~GameObjectPixmapItem()
+    {
+        delete m_game_object;
+    }
 public slots:
     void update_pixmap()
     {

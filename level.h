@@ -61,7 +61,10 @@ public:
     {
         return m_game_objects;
     }
-
+    ~Level()
+    {
+        m_game_objects.clear();
+    }
 private:
     unsigned int m_id;
     QString m_name;

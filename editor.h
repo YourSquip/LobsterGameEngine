@@ -48,8 +48,8 @@ public:
 
     ~Editor()
     {
-        delete m_game;
-        delete m_selected_game_obj;
+        //delete m_game;
+       // delete m_selected_game_obj;
     }
 
     static Editor* get_instance()

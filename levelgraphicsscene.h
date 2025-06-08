@@ -35,6 +35,14 @@ public:
         return m_level;
     }
 
+    ~LevelGraphicsScene()
+    {
+        m_layers.clear();
+        delete m_map;
+        delete m_grid;
+        delete m_level;
+    }
+
 private:
     //QVector<QGraphicsPixmapItem>
     QVector<QVector<GameObjectPixmapItem*>> m_layers;

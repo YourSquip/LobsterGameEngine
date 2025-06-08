@@ -4,6 +4,10 @@
 #include <QString>
 #include <QPixmap>
 #include <QObject>
+//#include <Q>
+//#include <Q
+#include <QtMultimedia/QAudioInput>
+
 
 class Component: public QObject
 {
@@ -104,5 +108,41 @@ private:
     QPixmap m_pixmap;
 };
 
+
+/*class Audio: public Component
+{
+public:
+    Audio()
+    {
+        m_name = "sprite";
+        m_pixmap = QPixmap(":/sprites/icons/object.png");
+    }
+
+    Audio(QPixmap pixmap)
+    {
+        m_name = "sprite";
+        m_pixmap = pixmap;
+    }
+
+
+    QPixmap get_pixmap()
+    {
+        return m_pixmap;
+    }
+
+    void set_pixmap(QPixmap pixmap)
+    {
+        m_pixmap = pixmap;
+        emit item_changed(this);
+    }
+
+    QString get_name() override
+    {
+        return m_name;
+    }
+
+private:
+    //QPixmap m_pixmap;
+};*/
 
 #endif // COMPONENT_H

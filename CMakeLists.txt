@@ -9,12 +9,14 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(OpenGL REQUIRED)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
-find_package(Qt6 REQUIRED COMPONENTS OpenGL)
+#find_package(OpenGL REQUIRED)
 
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Multimedia)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Multimedia)
+#find_package(Qt6 REQUIRED COMPONENTS OpenGL)
+#find_package(Qt5Multimedia REQUIRED)
+#find_package(Qt6Multimedia REQUIRED)
 
 set(PROJECT_SOURCES
         main.cpp
@@ -64,7 +66,10 @@ else()
 endif()
 
 target_link_libraries(LobsterGameEngine PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
-target_link_libraries(LobsterGameEngine PRIVATE Qt6::OpenGL)
+target_link_libraries(LobsterGameEngine PRIVATE Qt${QT_VERSION_MAJOR}::Multimedia)
+#target_link_libraries(LobsterGameEngine PRIVATE Qt${QT_VERSION_MAJOR}::OpenGL)
+#target_link_libraries(LobsterGameEngine PRIVATE Qt${QT_VERSION_MAJOR}::Multimedia)
+#target_link_libraries(LobsterGameEngine PRIVATE Qt6::Multimedia)
 #target_link_libraries(LobsterGameEngine )
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

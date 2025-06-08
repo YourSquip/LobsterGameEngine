@@ -22,11 +22,6 @@ public:
     {
         m_title = title;
     }
-    ~Game()
-    {
-        m_levels.clear();
-        delete curr_level;
-    }
 
     void add_level(Level* level)
     {
@@ -55,6 +50,11 @@ public:
     QMap<QString, Level*> get_all_levels()
     {
         return m_levels;
+    }
+    ~Game()
+    {
+        m_levels.clear();
+        delete curr_level;
     }
 
 private:

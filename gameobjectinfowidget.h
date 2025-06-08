@@ -75,6 +75,7 @@ public slots:
     {
         delete m_game_object;
         delete m_layout;
+        m_components.clear();
     }
 private:
     QVector<ComponentInfoWidget*> m_components;
