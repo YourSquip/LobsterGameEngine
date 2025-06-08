@@ -18,8 +18,10 @@ class Viewport: public QGraphicsView
 public:
     Viewport(QWidget* parent = nullptr):QGraphicsView(parent)
     {
+        m_curr_scene = new LevelGraphicsScene();
+        this->setScene(m_curr_scene);
         //m_tabs = new QTabWidget(parent);
-        QMap<QString, Level*> levels = Editor::get_instance()->get_game()->get_all_levels();
+        /*QMap<QString, Level*> levels = Editor::get_instance()->get_game()->get_all_levels();
         QMapIterator<QString, Level*> i(levels);
         while (i.hasNext())
         {
@@ -35,7 +37,7 @@ public:
         else
         {
             m_curr_scene = new LevelGraphicsScene();
-        }
+        }*/
         //m_tabs->addTab(parent,"ass");
         this->show();
 

@@ -3,6 +3,7 @@
 
 #include <QGraphicsPixmapItem>
 #include <QPixmap>
+#include "editor.h"
 
 
 class MapTileGraphics: public QGraphicsPixmapItem
@@ -14,6 +15,7 @@ public:
         this->setPixmap(pixmap.scaled(32,32));
 
         qDebug()<<"MapTileGraphics constructor";
+        this->setFlag(QGraphicsItem::ItemIsSelectable);
 
     }
 
@@ -23,6 +25,45 @@ public:
         this->setPixmap(m_pixmap);
     }
 
+
+    QPixmap get_pixmap()
+    {
+        return m_pixmap;
+    }
+
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override
+    {
+        qDebug() << "tile clicked!";
+;
+        //m_pixmap = Editor::get_instance()->get_map_tile()->get_graphics()->get_pixmap();
+        this->setPixmap(QPixmap(":/sprites/empty_tile.png"));
+        this->setVisible(true);
+        QGraphicsItem::mousePressEvent(event);
+        //EditorToolType tool_type = Editor::get_instance()->get_editor_tool_type();
+        /*if(tool_type == PaintBrush || tool_type == Eraser)
+        {
+
+            qDebug() << "Item clicked! It was"<< m_name;
+            if(tool_type == PaintBrush)
+            {
+
+                //m_name = Editor::get_instance()->get_map_tile->get;
+                m_pixmap = Editor::get_instance()->get_map_tile()->get_graphics()->get_pixmap();
+                //m_can_walk = On;
+                this->setPixmap(m_pixmap);
+                this->setVisible(true);
+            }
+            if(tool_type == Eraser)
+            {
+                //m_name = "none";
+                m_pixmap = QPixmap(":/sprites/empty_tile.png");
+                //m_can_walk = NotAble;
+                this->setPixmap(m_pixmap);
+            }
+            QGraphicsItem::mousePressEvent(event); // вызов базового обработчика, если нужно
+        }*/
+
+    }
 
 
 private:

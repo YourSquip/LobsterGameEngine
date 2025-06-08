@@ -54,7 +54,7 @@ private:
         m_layout->addWidget(m_viewport);
         m_layout->addWidget(m_game_object_info);
         connect(m_game_objects_tree,m_game_objects_tree->item_selected, m_game_object_info,m_game_object_info->show_obj_info);
-        connect(m_game_objects_tree, m_game_objects_tree->object_added, m_viewport,m_viewport->add_object_to_curr_scene);
+        //connect(m_game_objects_tree, m_game_objects_tree->object_added, m_viewport,m_viewport->add_object_to_curr_scene);
         //connect(m_game_object_info, m_g, m_viewport,m_viewport->add_object_to_curr_scene);
     }
     //GameObject* m_selected_object;
