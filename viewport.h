@@ -12,6 +12,9 @@
 #include "levelgraphicsscene.h"
 #include "editor.h"
 #include "level.h"
+#include <QAudioInput>
+#include <QAudioOutput>
+#include <QMediaPlayer>
 
 class Viewport: public QGraphicsView
 {
@@ -20,6 +23,14 @@ public:
     {
         m_curr_scene = new LevelGraphicsScene();
         this->setScene(m_curr_scene);
+        QMediaPlayer* player = new QMediaPlayer();
+        QAudioOutput* audioOutput = new QAudioOutput();
+
+        player->setAudioOutput(audioOutput);
+        // ...
+        player->setSource(QUrl::fromLocalFile("D:/QtProjects/LobsterGameEngine2.0/LobsterGameEngine/audio/title_music.mp3"));
+        audioOutput->setVolume(50);
+        player->play();
         //m_tabs = new QTabWidget(parent);
         /*QMap<QString, Level*> levels = Editor::get_instance()->get_game()->get_all_levels();
         QMapIterator<QString, Level*> i(levels);

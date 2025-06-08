@@ -6,7 +6,7 @@
 #include <QObject>
 //#include <Q>
 //#include <Q
-#include <QtMultimedia/QAudioInput>
+//#include <QtMultimedia/QAudioInput>
 
 
 class Component: public QObject
