@@ -22,7 +22,8 @@ public:
         m_level = level;
         m_map = new Map(5,5);
         m_grid = new Grid(5,5,32);
-        this->addItem(m_map);
+        //this->addItem(m_map);
+        m_map->add_map_to_scene(this);
         this->addItem(m_grid);
         /*for(auto game_object: m_level->get_all_game_objects())
         {

@@ -74,7 +74,7 @@ public:
     }
     ~EditorWidget()
     {
-        delete m_editor;
+        //delete m_editor;
         delete m_layout;
         delete m_game_objects_tree;
         delete m_game_object_info;

@@ -2,11 +2,12 @@
 #define MAP_H
 
 #include <QGraphicsItemGroup>
+#include <QGraphicsScene>
 #include <QVector>
 
 #include "maptile.h"
 
-class Map: public QGraphicsItemGroup
+class Map
 {
 public:
     Map(unsigned int width = 0, unsigned int heigth = 0)
@@ -22,10 +23,21 @@ public:
             for(int y = 0; y < m_height*m_cell_size; y+= m_cell_size)
             {
                 MapTile* new_tile = new MapTile(x,y);
-                this->addToGroup(new_tile->get_graphics());
+                //this->addToGroup(new_tile->get_graphics());
                 row.push_back(new_tile);
             }
             m_maptiles.push_back(row);
+        }
+    }
+
+    void add_map_to_scene(QGraphicsScene* scene)
+    {
+        for(int i = 0; i < m_width; i++)
+        {
+            for(int j = 0; j < m_height; j++)
+            {
+                scene->addItem(m_maptiles[i][j]->get_graphics());
+            }
         }
     }
 
