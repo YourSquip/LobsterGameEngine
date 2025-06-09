@@ -19,23 +19,37 @@ public:
     {
 
         qDebug()<<"LevelGraphicsScene constructor";
-        m_level = level;
+        //m_level = level;
+        m_level = new Level();
         m_map = new Map(5,5);
         m_grid = new Grid(5,5,32);
+        m_grid_on = true;
         //this->addItem(m_map);
         m_map->add_map_to_scene(this);
         this->addItem(m_grid);
-        /*for(auto game_object: m_level->get_all_game_objects())
+        for(auto game_object: m_level->get_all_game_objects())
         {
             this->addItem(new GameObjectPixmapItem(game_object));
-        }*/
+        }
+
         //this->show()
     }
     Level* get_level()
     {
         return m_level;
     }
-
+    void update_scene()
+    {
+        m_map->add_map_to_scene(this);
+        if(m_grid_on)
+        {
+            this->addItem(m_grid);
+        }
+        for(auto game_object: m_level->get_all_game_objects())
+        {
+            this->addItem(new GameObjectPixmapItem(game_object));
+        }
+    }
     ~LevelGraphicsScene()
     {
         m_layers.clear();
@@ -50,6 +64,7 @@ private:
     Map* m_map;
     Grid* m_grid;
     Level* m_level;
+    bool m_grid_on;
 
 };
 

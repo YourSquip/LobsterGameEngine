@@ -111,7 +111,7 @@ class MapTile
 public:
     MapTile(unsigned int x_pos = 0, unsigned int y_pos = 0)
     {
-        m_graphics = new MapTileGraphics(QPixmap("D:/QtProjects/LobsterGameEngine2.0/LobsterGameEngine/sprites/grass32.png"));
+        m_graphics = new MapTileGraphics(QPixmap(":/sprites/grass32.png"));
         //m_graphics = MapTileGraphicsFactory::get_instance().get_concrete_graphics(QString::fromStdString(":/sprites/grass32.png"));
         m_graphics->setPos(x_pos,y_pos);
         qDebug()<<"MapTile constructor";
@@ -151,6 +151,8 @@ private:
 
     float x_pos;
     float y_pos;
+
+    bool can_walk_on;
 };
 
 

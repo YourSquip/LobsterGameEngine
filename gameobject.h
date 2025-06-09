@@ -41,6 +41,19 @@ public:
         m_components["sprite"] = new Sprite();
     }
 
+    void debug_info()
+    {
+        qDebug()<<this->m_name;
+        QMapIterator<QString, Component*> i(m_components);
+
+        qDebug()<<"Components:";
+        while (i.hasNext())
+        {
+            i.next();
+            qDebug()<<(i.key()) << ": " << i.value();
+        }
+    }
+
     ~GameObject()
     {
         //m_components.clear();

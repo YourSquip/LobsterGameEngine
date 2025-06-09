@@ -70,10 +70,15 @@ public:
 public slots:
     void add_object_to_curr_scene(GameObject* game_object)
     {
+        if(!game_object)
+        {
+            qDebug()<<"GAMEOBJECT IS NULL";
+        }
         m_curr_scene->addItem(new GameObjectPixmapItem(game_object));
-        m_curr_scene->get_level()->add_game_object(game_object);
+        //m_curr_scene->get_level()->add_game_object(game_object);
         this->setScene(m_curr_scene);
         this->show();
+        qDebug()<<"add object to current scene slot";
     }
 private:
     LevelGraphicsScene* m_curr_scene;

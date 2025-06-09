@@ -163,6 +163,7 @@ public slots:
         item->m_game_object = new_object;
         this->m_level->add_game_object(new_object);
         m_tree_widget->insertTopLevelItem(0, item);
+        qDebug()<<"object added signal";
         emit object_added(new_object);
     }
 signals:

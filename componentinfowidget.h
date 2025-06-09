@@ -31,7 +31,7 @@ public:
     {
         delete m_name;
         delete m_layout;
-        delete m_component;
+        //delete m_component;
     }
 protected:
     QLabel* m_name;
@@ -100,7 +100,7 @@ public slots:
         delete x_line;
         delete y_label;
         delete y_line;
-        delete m_position;
+        //delete m_position;
     }
 
 private:

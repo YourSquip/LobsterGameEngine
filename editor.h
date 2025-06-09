@@ -9,13 +9,13 @@
 //#include "maptile.h"
 
 
-/*enum EditorToolType
+enum EditorToolType
 {
     Coursor = 0,
     PaintBrush = 1,
     Eraser = 2,
     MoveXY = 3
-};*/
+};
 
 
 class Editor
@@ -36,10 +36,10 @@ public:
         m_selected_game_obj = game_object;
     }
 
-    //EditorToolType get_editor_tool_type()
-    //{
-    //    return m_chosen_tool;
-    //}
+    EditorToolType get_editor_tool_type()
+    {
+        return m_chosen_tool;
+    }
 
     //MapTile* get_map_tile()
     //{/
@@ -62,7 +62,7 @@ private:
     Editor()
     {
         m_game = new Game();
-        //m_chosen_tool = PaintBrush;
+        m_chosen_tool = Coursor;
         //m_paint_tile = new MapTile();
         //m_paint_tile->set_graphics(new MapTileGraphics(QPixmap(":/sprites/grass32.png")));
 
@@ -71,7 +71,7 @@ private:
     Game* m_game;
     GameObject* m_selected_game_obj;
 
-    //EditorToolType m_chosen_tool;
+    EditorToolType m_chosen_tool;
     //MapTile* m_paint_tile;
 };
 
