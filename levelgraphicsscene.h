@@ -23,13 +23,15 @@ public:
         m_level = new Level();
         m_map = new Map(5,5);
         m_grid = new Grid(5,5,32);
-        m_grid_on = true;
+        m_grid_on = false;
         //this->addItem(m_map);
         m_map->add_map_to_scene(this);
-        this->addItem(m_grid);
+        //this->addItem(m_grid);
         for(auto game_object: m_level->get_all_game_objects())
         {
-            this->addItem(new GameObjectPixmapItem(game_object));
+            GameObjectPixmapItem* item = new GameObjectPixmapItem(game_object);
+            item->update_pixmap();
+            this->addItem(item);
         }
 
         //this->show()
@@ -38,9 +40,21 @@ public:
     {
         return m_level;
     }
+    bool is_grid_shown()
+    {
+        return m_grid_on;
+    }
     void set_show_grid(bool is_shown)
     {
         m_grid_on = is_shown;
+        if(is_shown)
+        {
+            this->addItem(m_grid);
+        }
+        else
+        {
+            this->removeItem(m_grid);
+        }
     }
     void update_scene()
     {
@@ -51,7 +65,8 @@ public:
         }
         for(auto game_object: m_level->get_all_game_objects())
         {
-            this->addItem(new GameObjectPixmapItem(game_object));
+            GameObjectPixmapItem* item = new GameObjectPixmapItem(game_object);
+            item->update_pixmap();
         }
     }
     ~LevelGraphicsScene()

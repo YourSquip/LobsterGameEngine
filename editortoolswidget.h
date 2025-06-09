@@ -9,6 +9,7 @@
 
 #include "editor.h"
 #include "viewport.h"
+#include "maptile.h"
 
 class EditorToolsWidget : public QWidget
 {
@@ -74,7 +75,6 @@ public slots:
     {
         Editor::get_instance()->change_editor_tool_type(MoveXY);
     }
-signals:
 
 private:
     Viewport* m_level_view;

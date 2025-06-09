@@ -47,11 +47,13 @@ public:
     {
         delete m_game_object;
     }
-public slots:
+
     void update_pixmap()
     {
-        //m_pixmap = m_sprite->get_sprite()->get_pixmap().scaled(32,32);
-        //this->setPixmap(m_pixmap);
+        //GameObject* selected_obj = Editor::get_instance()->get_selected_game_obj();
+        auto sprite_component = dynamic_cast<Sprite*>(m_game_object->get_all_components()["sprite"]);
+        m_pixmap = sprite_component->get_pixmap().scaled(32,32);
+        this->setPixmap(m_pixmap);
     }
 
 private:

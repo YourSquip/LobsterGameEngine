@@ -74,6 +74,7 @@ private:
 
 class Sprite: public Component
 {
+    Q_OBJECT
 public:
     Sprite()
     {
@@ -103,7 +104,8 @@ public:
     {
         return m_name;
     }
-
+signals:
+    void pixmap_was_changed();
 private:
     QPixmap m_pixmap;
 };

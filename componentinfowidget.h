@@ -31,7 +31,10 @@ public:
     {
         delete m_name;
         delete m_layout;
-        //delete m_component;
+    }
+    QLabel* get_name_lbl()
+    {
+        return m_name;
     }
 protected:
     QLabel* m_name;
@@ -127,6 +130,7 @@ public:
         m_open_pixmap_button = new QPushButton("Choose sprite",this);
         connect(m_open_pixmap_button,m_open_pixmap_button->clicked,this,this->open_sprite_explorer);
         connect(m_sprite,m_sprite->item_changed,this,this->update_pixmap_component_info);
+
         QHBoxLayout* layout = new QHBoxLayout();
 
 
@@ -136,10 +140,6 @@ public:
 
         m_layout->addLayout(layout);
         m_layout->addWidget(m_open_pixmap_button);
-        //connect(m_component,m_component->item_changed,this,this->update_x_component_info);
-        //connect(m_component,m_component->item_changed,this,this->update_y_component_info);
-        //connect(x_line,x_line->textChanged,this,this->update_x_component);
-        //connect(y_line,y_line->textChanged,this,this->update_y_component);
 
     }
     Sprite* get_sprite()
@@ -159,22 +159,21 @@ public slots:
     void open_sprite_explorer()
     {
         QString fileName = QFileDialog::getOpenFileName(this, "Open File", "../sprites", "Images (*.png *.xpm *.jpg)");
-        if (!fileName.isEmpty()) {
-            // Process the selected file
+        if (!fileName.isEmpty())
+        {
             QPixmap pixmap(fileName);
             m_sprite->set_pixmap(pixmap.scaled(32,32));
             qDebug()<<"file name:"<<fileName;
-            //emit pixmap_was_changed();
+            emit m_sprite->pixmap_was_changed();
         }
     }
     void update_pixmap_component_info(Component* component)
     {
         m_sprite = dynamic_cast<Sprite*>(component);
-        //x_line->setText(QString::number(m_position->x()));
         m_pixmap->setPixmap(m_sprite->get_pixmap());
+        //emit pixmap_was_changed();
     }
-signals:
-    void pixmap_was_changed();
+
 private:
     QLabel* m_label;
     QLabel* m_pixmap;

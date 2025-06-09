@@ -85,8 +85,21 @@ public slots:
     }
     void show_grid()
     {
-        m_curr_scene->set_show_grid(true);
-        m_curr_scene->update();
+        if(m_curr_scene->is_grid_shown())
+        {
+            m_curr_scene->set_show_grid(false);
+        }
+        else
+        {
+            m_curr_scene->set_show_grid(true);
+        }
+        //m_curr_scene->update();
+        //this->setScene(m_curr_scene);
+        //this->show();
+    }
+    void object_changed_pixmap()
+    {
+        m_curr_scene->update_scene();
     }
 private:
     LevelGraphicsScene* m_curr_scene;

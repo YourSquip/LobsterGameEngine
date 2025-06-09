@@ -64,6 +64,8 @@ private:
 
         connect(m_game_objects_tree,m_game_objects_tree->item_selected, m_game_object_info,m_game_object_info->show_obj_info);
         connect(m_game_objects_tree,m_game_objects_tree->object_added, m_viewport,m_viewport->add_object_to_curr_scene);
+        //SpriteComponentInfoWidget* sprite_info = dynamic_cast<SpriteComponentInfoWidget*>(m_game_object_info->get_component_info_widget(QString::fromStdString("sprite")));
+        //connect(sprite_info->get_sprite(),sprite_info->get_sprite()->pixmap_was_changed,m_viewport,m_viewport->object_changed_pixmap);
         //connect(m_game_objects_tree, m_game_objects_tree->object_added, m_viewport,m_viewport->add_object_to_curr_scene);
         //connect(m_game_object_info, m_g, m_viewport,m_viewport->add_object_to_curr_scene);
     }

@@ -37,10 +37,10 @@ public:
     }
 
 
-    //MapTile* get_map_tile()
-    //{/
-    //    return m_paint_tile;
-    //}
+    /*MapTile* get_map_tile()
+    {
+        return m_paint_tile;
+    }*/
 
     ~Editor()
     {
@@ -63,31 +63,19 @@ public:
         m_chosen_tool = tool_type;
     }
 
-    /*QString get_paint_tile_name()
-    {
-        return m_paint_tile_name;
-    }*/
 
-    /*void set_paint_tile_name(QString paint_tile_name)
-    {
-        m_paint_tile_name = paint_tile_name;
-    }*/
 
 private:
     Editor()
     {
         m_game = new Game();
         m_chosen_tool = Coursor;
-        //m_paint_tile = new MapTile();
-        //m_paint_tile->set_graphics(new MapTileGraphics(QPixmap(":/sprites/grass32.png")));
-
     }
     static Editor* instance;
     Game* m_game;
     GameObject* m_selected_game_obj;
 
     EditorToolType m_chosen_tool;
-    //MapTile* m_paint_tile;
 };
 
 #endif // EDITOR_H

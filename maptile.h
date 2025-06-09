@@ -36,19 +36,19 @@ public:
         qDebug() << "tile clicked!";
 ;
         //m_pixmap = Editor::get_instance()->get_map_tile()->get_graphics()->get_pixmap();
-        this->setPixmap(QPixmap(":/sprites/empty_tile.png"));
-        this->setVisible(true);
-        QGraphicsItem::mousePressEvent(event);
-        //EditorToolType tool_type = Editor::get_instance()->get_editor_tool_type();
-        /*if(tool_type == PaintBrush || tool_type == Eraser)
+        //this->setPixmap(QPixmap(":/sprites/empty_tile.png"));
+        //this->setVisible(true);
+        //QGraphicsItem::mousePressEvent(event);
+        EditorToolType tool_type = Editor::get_instance()->get_editor_tool_type();
+        if(tool_type == PaintBrush || tool_type == Eraser)
         {
 
-            qDebug() << "Item clicked! It was"<< m_name;
+            //qDebug() << "Item clicked! It was"<< m_name;
             if(tool_type == PaintBrush)
             {
 
                 //m_name = Editor::get_instance()->get_map_tile->get;
-                m_pixmap = Editor::get_instance()->get_map_tile()->get_graphics()->get_pixmap();
+                //m_pixmap = Editor::get_instance()->get_map_tile()->get_graphics()->get_pixmap();
                 //m_can_walk = On;
                 this->setPixmap(m_pixmap);
                 this->setVisible(true);
@@ -61,7 +61,7 @@ public:
                 this->setPixmap(m_pixmap);
             }
             QGraphicsItem::mousePressEvent(event); // вызов базового обработчика, если нужно
-        }*/
+        }
 
     }
 

@@ -69,7 +69,16 @@ public slots:
         }*/
     }
 
-
+    ComponentInfoWidget* get_component_info_widget(QString name)
+    {
+        for(auto comp: m_components)
+        {
+            if(comp->get_name_lbl()->text() == name)
+            {
+                return comp;
+            }
+        }
+    }
 
     ~GameObjectInfoWidget()
     {
