@@ -15,6 +15,8 @@
 #include <QAudioInput>
 #include <QAudioOutput>
 #include <QMediaPlayer>
+#include <QLineEdit>
+#include <QCheckBox>
 
 class Viewport: public QGraphicsView
 {
@@ -22,9 +24,10 @@ public:
     Viewport(QWidget* parent = nullptr):QGraphicsView(parent)
     {
         m_curr_scene = new LevelGraphicsScene();
+        //m_show_grid_check = new QCheckBox("show grid",this);
         this->setScene(m_curr_scene);
-        QMediaPlayer* player = new QMediaPlayer();
-        QAudioOutput* audioOutput = new QAudioOutput();
+        //QMediaPlayer* player = new QMediaPlayer();
+        //QAudioOutput* audioOutput = new QAudioOutput();
 
         //player->setAudioOutput(audioOutput);
         // ...
@@ -80,9 +83,17 @@ public slots:
         this->show();
         qDebug()<<"add object to current scene slot";
     }
+    void show_grid()
+    {
+        m_curr_scene->set_show_grid(true);
+        m_curr_scene->update();
+    }
 private:
     LevelGraphicsScene* m_curr_scene;
     QVector<LevelGraphicsScene*> m_all_scenes;
+    QCheckBox* m_show_grid_check;
+    QGraphicsScene* m_tiles_list;
+
 };
 
 #endif // VIEWPORT_H

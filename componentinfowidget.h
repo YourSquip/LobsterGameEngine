@@ -151,7 +151,7 @@ public:
     {
         delete m_label;
         delete m_pixmap;
-        delete m_sprite;
+        //delete m_sprite;
         delete m_open_pixmap_button;
     }
 

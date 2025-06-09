@@ -38,6 +38,10 @@ public:
     {
         return m_level;
     }
+    void set_show_grid(bool is_shown)
+    {
+        m_grid_on = is_shown;
+    }
     void update_scene()
     {
         m_map->add_map_to_scene(this);

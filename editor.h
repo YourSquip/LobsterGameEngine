@@ -36,10 +36,6 @@ public:
         m_selected_game_obj = game_object;
     }
 
-    EditorToolType get_editor_tool_type()
-    {
-        return m_chosen_tool;
-    }
 
     //MapTile* get_map_tile()
     //{/
@@ -58,6 +54,25 @@ public:
         instance = new Editor();
         return instance;
     }
+    EditorToolType get_editor_tool_type()
+    {
+        return m_chosen_tool;
+    }
+    void change_editor_tool_type(EditorToolType tool_type)
+    {
+        m_chosen_tool = tool_type;
+    }
+
+    /*QString get_paint_tile_name()
+    {
+        return m_paint_tile_name;
+    }*/
+
+    /*void set_paint_tile_name(QString paint_tile_name)
+    {
+        m_paint_tile_name = paint_tile_name;
+    }*/
+
 private:
     Editor()
     {
