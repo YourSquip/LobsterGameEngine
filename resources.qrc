@@ -4,6 +4,8 @@
     <file>sprites/app_icon.png</file>
     <file>sprites/icons/object.png</file>
     <file>sprites/grass32.png</file>
-    <file>sprites/empty_tile.png</file>
+    <file>sprites/water_tile.png</file>
+    <file>sprites/grass_tile.png</file>
+    <file>sprites/ground_tile.png</file>
   </qresource>
 </RCC>

@@ -10,6 +10,7 @@
 #include "gameobjectstreewidget.h"
 #include "viewport.h"
 #include "editortoolswidget.h"
+#include "maptileslist.h"
 
 class EditorWidget : public QWidget
 {
@@ -44,6 +45,7 @@ private:
     GameObjectsTreeWidget* m_game_objects_tree;
     GameObjectInfoWidget* m_game_object_info;
     Viewport*  m_viewport;
+    MapTilesList* m_tile_list;
     EditorToolsWidget* m_editor_tools;
     static EditorWidget* instance;
     EditorWidget(QWidget *parent=nullptr)
@@ -56,9 +58,11 @@ private:
         m_viewport = new Viewport(this);
         m_game_object_info = new GameObjectInfoWidget(this);
         m_editor_tools = new EditorToolsWidget(m_viewport,this);
+        m_tile_list = new MapTilesList(this);
         m_layout->addWidget(m_game_objects_tree);
         m_map_editor_layout->addWidget(m_editor_tools);
         m_map_editor_layout->addWidget(m_viewport);
+        m_map_editor_layout->addWidget(m_tile_list);
         m_layout->addLayout( m_map_editor_layout);
         m_layout->addWidget(m_game_object_info);
 
