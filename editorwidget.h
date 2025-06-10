@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QPushButton>
 
 #include "gameobjectinfowidget.h"
 #include "editor.h"
@@ -47,6 +48,8 @@ private:
     Viewport*  m_viewport;
     MapTilesList* m_tile_list;
     EditorToolsWidget* m_editor_tools;
+    QPushButton* m_play_bttn;
+    QPushButton* m_stop_bttn;
     static EditorWidget* instance;
     EditorWidget(QWidget *parent=nullptr)
     {
@@ -60,6 +63,12 @@ private:
         m_editor_tools = new EditorToolsWidget(m_viewport,this);
         m_tile_list = new MapTilesList(this);
         m_layout->addWidget(m_game_objects_tree);
+        QHBoxLayout* button_layout = new QHBoxLayout();
+        QPushButton* m_play_bttn = new QPushButton("Run");
+        QPushButton* m_stop_bttn = new QPushButton("Stop");
+        button_layout->addWidget(m_play_bttn);
+        button_layout->addWidget(m_stop_bttn);
+        m_map_editor_layout->addLayout(button_layout);
         m_map_editor_layout->addWidget(m_editor_tools);
         m_map_editor_layout->addWidget(m_viewport);
         m_map_editor_layout->addWidget(m_tile_list);
@@ -68,13 +77,39 @@ private:
 
         connect(m_game_objects_tree,m_game_objects_tree->item_selected, m_game_object_info,m_game_object_info->show_obj_info);
         connect(m_game_objects_tree,m_game_objects_tree->object_added, m_viewport,m_viewport->add_object_to_curr_scene);
+        connect(m_play_bttn,m_play_bttn->clicked, this,this->run_game);
+        connect(m_stop_bttn,m_stop_bttn->clicked, this,this->stop_game);
         //SpriteComponentInfoWidget* sprite_info = dynamic_cast<SpriteComponentInfoWidget*>(m_game_object_info->get_component_info_widget(QString::fromStdString("sprite")));
         //connect(sprite_info->get_sprite(),sprite_info->get_sprite()->pixmap_was_changed,m_viewport,m_viewport->object_changed_pixmap);
         //connect(m_game_objects_tree, m_game_objects_tree->object_added, m_viewport,m_viewport->add_object_to_curr_scene);
         //connect(m_game_object_info, m_g, m_viewport,m_viewport->add_object_to_curr_scene);
     }
     //GameObject* m_selected_object;
+public slots:
+    void run_game()
+    {
 
+        Editor::get_instance()->run_game(true);
+
+        m_game_objects_tree->setDisabled(true);
+        m_game_object_info->setDisabled(true);
+        m_tile_list->setDisabled(true);
+        m_editor_tools->setDisabled(true);
+        //m_play_bttn->setDisabled(true);
+        QPushButton* m_stop_bttn;
+    }
+
+    void stop_game()
+    {
+
+        Editor::get_instance()->run_game(false);
+
+        m_game_objects_tree->setEnabled(true);
+        m_game_object_info->setEnabled(true);
+        m_tile_list->setEnabled(true);
+        m_editor_tools->setEnabled(true);
+        //m_play_bttn->setEnabled(true);
+    }
 public:
     static EditorWidget* get_instance()
     {

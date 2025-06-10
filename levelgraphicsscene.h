@@ -21,8 +21,8 @@ public:
         qDebug()<<"LevelGraphicsScene constructor";
         //m_level = level;
         m_level = new Level();
-        m_map = new Map(5,5);
-        m_grid = new Grid(5,5,32);
+        m_map = new Map(10,10);
+        m_grid = new Grid(10,10,32);
         m_grid_on = false;
         //this->addItem(m_map);
         m_map->add_map_to_scene(this);

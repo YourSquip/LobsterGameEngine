@@ -42,6 +42,11 @@ public:
        // delete m_selected_game_obj;
     }
 
+    void run_game(bool run)
+    {
+        is_game_running = run;
+    }
+
     static Editor* get_instance()
     {
         if(instance) return  instance;
@@ -64,12 +69,14 @@ private:
     {
         m_game = new Game();
         m_chosen_tool = Coursor;
+        is_game_running = false;
         //m_paint_tile = new MapTileGraphics(QPixmap(":/sprites/grass_tile.png"));
     }
     static Editor* instance;
     Game* m_game;
     GameObject* m_selected_game_obj;
     EditorToolType m_chosen_tool;
+    bool is_game_running;
 };
 
 #endif // EDITOR_H
