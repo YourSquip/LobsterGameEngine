@@ -49,6 +49,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         editortoolswidget.h editortoolswidget.cpp
         maptileslist.h maptileslist.cpp
         maptilegraphics.h maptilegraphics.cpp
+        mapeditorsettings.h mapeditorsettings.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET LobsterGameEngine APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

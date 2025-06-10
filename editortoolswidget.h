@@ -9,7 +9,6 @@
 
 #include "editor.h"
 #include "viewport.h"
-#include "maptile.h"
 
 class EditorToolsWidget : public QWidget
 {

@@ -6,7 +6,7 @@
 #include <QMap>
 
 #include "game.h"
-#include "maptilegraphics.h"
+//#include "maptilegraphics.h"
 
 
 enum EditorToolType
@@ -34,16 +34,6 @@ public:
     void set_selected_game_obj(GameObject* game_object)
     {
         m_selected_game_obj = game_object;
-    }
-
-
-    MapTileGraphics* get_tile_graphics()
-    {
-        return m_paint_tile;
-    }
-    void set_tile_graphics(MapTileGraphics* graphics)
-    {
-        m_paint_tile = graphics;
     }
 
     ~Editor()
@@ -74,12 +64,11 @@ private:
     {
         m_game = new Game();
         m_chosen_tool = Coursor;
-        m_paint_tile = new MapTileGraphics(QPixmap(":/sprites/grass_tile.png"));
+        //m_paint_tile = new MapTileGraphics(QPixmap(":/sprites/grass_tile.png"));
     }
     static Editor* instance;
     Game* m_game;
     GameObject* m_selected_game_obj;
-    MapTileGraphics* m_paint_tile;
     EditorToolType m_chosen_tool;
 };
 

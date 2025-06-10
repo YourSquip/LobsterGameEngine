@@ -1,3 +1,4 @@
 #include "maptilegraphics.h"
 
-MapTileGraphics::MapTileGraphics() {}
+//MapTileGraphics::MapTileGraphics() {}
+MapTileGraphicsFactory* MapTileGraphicsFactory::instance = nullptr;
