@@ -11,9 +11,10 @@
 class MapTileGraphics: public QGraphicsPixmapItem
 {
 public:
-    MapTileGraphics(QPixmap pixmap):QGraphicsPixmapItem()
+    MapTileGraphics(QPixmap pixmap, QString pixmap_path):QGraphicsPixmapItem()
     {
         m_pixmap = pixmap;
+        m_pixmap_path = pixmap_path;
         this->setPixmap(pixmap.scaled(32,32));
 
         qDebug()<<"MapTileGraphics constructor";
@@ -62,7 +63,7 @@ public:
         //this->setVisible(true);
         //QGraphicsItem::mousePressEvent(event);
         //EditorToolType tool_type = Editor::get_instance()->get_editor_tool_type();
-        if(m_is_map&&(Editor::get_instance()->get_editor_tool_type() == 1 || Editor::get_instance()->get_editor_tool_type() == 2))
+        if(m_is_map)
         {
 
             //qDebug() << "Item clicked! It was"<< m_name;
@@ -87,9 +88,12 @@ public:
             }
             QGraphicsItem::mousePressEvent(event); // вызов базового обработчика, если нужно
         }
-        else
+        if(!m_is_map)
         {
-            MapEditorSettings::get_instance()->set_paint_tile_pixmap_path(m_pixmap_path);
+            qDebug()<<"IT SHOULD BE CHANGING TO:";
+            //MapEditorSettings::get_instance()->set_paint_tile_pixmap_path(m_pixmap_path);
+            MapEditorSettings::get_instance()->set_paint_tile_pixmap_path(this->get_pixmap_path());
+            qDebug()<<m_pixmap_path;
         }
 
     }
@@ -110,7 +114,7 @@ public:
     void register_graphics(QString sprite_path)
     {
         m_paths.push_back(sprite_path);
-        MapTileGraphics* graphics = new MapTileGraphics(QPixmap(sprite_path));
+        MapTileGraphics* graphics = new MapTileGraphics(QPixmap(sprite_path), sprite_path);
         m_graphics.push_back(graphics);
         m_registered_graphics[sprite_path] = graphics;
     }

@@ -37,8 +37,8 @@ public:
         this->setMaximumHeight(32);
         m_tiles_scene = new QGraphicsScene();
         //m_tiles_scene-
-        m_tiles.push_back(new MapTileGraphics(QPixmap(":/sprites/grass32.png")));
-        m_tiles_scene->addItem(new MapTileGraphics(QPixmap(":/sprites/grass32.png")));
+        m_tiles.push_back(new MapTileGraphics(QPixmap(":/sprites/grass32.png"),":/sprites/grass32.png"));
+        m_tiles_scene->addItem(new MapTileGraphics(QPixmap(":/sprites/grass32.png"),":/sprites/grass32.png" ));
         int cell_size = 32;
         int curr_cell = 0;
         for(auto text_path: MapTileGraphicsFactory::get_instance()->get_all_paths())
