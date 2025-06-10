@@ -27,6 +27,7 @@ public:
         //connect(m_sprite,m_sprite->pixmap_was_changed, this, this->update_pixmap);
     }
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override {
+        update_pixmap();
         if(Editor::get_instance()->get_editor_tool_type() == Coursor || Editor::get_instance()->get_editor_tool_type() == MoveXY  )
         {
             this->setFlag(QGraphicsItem::ItemIsSelectable,true);
@@ -42,6 +43,12 @@ public:
             this->setAcceptDrops(false);
         }
     }
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event)override
+    {
+        //auto pos_component = dynamic_cast<Position*>(m_game_object->get_all_components()["position"]);
+        m_game_object->get_all_components()["position"] = new Position(this->pos().x(),this->pos().y());
+        QGraphicsPixmapItem::mouseReleaseEvent(event);
+    }
 
     ~GameObjectPixmapItem()
     {
@@ -52,7 +59,10 @@ public:
     {
         //GameObject* selected_obj = Editor::get_instance()->get_selected_game_obj();
         auto sprite_component = dynamic_cast<Sprite*>(m_game_object->get_all_components()["sprite"]);
+        auto pos_component = dynamic_cast<Position*>(m_game_object->get_all_components()["position"]);
         m_pixmap = sprite_component->get_pixmap().scaled(32,32);
+        m_game_object->get_all_components()["position"] = new Position(this->pos().x(),this->pos().y());
+        //this->setPos(pos_component->x(),pos_component->y());
         this->setPixmap(m_pixmap);
     }
 
