@@ -182,7 +182,7 @@ public slots:
         if (!fileName.isEmpty())
         {
             QPixmap pixmap(fileName);
-            m_sprite->set_pixmap(pixmap);
+            m_sprite->set_pixmap(pixmap.scaled(32,32));
             qDebug()<<"file name:"<<fileName;
             emit m_sprite->pixmap_was_changed();
         }

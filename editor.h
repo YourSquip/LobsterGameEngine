@@ -62,6 +62,11 @@ public:
         m_chosen_tool = tool_type;
     }
 
+    bool game_running_state()
+    {
+        return is_game_running;
+    }
+
 
 
 private:
