@@ -27,12 +27,18 @@ public:
         //this->addItem(m_map);
         m_map->add_map_to_scene(this);
         //this->addItem(m_grid);
+
+        QVector<GameObjectPixmapItem*> row;
         for(auto game_object: m_level->get_all_game_objects())
         {
             GameObjectPixmapItem* item = new GameObjectPixmapItem(game_object);
             item->update_pixmap();
             this->addItem(item);
+            row.push_back(item);
+
         }
+        m_layers.push_back(row);
+
 
         //this->show()
     }
@@ -63,11 +69,33 @@ public:
         {
             this->addItem(m_grid);
         }
+        QVector<GameObjectPixmapItem*> row;
         for(auto game_object: m_level->get_all_game_objects())
         {
             GameObjectPixmapItem* item = new GameObjectPixmapItem(game_object);
             item->update_pixmap();
+            row.push_back(item);
         }
+        m_layers.push_back(row);
+    }
+    GameObjectPixmapItem* get_pixmap_item(int x, int y)
+    {
+        if(x< m_layers.size() && y < get_layer(0).size())
+        {
+
+            return m_layers[x][y];
+        }
+        return nullptr;
+    }
+
+    QVector<QVector<GameObjectPixmapItem*>> get_layers()
+    {
+        return m_layers;
+    }
+
+    QVector<GameObjectPixmapItem*> get_layer(int layer_ind)
+    {
+        return m_layers[layer_ind];
     }
     ~LevelGraphicsScene()
     {
@@ -84,6 +112,69 @@ private:
     Grid* m_grid;
     Level* m_level;
     bool m_grid_on;
+
+};
+
+
+class LevelUpdater: public QWidget
+{
+    Q_OBJECT
+public:
+    LevelGraphicsScene* m_scene;
+    LevelUpdater(LevelGraphicsScene* scene)
+    {
+        m_scene = scene;
+        m_scene->items();
+        qDebug()<<"LevelUpdater:constructor";
+        for(auto item: m_scene->items())
+        {
+            PixmapObjectUpdater* pixmap_updater = new PixmapObjectUpdater();
+            GameObjectPixmapItem* pixmap_item = dynamic_cast<GameObjectPixmapItem*>(item);
+            pixmap_item->add_updater();
+            connect(pixmap_item->get_updater(),pixmap_item->get_updater()->x_position_has_changed, this, this->give_signal_of_changed_pos_x);
+            connect(pixmap_item->get_updater(),pixmap_item->get_updater()->y_position_has_changed, this, this->give_signal_of_changed_pos_y);
+
+        }
+        /*if(!scene->get_layers().empty())
+        {
+            GameObject* new_obj = new GameObject();
+            m_scene->get_layer(0).push_back(new GameObjectPixmapItem(new_obj));
+            if(!scene->get_layer(0).empty())
+            {
+                for(int i = 0; i < scene->get_layer(0).size();i++)
+                {
+
+                    connect(scene->get_pixmap_item(0,i)->get_updater(),scene->get_pixmap_item(0,i)->get_updater()->x_position_has_changed, this, this->give_signal_of_changed_pos_x);
+                    connect(scene->get_pixmap_item(0,i)->get_updater(),scene->get_pixmap_item(0,i)->get_updater()->y_position_has_changed, this, this->give_signal_of_changed_pos_y);
+
+                }
+            }
+            else
+            {
+                qDebug()<<"LevelUpdater:scene->get_layer(0 is empty()";
+            }
+
+        }
+        else
+        {
+            qDebug()<<"LevelUpdater:scene->get_layers() is empty()";
+        }*/
+
+    }
+public slots:
+    void give_signal_of_changed_pos_x(float x)
+    {
+        qDebug()<<"LevelUpdater:give_signal_of_changed_pos_x";
+        emit changed_game_obj_x_pos(x);
+    }
+    void give_signal_of_changed_pos_y(float y)
+    {
+        qDebug()<<"LevelUpdater:give_signal_of_changed_pos_y";
+        emit changed_game_obj_y_pos(y);
+    }
+signals:
+    void changed_game_obj_x_pos(float x);
+    void changed_game_obj_y_pos(float y);
 
 };
 

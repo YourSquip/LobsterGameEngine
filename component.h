@@ -29,6 +29,7 @@ signals:
 
 class Position: public Component
 {
+    Q_OBJECT
 public:
     Position()
     {
@@ -51,14 +52,16 @@ public:
         return m_y;
     }
 
-    void set_x(unsigned int x)
+    void set_x(float x)
     {
         m_x = x;
+        emit x_pos_changed(x);
         emit item_changed(this);
     }
-    void set_y(unsigned int y)
+    void set_y(float y)
     {
         m_y = y;
+        emit y_pos_changed(y);
         emit item_changed(this);
     }
 
@@ -66,6 +69,9 @@ public:
     {
         return m_name;
     }
+signals:
+    void x_pos_changed(float x);
+    void y_pos_changed(float y);
 private:
     float m_x;
     float m_y;

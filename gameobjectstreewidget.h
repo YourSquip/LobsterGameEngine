@@ -24,7 +24,6 @@ public:
     }
     GameObject* m_game_object;
 
-
 };
 
 

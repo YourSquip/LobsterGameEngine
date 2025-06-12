@@ -68,24 +68,31 @@ public:
         m_layout->addLayout(x_layout);
         m_layout->addLayout(y_layout);
         this->show();
-        connect(m_component,m_component->item_changed,this,this->update_x_component_info);
-        connect(m_component,m_component->item_changed,this,this->update_y_component_info);
+
+        Position* pos = dynamic_cast<Position*>(m_component);
+       // connect(pos,pos->x_pos_changed,this,this->update_x_component_info);
+        //connect(pos,pos->y_pos_changed,this,this->update_y_component_info);
         connect(x_line,x_line->textChanged,this,this->update_x_component);
         connect(y_line,y_line->textChanged,this,this->update_y_component);
     }
+
+    QString get_name()
+    {
+        return m_name->text();
+    }
+    void update_x_component_info(float x)
+    {
+        x_line->setText(QString::number(x));
+        qDebug()<<"PositionComponentInfoWidget: x_line->setText(QString::number(x));";
+    }
+    void update_y_component_info(float y)
+    {
+        y_line->setText(QString::number(y));
+        qDebug()<<"PositionComponentInfoWidget: y_line->setText(QString::number(y));";
+    }
 public slots:
 
-    void update_x_component_info(Component* component)
-    {
-        m_position = dynamic_cast<Position*>(component);
-        x_line->setText(QString::number(m_position->x()));
-    }
-    void update_y_component_info(Component* component)
-    {
-        m_position = dynamic_cast<Position*>(component);
-        y_line->setText(QString::number(m_position->y()));
 
-    }
 
     void update_x_component()
     {
@@ -101,7 +108,7 @@ public slots:
         qDebug()<<"update_y_component() slot";
         qDebug()<<m_position->y();
     }
-
+public:
     ~PositionComponentInfoWidget()
     {
         delete x_label;
@@ -110,6 +117,8 @@ public slots:
         delete y_line;
         //delete m_position;
     }
+
+
 signals:
     void new_x_in_line();
     void new_y_in_line();
@@ -199,12 +208,12 @@ public:
 
         qDebug()<<"AudioComponentInfoWidget";
         m_audio = dynamic_cast<Audio*>(component);
-        m_label =  new QLabel("audio file:",this);
-        m_audio_label = new QLabel(m_audio->get_audio_path(),this);
+        m_label =  new QLabel("audio file:");
+        m_audio_label = new QLabel(m_audio->get_audio_path());
 
         m_play_audio_button = new QPushButton("play");
         m_stop_audio_button = new QPushButton("stop");
-        m_open_audio_button = new QPushButton("Choose audio file",this);
+        m_open_audio_button = new QPushButton("Choose audio file");
         connect(m_open_audio_button,m_open_audio_button->clicked,this,this->open_audio_explorer);
         connect(m_audio,m_audio->item_changed,this,this->update_audio_component_info);
         connect(m_play_audio_button,m_open_audio_button->clicked,this,this->play_audio);

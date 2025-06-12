@@ -21,6 +21,7 @@ public:
         next_id++;
         m_name = QString::fromStdString("game_object" + std::to_string(m_id));
         m_parent = parent;
+        m_controlable = false;
         //add_component(new Position());
 
         //add_component(new Sprite());
@@ -31,6 +32,7 @@ public:
     }
     GameObject( QString name,GameObject* parent = nullptr)
     {
+        m_controlable = false;
         m_id = next_id;
         next_id++;
         m_name = name;
@@ -70,6 +72,16 @@ public:
     {
         m_name = name;
         emit name_changed(name);
+    }
+
+    void set_controlable(bool controlable)
+    {
+        m_controlable = controlable;
+    }
+
+    bool get_controlable()
+    {
+        return m_controlable;
     }
 
     void add_component(Component* component)
@@ -138,6 +150,7 @@ signals:
     void name_changed(QString new_name);
 private:
     unsigned int m_id;
+    bool m_controlable;
     QString m_name;
     static unsigned int next_id;
     QMap <QString, Component*> m_components;

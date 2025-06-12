@@ -20,12 +20,17 @@
 
 class Viewport: public QGraphicsView
 {
+    Q_OBJECT
 public:
     Viewport(QWidget* parent = nullptr):QGraphicsView(parent)
     {
         m_curr_scene = new LevelGraphicsScene();
         //m_show_grid_check = new QCheckBox("show grid",this);
         this->setScene(m_curr_scene);
+        updater = new LevelUpdater(m_curr_scene);
+        connect(updater,updater->changed_game_obj_x_pos,this,this->give_signal_of_changed_pos_x);
+        connect(updater,updater->changed_game_obj_y_pos,this,this->give_signal_of_changed_pos_y);
+        qDebug()<<"Viewport:connect(updater,updater->changed_game_obj_x_pos,this,this->give_signal_of_changed_pos_x);";
         //QMediaPlayer* player = new QMediaPlayer();
         //QAudioOutput* audioOutput = new QAudioOutput();
 
@@ -65,6 +70,10 @@ public:
             if(scene->get_level()->get_name() == level_name)
             {
                 m_curr_scene = scene;
+                updater = new LevelUpdater(m_curr_scene);
+                connect(updater,updater->changed_game_obj_x_pos,this,this->give_signal_of_changed_pos_x);
+                connect(updater,updater->changed_game_obj_y_pos,this,this->give_signal_of_changed_pos_y);
+                qDebug()<<"Viewport:connect(updater,updater->changed_game_obj_x_pos,this,this->give_signal_of_changed_pos_x);";
             }
         }
         this->show();
@@ -80,6 +89,10 @@ public slots:
         m_curr_scene->addItem(new GameObjectPixmapItem(game_object));
         //m_curr_scene->get_level()->add_game_object(game_object);
         this->setScene(m_curr_scene);
+        updater = new LevelUpdater(m_curr_scene);
+        connect(updater,updater->changed_game_obj_x_pos,this,this->give_signal_of_changed_pos_x);
+        connect(updater,updater->changed_game_obj_y_pos,this,this->give_signal_of_changed_pos_y);
+        qDebug()<<"Viewport:connect(updater,updater->changed_game_obj_x_pos,this,this->give_signal_of_changed_pos_x);";
         this->show();
         qDebug()<<"add object to current scene slot";
     }
@@ -101,8 +114,23 @@ public slots:
     {
         m_curr_scene->update_scene();
     }
+    void give_signal_of_changed_pos_x(float x)
+    {
+        emit changed_game_obj_x_pos(x);
+        qDebug()<<"Viewport:changed_game_obj_x_pos";
+    }
+    void give_signal_of_changed_pos_y(float y)
+    {
+        emit changed_game_obj_y_pos(y);
+        qDebug()<<"Viewport:changed_game_obj_y_pos";
+    }
+
+signals:
+    void changed_game_obj_x_pos(float x);
+    void changed_game_obj_y_pos(float y);
 private:
     LevelGraphicsScene* m_curr_scene;
+    LevelUpdater* updater;
     QVector<LevelGraphicsScene*> m_all_scenes;
     QCheckBox* m_show_grid_check;
     QGraphicsScene* m_tiles_list;
