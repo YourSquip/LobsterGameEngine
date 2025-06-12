@@ -10,7 +10,7 @@
 #include "componentinfowidget.h"
 #include "editor.h"
 
-class PixmapObjectUpdater:public QWidget
+/*class PixmapObjectUpdater:public QWidget
 {
     Q_OBJECT
 public:
@@ -22,7 +22,7 @@ public:
 signals:
     void x_position_has_changed(float x);
     void y_position_has_changed(float y);
-};
+};*/
 
 class GameObjectPixmapItem: public QGraphicsPixmapItem
 {
@@ -33,7 +33,7 @@ public:
         m_game_object = game_object;
         QMap<QString,Component*> all_components = m_game_object->get_all_components();
         Sprite* sprite = dynamic_cast<Sprite*>(all_components["sprite"]);
-        updater = new PixmapObjectUpdater();
+        //updater = new PixmapObjectUpdater();
         //m_game_object->get_all_components()
         //m_sprite = new SpriteComponentInfoWidget(all_components["sprite"]);
         //pixmap = sprite->get_pixmap().scaled(32,32);
@@ -48,8 +48,8 @@ public:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override {
 
 
-        emit updater->x_position_has_changed(this->pos().x());
-        emit updater->y_position_has_changed(this->pos().y());
+        //emit updater->x_position_has_changed(this->pos().x());
+        //emit updater->y_position_has_changed(this->pos().y());
         qDebug()<<"GameObjectPixmapItem:x_position_has_changed";
         qDebug()<<"GameObjectPixmapItem:y_position_has_changed";
         update_pixmap();
@@ -74,8 +74,8 @@ public:
         //update_pixmap();
         //auto pos_component = dynamic_cast<Position*>(m_game_object->get_all_components()["position"]);
         //m_game_object->get_all_components()["position"] = new Position(this->pos().x(),this->pos().y());
-        emit updater->x_position_has_changed(this->pos().x());
-        emit updater->y_position_has_changed(this->pos().y());
+        //emit updater->x_position_has_changed(this->pos().x());
+        //emit updater->y_position_has_changed(this->pos().y());
         qDebug()<<"GameObjectPixmapItem:x_position_has_changed";
         qDebug()<<"GameObjectPixmapItem:y_position_has_changed";
         QGraphicsPixmapItem::mouseReleaseEvent(event);
@@ -104,7 +104,7 @@ public:
                 new_x = x;
                 new_y = y - velocity;
                 this->setPos(new_x, new_x);
-                emit updater->y_position_has_changed(new_y);
+                //emit updater->y_position_has_changed(new_y);
                 qDebug()<<"GameObjectPixmapItem: y_position_has_changed";
 
             }
@@ -113,7 +113,7 @@ public:
                 new_x = x - velocity;
                 new_y = y;
                 this->setPos(new_x, new_y);
-                emit updater->x_position_has_changed(new_x);
+                //emit updater->x_position_has_changed(new_x);
                 qDebug()<<"GameObjectPixmapItem:x_position_has_changed";
             }
             if(event->key() == Qt::Key_S)
@@ -121,7 +121,7 @@ public:
                 new_x = x;
                 new_y = y + velocity;
                 this->setPos(new_x, new_y);
-                emit updater->y_position_has_changed(new_y);
+                //emit updater->y_position_has_changed(new_y);
                 qDebug()<<"GameObjectPixmapItem:y_position_has_changed";
             }
             if(event->key() == Qt::Key_D)
@@ -129,7 +129,7 @@ public:
                 new_x = x + velocity;
                 new_y = y;
                 this->setPos(new_x, new_y);
-                emit updater->x_position_has_changed(new_x);
+                //emit updater->x_position_has_changed(new_x);
                 qDebug()<<"GameObjectPixmapItem:x_position_has_changed";
             }
             QGraphicsItem::keyPressEvent(event);
@@ -141,7 +141,7 @@ public:
     {
         //GameObject* selected_obj = Editor::get_instance()->get_selected_game_obj();
         auto sprite_component = dynamic_cast<Sprite*>(m_game_object->get_all_components()["sprite"]);
-        auto pos_component = dynamic_cast<Position*>(m_game_object->get_all_components()["position"]);
+       // auto pos_component = dynamic_cast<Position*>(m_game_object->get_all_components()["position"]);
         m_pixmap = sprite_component->get_pixmap().scaled(32,32);
         //m_game_object->get_all_components()["position"] = new Position(this->pos().x(),this->pos().y());
         //qDebug()<<"this->pos().x(),this->pos().y()"<< this->pos().x()<<" "<<this->pos().y();
@@ -151,25 +151,17 @@ public:
     }
 
     //void update
-    PixmapObjectUpdater* get_updater()
+    /*PixmapObjectUpdater* get_updater()
     {
         return updater;
-    }
+    }*/
 
-    void set_updater(PixmapObjectUpdater* p_updater)
-    {
-        updater = p_updater;
-    }
 
-    void add_updater()
-    {
-        updater = new PixmapObjectUpdater();
-    }
 private:
     GameObject* m_game_object;
     //SpriteComponentInfoWidget* m_sprite;
     QPixmap m_pixmap;
-    PixmapObjectUpdater* updater;
+    //PixmapObjectUpdater* updater;
 };
 
 

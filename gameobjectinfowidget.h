@@ -31,7 +31,7 @@ public:
 
     }
 
-    PositionComponentInfoWidget* get_pos_comp_widget()
+   /* PositionComponentInfoWidget* get_pos_comp_widget()
     {
         for(auto widget: m_components)
         {
@@ -40,7 +40,7 @@ public:
                 return dynamic_cast<PositionComponentInfoWidget*>(widget);
             }
         }
-    }
+    }*/
 
 public slots:
     void show_obj_info()
@@ -50,7 +50,10 @@ public slots:
         qDebug()<< "show_obj_info";
         m_game_object = Editor::get_instance()->get_selected_game_obj();
         m_obj_name_line = new QLineEdit(m_game_object->get_name());
+
         m_controlable_check = new QCheckBox("is controlable");
+        m_controlable_check->setChecked(m_game_object->get_controlable());
+
         m_layout->addWidget(m_obj_name_line);
         m_layout->addWidget(m_controlable_check);
         m_layout->addWidget(new QSplitter(Qt::Horizontal));
@@ -62,14 +65,14 @@ public slots:
             i.next();
             qDebug()<<(i.key()) << ": " << i.value();
 
-            if (i.key() == "position")
+            /*if (i.key() == "position")
             {
                 PositionComponentInfoWidget* pos_info = new PositionComponentInfoWidget(i.value(),this);
                 m_components.push_back(pos_info);
                 m_layout->addWidget(pos_info);
                 //QObject::connect(,this,this->update_game_object_name);
                 m_layout->addWidget(new QSplitter(Qt::Horizontal));
-            }
+            }*/
             if (i.key() == "sprite")
             {
                 SpriteComponentInfoWidget* sprite_info = new SpriteComponentInfoWidget(i.value(),this);
@@ -99,19 +102,6 @@ public slots:
     void update_line_name(QString new_name)
     {
         m_obj_name_line->setText(new_name);
-    }
-
-    void update_x(float x)
-    {
-
-        get_pos_comp_widget()->update_x_component_info(x);
-        qDebug()<<"GameObjectsInfoWidget: get_pos_comp_widget()->update_x_component_info(x)";
-    }
-
-    void update_y(float y)
-    {
-        get_pos_comp_widget()->update_y_component_info(y);
-        qDebug()<<"GameObjectsInfoWidget: get_pos_comp_widget()->update_y_component_info(y)";
     }
 
 

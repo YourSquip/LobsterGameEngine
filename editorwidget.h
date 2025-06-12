@@ -85,8 +85,8 @@ private:
         connect(m_game_objects_tree,m_game_objects_tree->object_added, m_viewport,m_viewport->add_object_to_curr_scene);
         connect(m_play_bttn,m_play_bttn->clicked, this,this->run_game);
         connect(m_stop_bttn,m_stop_bttn->clicked, this,this->stop_game);
-        connect(m_viewport,m_viewport->changed_game_obj_x_pos, m_game_object_info, m_game_object_info->update_x);
-        connect(m_viewport,m_viewport->changed_game_obj_y_pos, m_game_object_info, m_game_object_info->update_y);
+       // connect(m_viewport,m_viewport->changed_game_obj_x_pos, m_game_object_info, m_game_object_info->update_x);
+       // connect(m_viewport,m_viewport->changed_game_obj_y_pos, m_game_object_info, m_game_object_info->update_y);
         //SpriteComponentInfoWidget* sprite_info = dynamic_cast<SpriteComponentInfoWidget*>(m_game_object_info->get_component_info_widget(QString::fromStdString("sprite")));
         //connect(sprite_info->get_sprite(),sprite_info->get_sprite()->pixmap_was_changed,m_viewport,m_viewport->object_changed_pixmap);
         //connect(m_game_objects_tree, m_game_objects_tree->object_added, m_viewport,m_viewport->add_object_to_curr_scene);

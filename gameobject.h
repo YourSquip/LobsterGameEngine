@@ -26,7 +26,7 @@ public:
 
         //add_component(new Sprite());
 
-        m_components["position"] = new Position();
+       // m_components["position"] = new Position();
         m_components["sprite"] = new Sprite();
         m_components["audio"] = new Audio();
     }
@@ -40,8 +40,9 @@ public:
         //add_component(new Position());
 
         //add_component(new Sprite());
-        m_components["position"] = new Position();
+        //m_components["position"] = new Position();
         m_components["sprite"] = new Sprite();
+        m_components["audio"] = new Audio();
     }
 
     void debug_info()

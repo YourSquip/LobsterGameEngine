@@ -27,7 +27,7 @@ signals:
 };
 
 
-class Position: public Component
+/*class Position: public Component
 {
     Q_OBJECT
 public:
@@ -76,6 +76,7 @@ private:
     float m_x;
     float m_y;
 };
+*/
 
 class Sprite: public Component
 {

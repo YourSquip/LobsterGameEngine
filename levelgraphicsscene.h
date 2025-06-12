@@ -115,7 +115,7 @@ private:
 
 };
 
-
+/*
 class LevelUpdater: public QWidget
 {
     Q_OBJECT
@@ -126,7 +126,7 @@ public:
         m_scene = scene;
         m_scene->items();
         qDebug()<<"LevelUpdater:constructor";
-        for(auto item: m_scene->items())
+        /*for(auto item: m_scene->items())
         {
             PixmapObjectUpdater* pixmap_updater = new PixmapObjectUpdater();
             GameObjectPixmapItem* pixmap_item = dynamic_cast<GameObjectPixmapItem*>(item);
@@ -134,7 +134,7 @@ public:
             connect(pixmap_item->get_updater(),pixmap_item->get_updater()->x_position_has_changed, this, this->give_signal_of_changed_pos_x);
             connect(pixmap_item->get_updater(),pixmap_item->get_updater()->y_position_has_changed, this, this->give_signal_of_changed_pos_y);
 
-        }
+        }*/
         /*if(!scene->get_layers().empty())
         {
             GameObject* new_obj = new GameObject();
@@ -158,7 +158,7 @@ public:
         else
         {
             qDebug()<<"LevelUpdater:scene->get_layers() is empty()";
-        }*/
+        }
 
     }
 public slots:
@@ -176,6 +176,6 @@ signals:
     void changed_game_obj_x_pos(float x);
     void changed_game_obj_y_pos(float y);
 
-};
+};*/
 
 #endif // LEVELGRAPHICSSCENE_H

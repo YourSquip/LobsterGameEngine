@@ -43,6 +43,7 @@ protected:
     Component* m_component;
 };
 
+/*
 class PositionComponentInfoWidget:public ComponentInfoWidget
 {
 public:
@@ -132,6 +133,7 @@ private:
     QLineEdit* y_line;
     Position* m_position;
 };
+*/
 
 class SpriteComponentInfoWidget:public ComponentInfoWidget
 {
