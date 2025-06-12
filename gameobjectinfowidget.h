@@ -5,6 +5,7 @@
 #include <QLabel>
 #include <QMap>
 #include <QMapIterator>
+#include <QSplitter>
 
 #include "gameobject.h"
 #include "componentinfowidget.h"
@@ -38,6 +39,7 @@ public slots:
         m_game_object = Editor::get_instance()->get_selected_game_obj();
         m_obj_name_line = new QLineEdit(m_game_object->get_name());
         m_layout->addWidget(m_obj_name_line);
+        m_layout->addWidget(new QSplitter(Qt::Horizontal));
         if(m_game_object==nullptr) qDebug()<<"gameobj is null";
         if(m_game_object->get_all_components().empty()) qDebug()<<"components container is null";
         QMapIterator<QString, Component*> i(m_game_object->get_all_components());
@@ -50,12 +52,25 @@ public slots:
                 PositionComponentInfoWidget* pos_info = new PositionComponentInfoWidget(i.value(),this);
                 m_components.push_back(pos_info);
                 m_layout->addWidget(pos_info);
+
+                m_layout->addWidget(new QSplitter(Qt::Horizontal));
             }
             if (i.key() == "sprite")
             {
                 SpriteComponentInfoWidget* sprite_info = new SpriteComponentInfoWidget(i.value(),this);
                 m_components.push_back(sprite_info);
                 m_layout->addWidget(sprite_info);
+
+                m_layout->addWidget(new QSplitter(Qt::Horizontal));
+
+            }
+            if (i.key() == "audio")
+            {
+                AudioComponentInfoWidget* audio_info = new AudioComponentInfoWidget(i.value(),this);
+                m_components.push_back(audio_info);
+                m_layout->addWidget(audio_info);
+
+                m_layout->addWidget(new QSplitter(Qt::Horizontal));
 
             }
         }

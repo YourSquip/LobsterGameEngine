@@ -27,6 +27,7 @@ public:
 
         m_components["position"] = new Position();
         m_components["sprite"] = new Sprite();
+        m_components["audio"] = new Audio();
     }
     GameObject( QString name,GameObject* parent = nullptr)
     {

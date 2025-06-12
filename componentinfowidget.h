@@ -23,6 +23,7 @@ public:
 
         qDebug()<<"name:"<<component->get_name();
         m_layout = new QVBoxLayout(this);
+        //m_layout->
         m_layout->addWidget(m_name);
         qDebug()<<"ComponentInfoWidget";
         this->setVisible(true);
@@ -181,14 +182,95 @@ public slots:
         m_pixmap->setPixmap(m_sprite->get_pixmap());
         //emit pixmap_was_changed();
     }
-signals:
-    //void pi
 
 private:
     QLabel* m_label;
     QLabel* m_pixmap;
     Sprite* m_sprite;
     QPushButton* m_open_pixmap_button;
+
+};
+
+class AudioComponentInfoWidget:public ComponentInfoWidget
+{
+public:
+    AudioComponentInfoWidget(Component* component, QWidget* parent = nullptr):ComponentInfoWidget(component,parent)
+    {
+
+        qDebug()<<"AudioComponentInfoWidget";
+        m_audio = dynamic_cast<Audio*>(component);
+        m_label =  new QLabel("audio file:",this);
+        m_audio_label = new QLabel(m_audio->get_audio_path(),this);
+
+        m_play_audio_button = new QPushButton("play");
+        m_stop_audio_button = new QPushButton("stop");
+        m_open_audio_button = new QPushButton("Choose audio file",this);
+        connect(m_open_audio_button,m_open_audio_button->clicked,this,this->open_audio_explorer);
+        connect(m_audio,m_audio->item_changed,this,this->update_audio_component_info);
+        connect(m_play_audio_button,m_open_audio_button->clicked,this,this->play_audio);
+        connect(m_stop_audio_button,m_open_audio_button->clicked,this,this->stop_audio);
+        QHBoxLayout* layout = new QHBoxLayout();
+        QHBoxLayout* bttn_layout = new QHBoxLayout();
+
+        layout->addWidget(m_label);
+        layout->addWidget(m_audio_label);
+
+        bttn_layout->addWidget(m_play_audio_button);
+        bttn_layout->addWidget(m_stop_audio_button);
+        m_layout->addLayout(layout);
+        m_layout->addLayout(bttn_layout);
+        m_layout->addWidget(m_open_audio_button);
+
+    }
+    Audio* get_audio()
+    {
+        return m_audio;
+    }
+
+    ~AudioComponentInfoWidget()
+    {
+        delete m_label;
+        //delete m_audio;
+        //delete m_sprite;
+        //delete m_open_pixmap_button;
+    }
+
+public slots:
+    void open_audio_explorer()
+    {
+        QString fileName = QFileDialog::getOpenFileName(this, "Open File", "../audio", "Audio files (*.wav *.mp3)");
+        if (!fileName.isEmpty())
+        {
+            m_audio->set_audio(fileName);
+            qDebug()<<"file name:"<<fileName;
+            emit m_audio->audio_was_changed();
+        }
+    }
+    void update_audio_component_info(Component* component)
+    {
+        m_audio = dynamic_cast<Audio*>(component);
+        m_label->setText(m_audio->get_audio_path());
+        //m_audio
+        //m_pixmap->setPixmap(m_sprite->get_pixmap());
+        //emit pixmap_was_changed();
+    }
+    void play_audio()
+    {
+        m_audio->play_audio();
+    }
+    void stop_audio()
+    {
+        m_audio->play_audio();
+    }
+
+private:
+    QLabel* m_label;
+    QLabel* m_audio_label;
+    Audio* m_audio;
+    QPushButton* m_open_audio_button;
+
+    QPushButton* m_play_audio_button;
+    QPushButton* m_stop_audio_button;
 
 };
 

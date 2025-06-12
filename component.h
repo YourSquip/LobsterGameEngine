@@ -4,9 +4,8 @@
 #include <QString>
 #include <QPixmap>
 #include <QObject>
-//#include <Q>
-//#include <Q
-//#include <QtMultimedia/QAudioInput>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 
 class Component: public QObject
@@ -111,31 +110,39 @@ private:
 };
 
 
-/*class Audio: public Component
+class Audio: public Component
 {
+    Q_OBJECT
 public:
     Audio()
     {
-        m_name = "sprite";
-        m_pixmap = QPixmap(":/sprites/icons/object.png");
+        m_name = "audio";
+        m_media_player = new QMediaPlayer();
+        m_audio_output = new QAudioOutput();
+        m_media_player->setAudioOutput(m_audio_output);
+        m_media_player->setSource(QUrl::fromLocalFile("D:/QtProjects/LobsterEngine2.0/LobsterEngine/audio/coin_sound.wav"));
+        m_audio_path = "D:/QtProjects/LobsterEngine2.0/LobsterEngine/audio/coin_sound.wav";
+        m_audio_output->setVolume(50);
     }
 
-    Audio(QPixmap pixmap)
+    Audio(QString url)
     {
-        m_name = "sprite";
-        m_pixmap = pixmap;
+        m_name = "audio";
+        m_audio_path = url;
+        m_media_player = new QMediaPlayer();
+        m_audio_output = new QAudioOutput();
+        m_media_player->setSource(QUrl::fromLocalFile(url));
+        m_audio_output->setVolume(50);
     }
 
-
-    QPixmap get_pixmap()
+    void play_audio()
     {
-        return m_pixmap;
+        m_media_player->play();
     }
 
-    void set_pixmap(QPixmap pixmap)
+    void stop_audio()
     {
-        m_pixmap = pixmap;
-        emit item_changed(this);
+        m_media_player->stop();
     }
 
     QString get_name() override
@@ -143,8 +150,23 @@ public:
         return m_name;
     }
 
+    void set_audio(QString url)
+    {
+        m_media_player->setSource(QUrl::fromLocalFile(url));
+        m_audio_path = url;
+        emit audio_was_changed();
+    }
+
+    QString get_audio_path()
+    {
+        return m_audio_path;
+    }
+signals:
+    void audio_was_changed();
 private:
-    //QPixmap m_pixmap;
-};*/
+    QAudioOutput* m_audio_output;
+    QMediaPlayer* m_media_player;
+    QString m_audio_path;
+};
 
 #endif // COMPONENT_H
