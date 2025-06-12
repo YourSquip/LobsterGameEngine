@@ -75,6 +75,8 @@ private:
         m_layout->addLayout( m_map_editor_layout);
         m_layout->addWidget(m_game_object_info);
 
+        //connect(m_game_object_info->get_obj_name_line(), m_game_object_info->get_obj_name_line()->textChanged, m_game_objects_tree,m_game_objects_tree->change_name_from_info);
+
         connect(m_game_objects_tree,m_game_objects_tree->item_selected, m_game_object_info,m_game_object_info->show_obj_info);
         connect(m_game_objects_tree,m_game_objects_tree->object_added, m_viewport,m_viewport->add_object_to_curr_scene);
         connect(m_play_bttn,m_play_bttn->clicked, this,this->run_game);

@@ -88,13 +88,17 @@ public slots:
 
     void update_x_component()
     {
-        m_position->set_x(x_line->text().toInt());
+        m_position->set_x(x_line->text().toFloat());
+        qDebug()<<"update_x_component() slot";
+        qDebug()<<m_position->x();
     }
 
 
     void update_y_component()
     {
-        m_position->set_y(y_line->text().toInt());
+        m_position->set_y(y_line->text().toFloat());
+        qDebug()<<"update_y_component() slot";
+        qDebug()<<m_position->y();
     }
 
     ~PositionComponentInfoWidget()
@@ -105,6 +109,10 @@ public slots:
         delete y_line;
         //delete m_position;
     }
+signals:
+    void new_x_in_line();
+    void new_y_in_line();
+
 
 private:
     QLabel* x_label;
@@ -162,7 +170,7 @@ public slots:
         if (!fileName.isEmpty())
         {
             QPixmap pixmap(fileName);
-            m_sprite->set_pixmap(pixmap.scaled(32,32));
+            m_sprite->set_pixmap(pixmap);
             qDebug()<<"file name:"<<fileName;
             emit m_sprite->pixmap_was_changed();
         }
@@ -173,6 +181,8 @@ public slots:
         m_pixmap->setPixmap(m_sprite->get_pixmap());
         //emit pixmap_was_changed();
     }
+signals:
+    //void pi
 
 private:
     QLabel* m_label;

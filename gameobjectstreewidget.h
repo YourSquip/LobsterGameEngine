@@ -20,8 +20,11 @@ public:
     {
         this->setFlags(Qt::ItemIsEditable | Qt::ItemIsSelectable | Qt::ItemIsEnabled| Qt::ItemIsDragEnabled|  Qt::ItemIsDropEnabled);
         this->setIcon(0, QIcon(":/sprites/icons/object.png"));
+        //connect(m_game_object, m_game_object->name_changed, this, this->change_item_name);
     }
     GameObject* m_game_object;
+
+
 };
 
 
@@ -58,6 +61,7 @@ public:
         QObject::connect(m_new_object_bttn, &QPushButton::clicked, this, &GameObjectsTreeWidget::create_empty_object_in_tree);
 
         //QObject::connect(, &QPushButton::clicked, this, &GameObjectsTreeWidget::create_empty_object_in_tree);
+        //QObject::connect(, &QPushButton::clicked, this, &GameObjectsTreeWidget::create_empty_object_in_tree);
 
         m_tree_widget->setHeaderHidden(true);
 
@@ -75,6 +79,8 @@ public:
             if (game_object->get_parent() == nullptr)
             {
                 GameObjectTreeItem* item = create_game_object_hierarchy(game_object);
+                QObject::connect(item->m_game_object, item->m_game_object->name_changed, this, this->change_item_name);
+                QObject::connect(m_tree_widget, &QTreeWidget::itemChanged, this, this->change_game_obj_name);
                 m_tree_widget->insertTopLevelItem(0, item);
             }
         }
@@ -114,6 +120,8 @@ public:
                 item->addChild(create_game_object_hierarchy(child));
             }
         }
+        QObject::connect(item->m_game_object, item->m_game_object->name_changed, this, this->change_item_name);
+        QObject::connect(m_tree_widget, &QTreeWidget::itemChanged, this, this->change_game_obj_name);
         return item;
     }
     /*void dragEnterEvent(QDragEnterEvent *event){
@@ -135,8 +143,16 @@ signals:
 
     void item_selected(GameObject* game_object);
 
-public slots:
 
+public slots:
+    void change_item_name(QString new_name)
+    {
+        this->get_selected_item()->setText(0,new_name);
+    }
+    void change_game_obj_name()
+    {
+        this->get_selected_game_object()->set_name(this->get_selected_item()->text(0));
+    }
     void select_tree_item()
     {
         if (!get_tree_widget()->selectedItems().empty())
@@ -159,15 +175,26 @@ public slots:
     {
         GameObject* new_object = new GameObject();
         GameObjectTreeItem* item = new GameObjectTreeItem();
+
         item->setText(0, QString(new_object->get_name()));
         item->m_game_object = new_object;
         this->m_level->add_game_object(new_object);
         m_tree_widget->insertTopLevelItem(0, item);
         qDebug()<<"object added signal";
+        QObject::connect(item->m_game_object, item->m_game_object->name_changed, this, this->change_item_name);
+        QObject::connect(m_tree_widget, &QTreeWidget::itemChanged, this, this->change_game_obj_name);
         emit object_added(new_object);
+    }
+
+    void change_name_from_info(QString new_name)
+    {
+        get_selected_game_object()->set_name(new_name);
+        get_selected_item()->setText(0,new_name);
+        qDebug()<<"CHANGED NAME:"<<new_name;
     }
 signals:
     void object_added(GameObject* game_object);
+    //void game_obj_name_changed(QString new_name);
 
 private:
 

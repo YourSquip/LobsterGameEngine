@@ -13,6 +13,7 @@
 
 class GameObjectInfoWidget: public QWidget
 {
+    //Q_OBJECT
 public:
     GameObjectInfoWidget(QWidget* parent = nullptr):QWidget(parent)
     {
@@ -23,7 +24,9 @@ public:
         }
         m_layout = new QVBoxLayout(this);
         m_game_object = nullptr;
+        m_obj_name_line = new QLineEdit("");
         this->setMinimumWidth(300);
+
     }
 
 public slots:
@@ -33,7 +36,8 @@ public slots:
         m_layout = new QVBoxLayout(this);
         qDebug()<< "show_obj_info";
         m_game_object = Editor::get_instance()->get_selected_game_obj();
-        m_layout->addWidget(new QLabel(m_game_object->get_name()));
+        m_obj_name_line = new QLineEdit(m_game_object->get_name());
+        m_layout->addWidget(m_obj_name_line);
         if(m_game_object==nullptr) qDebug()<<"gameobj is null";
         if(m_game_object->get_all_components().empty()) qDebug()<<"components container is null";
         QMapIterator<QString, Component*> i(m_game_object->get_all_components());
@@ -55,6 +59,8 @@ public slots:
 
             }
         }
+        QObject::connect(m_obj_name_line,m_obj_name_line->textEdited,this,this->update_game_object_name);
+        QObject::connect(m_game_object,m_game_object->name_changed,this,this->update_line_name);
 
         /*for (QHash<QString,Component*>::iterator i = m_game_object->get_all_components().begin(); i != m_game_object->get_all_components().end(); ++i)
         {    //cout << qPrintable(key()) << ": " << i.value() << endl;
@@ -69,6 +75,17 @@ public slots:
         }*/
     }
 
+    void update_line_name(QString new_name)
+    {
+        m_obj_name_line->setText(new_name);
+    }
+
+
+    void update_game_object_name(QString new_name)
+    {
+        m_game_object->set_name(new_name);
+    }
+public:
     ComponentInfoWidget* get_component_info_widget(QString name)
     {
         for(auto comp: m_components)
@@ -79,6 +96,10 @@ public slots:
             }
         }
     }
+    QLineEdit* get_obj_name_line()
+    {
+        return m_obj_name_line;
+    }
 
     ~GameObjectInfoWidget()
     {
@@ -87,6 +108,7 @@ public slots:
         m_components.clear();
     }
 private:
+    QLineEdit* m_obj_name_line;
     QVector<ComponentInfoWidget*> m_components;
     GameObject* m_game_object;
     QVBoxLayout* m_layout;

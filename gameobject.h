@@ -68,6 +68,7 @@ public:
     void set_name(QString name)
     {
         m_name = name;
+        emit name_changed(name);
     }
 
     void add_component(Component* component)
@@ -124,13 +125,16 @@ public:
         m_parent = parent;
     }
 
+
+
     QMap <QString, Component*> get_all_components()
     {
         if(!m_components.empty())
             return m_components;
         qDebug()<<"m_components are empty";
     }
-
+signals:
+    void name_changed(QString new_name);
 private:
     unsigned int m_id;
     QString m_name;
