@@ -92,6 +92,10 @@ public:
     {
         return m_layers[layer_ind];
     }
+    /*void update() override
+    {
+
+    }*/
     ~LevelGraphicsScene()
     {
         m_layers.clear();
@@ -119,14 +123,37 @@ public:
         return intersected_items;
     }
 
+    QVector<GameObjectPixmapItem*> get_all_intersected_interactable_objects(GameObjectPixmapItem* item1)
+    {
+        QVector<GameObjectPixmapItem*> intersected_items;
+        for(auto item: this->items())
+        {
+
+            GameObjectPixmapItem* game_item = dynamic_cast<GameObjectPixmapItem*>(item);
+            qDebug()<<"game_item: "<<game_item->get_game_object()->get_name();
+            qDebug()<<"item1: "<<item1->get_game_object()->get_name();
+            if(do_item_intersects_with_item(item1,game_item) && game_item->get_game_object()->get_states()->m_interactable)
+            {
+                intersected_items.push_back(game_item);
+            }
+        }
+        return intersected_items;
+    }
+
     void keyPressEvent(QKeyEvent *event) override
     {
         GameObjectPixmapItem* curr_item =  get_current_item();
         curr_item->keyPressEvent(event);
+        //this->setFlag(QGraphicsScene::It);
+        //this->setFlag(QGraphicsItem::ItemIsMovable,true);
+        //this->setAcceptDrops(true);
+        //curr_item->update_pixmap();
         if(Editor::get_instance()->game_running_state())
         {
+            qDebug()<<"keyPressEvent:game running";
             if(curr_item->get_game_object()->get_states()->m_controlable)
             {
+                qDebug()<<"keyPressEvent:game object is controlable";
                 qreal x = curr_item->pos().x();
                 qreal y = curr_item->pos().y();
                 float velocity = 20;
@@ -161,22 +188,26 @@ public:
                     curr_item->setPos(new_x, new_y);
                     qDebug()<<"GameObjectPixmapItem:x_position_has_changed";
                 }
-                //QGraphicsItem::keyPressEvent(event);
+
+                //QGraphicsScene::keyPressEvent(event);
             }
-        }
-        /*if(m_game_object->get_states()->m_can_interact)
+
+            /*if(curr_item->get_game_object()->get_states()->m_can_interact)
             {
 
-            }
+                if(event->key() == Qt::Key_Space)
+                {
+                    curr_item->update_pixmap();
+                    QVector<GameObjectPixmapItem*> items = get_all_intersected_interactable_objects(curr_item);
+                    for(auto item: items)
+                    {
+                        this->removeItem(item);
+                    }
+                }
+            }*/
         }
-        else
-        {
-            if(event->key() == Qt::Key_Enter)
-            {
-                update_pixmap();
-            }
-        }*/
-        //QGraphicsScene::keyPressEvent(event);
+
+        QGraphicsScene::keyPressEvent(event);
     }
 
     GameObjectPixmapItem* get_current_item()

@@ -30,7 +30,11 @@ public:
 
     bool get_current_in_scene()
     {
-        return m_current_in_scene;
+        if(this->get_game_object()->get_states()->m_controlable)
+        {
+            return true;
+        }
+        return false;
     }
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override {
@@ -45,7 +49,7 @@ public:
             this->setFlag(QGraphicsItem::ItemIsMovable,true);
             this->setAcceptDrops(true);
             QGraphicsPixmapItem::mousePressEvent(event);
-            m_current_in_scene = true;
+            //m_current_in_scene = true;
         }
         else
         {
@@ -69,8 +73,18 @@ public:
     void keyPressEvent(QKeyEvent *event) override
     {
         this->setFlag(QGraphicsItem::ItemIsMovable,true);
+        this->setFlag(QGraphicsItem::ItemIsSelectable,true);
         this->setAcceptDrops(true);
+        /*if(m_game_object->get_states()->m_controlable)
+        {
+            m_current_in_scene = true;
+        }
+        else
+        {
+            m_current_in_scene = false;
+        }*/
         QGraphicsItem::keyPressEvent(event);
+        //m_current_in_scene = true;
         /*if(Editor::get_instance()->game_running_state())
         {
             if(m_game_object->get_states()->m_controlable)
