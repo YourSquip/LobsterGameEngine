@@ -128,13 +128,15 @@ public:
         QVector<GameObjectPixmapItem*> intersected_items;
         for(auto item: this->items())
         {
-
             GameObjectPixmapItem* game_item = dynamic_cast<GameObjectPixmapItem*>(item);
-            qDebug()<<"game_item: "<<game_item->get_game_object()->get_name();
-            qDebug()<<"item1: "<<item1->get_game_object()->get_name();
-            if(do_item_intersects_with_item(item1,game_item) && game_item->get_game_object()->get_states()->m_interactable)
+            if(game_item)
             {
-                intersected_items.push_back(game_item);
+                qDebug()<<"game_item: "<<game_item->get_game_object()->get_name();
+                qDebug()<<"item1: "<<item1->get_game_object()->get_name();
+                if(do_item_intersects_with_item(item1,game_item) && game_item->get_game_object()->get_states()->m_interactable)
+                {
+                    intersected_items.push_back(game_item);
+                }
             }
         }
         return intersected_items;
@@ -192,7 +194,7 @@ public:
                 //QGraphicsScene::keyPressEvent(event);
             }
 
-            /*if(curr_item->get_game_object()->get_states()->m_can_interact)
+            if(curr_item->get_game_object()->get_states()->m_can_interact)
             {
 
                 if(event->key() == Qt::Key_Space)
@@ -204,7 +206,7 @@ public:
                         this->removeItem(item);
                     }
                 }
-            }*/
+            }
         }
 
         QGraphicsScene::keyPressEvent(event);
