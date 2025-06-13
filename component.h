@@ -79,6 +79,8 @@ public:
         //m_media_player->setSource(QUrl::fromLocalFile("D:/QtProjects/LobsterEngine2.0/LobsterEngine/audio/coin_sound.wav"));
         m_audio_path = "";
         m_audio_output->setVolume(50);
+        m_auto_play = false;
+        m_play_on_interact = false;
     }
 
     Audio(QString url)
@@ -89,6 +91,8 @@ public:
         m_audio_output = new QAudioOutput();
         m_media_player->setSource(QUrl::fromLocalFile(url));
         m_audio_output->setVolume(50);
+        m_auto_play = false;
+        m_play_on_interact = false;
     }
 
     void play_audio()
@@ -117,12 +121,36 @@ public:
     {
         return m_audio_path;
     }
+
+    void set_autoplay(bool flag)
+    {
+        m_auto_play = flag;
+    }
+
+    void set_play_on_interact(bool flag)
+    {
+        m_play_on_interact = flag;
+    }
+
+    bool get_autoplay()
+    {
+        return m_auto_play;
+    }
+
+    bool get_play_on_interact()
+    {
+        return m_play_on_interact;
+    }
+
 signals:
     void audio_was_changed();
 private:
     QAudioOutput* m_audio_output;
     QMediaPlayer* m_media_player;
     QString m_audio_path;
+
+    bool m_auto_play;
+    bool m_play_on_interact;
 };
 
 #endif // COMPONENT_H

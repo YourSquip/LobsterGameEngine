@@ -25,6 +25,8 @@ public:
     Viewport(QWidget* parent = nullptr):QGraphicsView(parent)
     {
         m_curr_scene = new LevelGraphicsScene();
+
+        m_scene_before_play = new LevelGraphicsScene();
         this->setScene(m_curr_scene);
 
         this->show();
@@ -39,6 +41,7 @@ public:
             if(scene->get_level()->get_name() == level_name)
             {
                 m_curr_scene = scene;
+                m_scene_before_play->copy_to_current(scene);
             }
         }
         this->show();
@@ -84,11 +87,14 @@ public slots:
         qDebug()<<"Viewport:changed_game_obj_y_pos";
     }
 
+
+
 signals:
     void changed_game_obj_x_pos(float x);
     void changed_game_obj_y_pos(float y);
 private:
     LevelGraphicsScene* m_curr_scene;
+    LevelGraphicsScene* m_scene_before_play;
     QVector<LevelGraphicsScene*> m_all_scenes;
     QCheckBox* m_show_grid_check;
     QGraphicsScene* m_tiles_list;

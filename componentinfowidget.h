@@ -13,6 +13,7 @@
 #include <QFileDialog>
 
 #include "component.h"
+#include "editor.h"
 
 class ComponentInfoWidget:public QWidget
 {
@@ -130,16 +131,29 @@ public:
         connect(m_audio,m_audio->item_changed,this,this->update_audio_component_info);
         connect(m_play_audio_button,m_open_audio_button->clicked,this,this->play_audio);
         connect(m_stop_audio_button,m_open_audio_button->clicked,this,this->stop_audio);
+
+
+        m_autoplay_check = new QCheckBox("autoplay");
+        m_play_when_interacted_check = new QCheckBox("play on interaction");
+
+        connect(m_autoplay_check, m_autoplay_check->stateChanged, this, this->change_autoplay_flag);
+        connect(m_play_when_interacted_check, m_play_when_interacted_check->stateChanged, this, this->change_play_on_interact_flag);
         QHBoxLayout* layout = new QHBoxLayout();
         QHBoxLayout* bttn_layout = new QHBoxLayout();
+        QHBoxLayout* check_layout = new QHBoxLayout();
 
         layout->addWidget(m_label);
         layout->addWidget(m_audio_label);
 
         bttn_layout->addWidget(m_play_audio_button);
         bttn_layout->addWidget(m_stop_audio_button);
+
+        check_layout->addWidget(m_autoplay_check);
+        check_layout->addWidget( m_play_when_interacted_check);
+
         m_layout->addLayout(layout);
         m_layout->addLayout(bttn_layout);
+        m_layout->addLayout(check_layout);
         m_layout->addWidget(m_open_audio_button);
 
     }
@@ -176,6 +190,31 @@ public slots:
     void stop_audio()
     {
         m_audio->play_audio();
+    }
+
+    void play_when_game_starts()
+    {
+        if(Editor::get_instance()->game_running_state())
+        {
+            m_audio->play_audio();
+        }
+    }
+
+    void play_on_interaction()
+    {
+        if(Editor::get_instance()->game_running_state())
+        {
+            m_audio->play_audio();
+        }
+    }
+
+    void change_autoplay_flag(bool flag)
+    {
+        m_audio->set_autoplay(flag);
+    }
+    void change_play_on_interact_flag(bool flag)
+    {
+        m_audio->set_play_on_interact(flag);
     }
 
 private:

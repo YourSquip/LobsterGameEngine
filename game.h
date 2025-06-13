@@ -15,6 +15,7 @@ public:
         m_title = "Untitled Game";
         Level* empty_level = new Level();
         curr_level = empty_level;
+        //level_before_play = *empty_level;
     }
     Game(QString title):Game()
     {

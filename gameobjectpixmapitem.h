@@ -24,6 +24,7 @@ public:
         this->setFlag(QGraphicsItem::ItemIsSelectable,true);
         this->setFlag(QGraphicsItem::ItemIsMovable,true);
         this->setFlag(QGraphicsItem::ItemIsFocusable,true);
+        this->setShapeMode(QGraphicsPixmapItem::HeuristicMaskShape);
         this->setAcceptDrops(true);
         m_current_in_scene = false;
     }
@@ -75,70 +76,7 @@ public:
         this->setFlag(QGraphicsItem::ItemIsMovable,true);
         this->setFlag(QGraphicsItem::ItemIsSelectable,true);
         this->setAcceptDrops(true);
-        /*if(m_game_object->get_states()->m_controlable)
-        {
-            m_current_in_scene = true;
-        }
-        else
-        {
-            m_current_in_scene = false;
-        }*/
         QGraphicsItem::keyPressEvent(event);
-        //m_current_in_scene = true;
-        /*if(Editor::get_instance()->game_running_state())
-        {
-            if(m_game_object->get_states()->m_controlable)
-            {
-                qreal x = this->pos().x();
-                qreal y = this->pos().y();
-                float velocity = 20;
-                float new_x = x;
-                float new_y = y;
-                if(event->key() == Qt::Key_W)
-                {
-                    new_x = x;
-                    new_y = y - velocity;
-                    this->setPos(new_x, new_y);
-                    qDebug()<<"GameObjectPixmapItem: y_position_has_changed";
-
-                }
-                if(event->key() == Qt::Key_A)
-                {
-                    new_x = x - velocity;
-                    new_y = y;
-                    this->setPos(new_x, new_y);
-                    qDebug()<<"GameObjectPixmapItem:x_position_has_changed";
-                }
-                if(event->key() == Qt::Key_S)
-                {
-                    new_x = x;
-                    new_y = y + velocity;
-                    this->setPos(new_x, new_y);
-                    qDebug()<<"GameObjectPixmapItem:y_position_has_changed";
-                }
-                if(event->key() == Qt::Key_D)
-                {
-                    new_x = x + velocity;
-                    new_y = y;
-                    this->setPos(new_x, new_y);
-                    qDebug()<<"GameObjectPixmapItem:x_position_has_changed";
-                }
-                QGraphicsItem::keyPressEvent(event);
-            }
-
-            /*if(m_game_object->get_states()->m_can_interact)
-            {
-
-            }
-        }
-        else
-        {
-            if(event->key() == Qt::Key_Enter)
-            {
-                update_pixmap();
-            }
-        }*/
-
     }
 
     GameObject* get_game_object()

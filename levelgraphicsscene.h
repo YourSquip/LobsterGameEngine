@@ -192,24 +192,63 @@ public:
                 }
 
                 //QGraphicsScene::keyPressEvent(event);
-            }
 
-            if(curr_item->get_game_object()->get_states()->m_can_interact)
-            {
-
-                if(event->key() == Qt::Key_Space)
+                if(curr_item->get_game_object()->get_states()->m_can_interact)
                 {
-                    curr_item->update_pixmap();
-                    QVector<GameObjectPixmapItem*> items = get_all_intersected_interactable_objects(curr_item);
-                    for(auto item: items)
+
+                    if(event->key() == Qt::Key_Space)
                     {
-                        this->removeItem(item);
+                        curr_item->update_pixmap();
+                        //auto colliding_items = curr_item->collidesWithItem();
+                        QVector<GameObjectPixmapItem*> items = get_all_intersected_interactable_objects(curr_item);
+                        for(auto item: items)
+                        {
+                            if(curr_item->collidesWithItem(item))
+                            {
+                                Audio* audio = dynamic_cast<Audio*>(item->get_game_object()->get_component("audio"));
+                                if(audio->get_play_on_interact())
+                                {
+                                    audio->play_audio();
+                                }
+                            }
+                            //this->removeItem(item);
+                            //Audio* audio = dynamic_cast<Audio*>(item->get_game_object()->get_component("audio"));
+                            //if(audio->get_play_on_interact())
+                           // {
+                            //    audio->play_audio();
+                            //}
+                        }
+                        /*for(auto item: colliding_items)
+                        {
+                            if(item!=m_map)
+                            {
+                                GameObjectPixmapItem* game_item= dynamic_cast<GameObjectPixmapItem*>(item);
+                                Audio* audio = dynamic_cast<Audio*>(game_item->get_game_object()->get_component("audio"));
+                                if(audio->get_play_on_interact())
+                                {
+                                    audio->play_audio();
+                                }
+                            }
+
+                        }
+                        //if(curr_item->collidingItems())
+                        /*QVector<GameObjectPixmapItem*> items = get_all_intersected_interactable_objects(curr_item);
+                        for(auto item: items)
+                        {
+
+                            //this->removeItem(item);
+                            Audio* audio = dynamic_cast<Audio*>(item->get_game_object()->get_component("audio"));
+                            if(audio->get_play_on_interact())
+                            {
+                                audio->play_audio();
+                            }
+                        }*/
                     }
                 }
             }
-        }
 
-        QGraphicsScene::keyPressEvent(event);
+
+        }
     }
 
     GameObjectPixmapItem* get_current_item()
@@ -222,6 +261,17 @@ public:
                 return game_item;
             }
         }
+    }
+
+    void copy_to_current(LevelGraphicsScene* scene)
+    {
+        this->clear();
+        for(auto item: scene->items())
+        {
+            GameObjectPixmapItem* game_item = dynamic_cast<GameObjectPixmapItem*>(item);
+            this->addItem(game_item);
+        }
+
     }
 
     QVector<GameObjectPixmapItem*> get_all_controlable();

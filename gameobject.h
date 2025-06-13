@@ -93,6 +93,20 @@ public:
         m_components.remove(component->get_name());
     }
 
+    Component* get_component(QString name)
+    {
+        QMapIterator<QString, Component*> i(m_components);
+        while (i.hasNext()) {
+            i.next();
+            qDebug()<<(i.key()) << ": " << i.value();
+
+            if (i.key() == name)
+            {
+                return i.value();
+            }
+        }
+        return nullptr;
+    }
 
     void add_child(GameObject* game_object)
     {
