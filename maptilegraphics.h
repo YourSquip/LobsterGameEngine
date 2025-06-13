@@ -58,21 +58,13 @@ public:
     {
         qDebug() << "tile clicked!";
 
-        //m_pixmap = Editor::get_instance()->get_map_tile()->get_graphics()->get_pixmap();
-        //this->setPixmap(QPixmap(":/sprites/empty_tile.png"));
-        //this->setVisible(true);
-        //QGraphicsItem::mousePressEvent(event);
-        //EditorToolType tool_type = Editor::get_instance()->get_editor_tool_type();
+
         if(m_is_map)
         {
 
-            //qDebug() << "Item clicked! It was"<< m_name;
             if(Editor::get_instance()->get_editor_tool_type() == 1)
             {
 
-                //m_name = Editor::get_instance()->get_map_tile->get;
-                //m_pixmap = Editor::get_instance()->get_map_tile()->get_graphics()->get_pixmap();
-                //m_can_walk = On;
                 m_pixmap_path = MapEditorSettings::get_instance()->get_paint_tile_pixmap_path();
                 m_pixmap = QPixmap(m_pixmap_path);
                 this->setPixmap(m_pixmap);
@@ -80,20 +72,15 @@ public:
             }
             if(Editor::get_instance()->get_editor_tool_type() == 2)
             {
-                //m_name = "none";
                 m_pixmap_path = ":/sprites/empty_tile.png";
                 m_pixmap = QPixmap(":/sprites/empty_tile.png");
-                //m_can_walk = NotAble;
                 this->setPixmap(m_pixmap);
             }
             QGraphicsItem::mousePressEvent(event); // вызов базового обработчика, если нужно
         }
         if(!m_is_map)
         {
-            qDebug()<<"IT SHOULD BE CHANGING TO:";
-            //MapEditorSettings::get_instance()->set_paint_tile_pixmap_path(m_pixmap_path);
             MapEditorSettings::get_instance()->set_paint_tile_pixmap_path(this->get_pixmap_path());
-            qDebug()<<m_pixmap_path;
         }
 
     }
@@ -123,22 +110,14 @@ public:
         if(!m_registered_graphics.contains(sprite_path))
         {
             register_graphics(sprite_path);
-            //m_paths.push_back(sprite_path);
-            //MapTileGraphics* graphics = new MapTileGraphics(QPixmap(sprite_path));
-            //m_registered_graphics[sprite_path] = graphics;
-            //m_registered_graphics[sprite_path] = new MapTileGraphics(QPixmap(sprite_path));
-            //m_registered_graphics.            //register_graphics(sprite_path);
+
         }
         else
         {
             return m_registered_graphics[sprite_path];
         }
     }
-    /*MapTileGraphicsFactory& get_instance()
-    {
-        static MapTileGraphicsFactory instance = MapTileGraphicsFactory();
-        return instance;
-    }*/
+
     static MapTileGraphicsFactory* get_instance()
     {
         if(instance) return  instance;
@@ -153,14 +132,7 @@ public:
     {
         return m_graphics;
     }
-    /*MapTileGraphics* get_paint_tile()
-    {
-        return paint_tile;
-    }
-    void set_paint_tile(MapTileGraphics* graphics)
-    {
-        paint_tile = graphics;
-    }*/
+
 private:
     MapTileGraphicsFactory()
     {
@@ -168,9 +140,8 @@ private:
         register_graphics(":/sprites/water_tile.png");
         register_graphics(":/sprites/ground_tile.png");
         register_graphics(":/sprites/grass_tile.png");
-        //paint_tile = new MapTileGraphics(QPixmap(":/sprites/water_tile.png"));
     }
-    //MapTileGraphics* paint_tile;
+
     QMap<QString, MapTileGraphics*> m_registered_graphics;
     QVector<QString> m_paths;
     QVector<MapTileGraphics*> m_graphics;

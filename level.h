@@ -42,20 +42,13 @@ public:
 
     void add_game_object(GameObject* game_object)
     {
-        if(!m_game_objects.empty())
-        {
-
-        }
-        //m_game_objects.push_back(game_object);
+        m_game_objects.push_back(game_object);
         /*if(!m_game_objects.empty())
         {
-            if(m_game_objects.contains(game_object->get_name()))
-            {
-                qDebug()<<"Level " << m_name << " already has object with name " << game_object->get_name();
-                return;
-            }
-        }
-        m_game_objects.insert(game_object->get_name(), game_object);*/
+
+        }*/
+
+
     }
 
     void remove_game_object(GameObject* game_object)
