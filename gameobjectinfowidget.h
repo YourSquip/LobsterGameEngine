@@ -56,7 +56,6 @@ public slots:
         if(m_game_object==nullptr) qDebug()<<"gameobj is null";
         if(m_game_object->get_all_components().empty()) qDebug()<<"components container is null";
         QMapIterator<QString, Component*> i(m_game_object->get_all_components());
-        m_new_comp_bttn = new QPushButton("add component");
         while (i.hasNext()) {
             i.next();
             qDebug()<<(i.key()) << ": " << i.value();
@@ -85,7 +84,6 @@ public slots:
         QObject::connect(m_controlable_check,m_controlable_check->stateChanged,this, this->update_controlable);
         QObject::connect(m_interactable_check,m_interactable_check->stateChanged,this, this->update_interactable);
         QObject::connect(m_can_interact_check,m_can_interact_check->stateChanged,this, this->update_can_interact);
-        m_layout->addWidget(m_new_comp_bttn);
     }
 
     void update_line_name(QString new_name)
@@ -141,8 +139,6 @@ private:
     QVector<ComponentInfoWidget*> m_components;
     GameObject* m_game_object;
     QVBoxLayout* m_layout;
-    QPushButton* m_new_comp_bttn;
-
 
     QCheckBox* m_controlable_check;
     QCheckBox* m_interactable_check;

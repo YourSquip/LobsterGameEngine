@@ -146,10 +146,7 @@ public:
     {
         GameObjectPixmapItem* curr_item =  get_current_item();
         curr_item->keyPressEvent(event);
-        //this->setFlag(QGraphicsScene::It);
-        //this->setFlag(QGraphicsItem::ItemIsMovable,true);
-        //this->setAcceptDrops(true);
-        //curr_item->update_pixmap();
+        curr_item->update_pixmap();
         if(Editor::get_instance()->game_running_state())
         {
             qDebug()<<"keyPressEvent:game running";
@@ -211,38 +208,9 @@ public:
                                     audio->play_audio();
                                 }
                             }
-                            //this->removeItem(item);
-                            //Audio* audio = dynamic_cast<Audio*>(item->get_game_object()->get_component("audio"));
-                            //if(audio->get_play_on_interact())
-                           // {
-                            //    audio->play_audio();
-                            //}
-                        }
-                        /*for(auto item: colliding_items)
-                        {
-                            if(item!=m_map)
-                            {
-                                GameObjectPixmapItem* game_item= dynamic_cast<GameObjectPixmapItem*>(item);
-                                Audio* audio = dynamic_cast<Audio*>(game_item->get_game_object()->get_component("audio"));
-                                if(audio->get_play_on_interact())
-                                {
-                                    audio->play_audio();
-                                }
-                            }
 
                         }
-                        //if(curr_item->collidingItems())
-                        /*QVector<GameObjectPixmapItem*> items = get_all_intersected_interactable_objects(curr_item);
-                        for(auto item: items)
-                        {
 
-                            //this->removeItem(item);
-                            Audio* audio = dynamic_cast<Audio*>(item->get_game_object()->get_component("audio"));
-                            if(audio->get_play_on_interact())
-                            {
-                                audio->play_audio();
-                            }
-                        }*/
                     }
                 }
             }

@@ -68,12 +68,12 @@ public:
                 m_pixmap_path = MapEditorSettings::get_instance()->get_paint_tile_pixmap_path();
                 m_pixmap = QPixmap(m_pixmap_path);
                 this->setPixmap(m_pixmap);
-                this->setVisible(true);
+                //this->setVisible(true);
             }
             if(Editor::get_instance()->get_editor_tool_type() == 2)
             {
-                m_pixmap_path = ":/sprites/empty_tile.png";
-                m_pixmap = QPixmap(":/sprites/empty_tile.png");
+                m_pixmap_path = ":/sprites/grass32.png";
+                m_pixmap = QPixmap(":/sprites/grass32.png");
                 this->setPixmap(m_pixmap);
             }
             QGraphicsItem::mousePressEvent(event);
