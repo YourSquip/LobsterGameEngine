@@ -76,7 +76,7 @@ public:
                 m_pixmap = QPixmap(":/sprites/empty_tile.png");
                 this->setPixmap(m_pixmap);
             }
-            QGraphicsItem::mousePressEvent(event); // вызов базового обработчика, если нужно
+            QGraphicsItem::mousePressEvent(event);
         }
         if(!m_is_map)
         {

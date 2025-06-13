@@ -11,11 +11,10 @@
 #include "gameobject.h"
 #include "componentinfowidget.h"
 #include "editor.h"
-//#include "editorwidget.h"
 
 class GameObjectInfoWidget: public QWidget
 {
-    //Q_OBJECT
+
 public:
     GameObjectInfoWidget(QWidget* parent = nullptr):QWidget(parent)
     {
@@ -31,17 +30,6 @@ public:
 
     }
 
-   /* PositionComponentInfoWidget* get_pos_comp_widget()
-    {
-        for(auto widget: m_components)
-        {
-            if(dynamic_cast<PositionComponentInfoWidget*>(widget)->get_name() == "position")
-            {
-                return dynamic_cast<PositionComponentInfoWidget*>(widget);
-            }
-        }
-    }*/
-
 public slots:
     void show_obj_info()
     {
@@ -52,10 +40,18 @@ public slots:
         m_obj_name_line = new QLineEdit(m_game_object->get_name());
 
         m_controlable_check = new QCheckBox("is controlable");
-        m_controlable_check->setChecked(m_game_object->get_controlable());
-
+        m_controlable_check->setChecked(m_game_object->get_states()->m_controlable);
+        m_interactable_check = new QCheckBox("is interactable");
+        m_interactable_check->setChecked(m_game_object->get_states()->m_interactable);
+        m_can_interact_check = new QCheckBox("can interact");
+        m_can_interact_check->setChecked(m_game_object->get_states()->m_can_interact);
         m_layout->addWidget(m_obj_name_line);
+        m_layout->addWidget(new QLabel("States:"));
+
         m_layout->addWidget(m_controlable_check);
+        m_layout->addWidget(m_interactable_check);
+        m_layout->addWidget(m_can_interact_check);
+
         m_layout->addWidget(new QSplitter(Qt::Horizontal));
         if(m_game_object==nullptr) qDebug()<<"gameobj is null";
         if(m_game_object->get_all_components().empty()) qDebug()<<"components container is null";
@@ -65,14 +61,6 @@ public slots:
             i.next();
             qDebug()<<(i.key()) << ": " << i.value();
 
-            /*if (i.key() == "position")
-            {
-                PositionComponentInfoWidget* pos_info = new PositionComponentInfoWidget(i.value(),this);
-                m_components.push_back(pos_info);
-                m_layout->addWidget(pos_info);
-                //QObject::connect(,this,this->update_game_object_name);
-                m_layout->addWidget(new QSplitter(Qt::Horizontal));
-            }*/
             if (i.key() == "sprite")
             {
                 SpriteComponentInfoWidget* sprite_info = new SpriteComponentInfoWidget(i.value(),this);
@@ -95,7 +83,8 @@ public slots:
         QObject::connect(m_obj_name_line,m_obj_name_line->textEdited,this,this->update_game_object_name);
         QObject::connect(m_game_object,m_game_object->name_changed,this,this->update_line_name);
         QObject::connect(m_controlable_check,m_controlable_check->stateChanged,this, this->update_controlable);
-
+        QObject::connect(m_interactable_check,m_interactable_check->stateChanged,this, this->update_interactable);
+        QObject::connect(m_can_interact_check,m_can_interact_check->stateChanged,this, this->update_can_interact);
         m_layout->addWidget(m_new_comp_bttn);
     }
 
@@ -112,7 +101,15 @@ public slots:
 
     void update_controlable(bool controlable)
     {
-        m_game_object->set_controlable(controlable);
+        m_game_object->get_states()->m_controlable = controlable;
+    }
+    void update_interactable(bool interactable)
+    {
+        m_game_object->get_states()->m_interactable = interactable;
+    }
+    void update_can_interact(bool can_interact)
+    {
+        m_game_object->get_states()->m_can_interact = can_interact;
     }
 signals:
     void pixmap_x_pos_changed(float x);
@@ -140,12 +137,16 @@ public:
         m_components.clear();
     }
 private:
-    QCheckBox* m_controlable_check;
     QLineEdit* m_obj_name_line;
     QVector<ComponentInfoWidget*> m_components;
     GameObject* m_game_object;
     QVBoxLayout* m_layout;
     QPushButton* m_new_comp_bttn;
+
+
+    QCheckBox* m_controlable_check;
+    QCheckBox* m_interactable_check;
+    QCheckBox* m_can_interact_check;
 };
 
 #endif // GAMEOBJECTINFOWIDGET_H

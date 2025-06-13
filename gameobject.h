@@ -8,6 +8,7 @@
 #include <QObject>
 
 #include "component.h"
+#include "gameobjectstates.h"
 
 
 class GameObject:public QObject
@@ -21,28 +22,19 @@ public:
         next_id++;
         m_name = QString::fromStdString("game_object" + std::to_string(m_id));
         m_parent = parent;
-        m_controlable = false;
-        //add_component(new Position());
-
-        //add_component(new Sprite());
-
-       // m_components["position"] = new Position();
         m_components["sprite"] = new Sprite();
         m_components["audio"] = new Audio();
+        m_states = new GameObjectStates();
     }
     GameObject( QString name,GameObject* parent = nullptr)
     {
-        m_controlable = false;
         m_id = next_id;
         next_id++;
         m_name = name;
         m_parent = parent;
-        //add_component(new Position());
-
-        //add_component(new Sprite());
-        //m_components["position"] = new Position();
         m_components["sprite"] = new Sprite();
         m_components["audio"] = new Audio();
+        m_states = new GameObjectStates();
     }
 
     void debug_info()
@@ -58,9 +50,13 @@ public:
         }
     }
 
+    GameObjectStates* get_states()
+    {
+        return m_states;
+    }
+
     ~GameObject()
     {
-        //m_components.clear();
         delete m_parent;
     }
 
@@ -75,15 +71,6 @@ public:
         emit name_changed(name);
     }
 
-    void set_controlable(bool controlable)
-    {
-        m_controlable = controlable;
-    }
-
-    bool get_controlable()
-    {
-        return m_controlable;
-    }
 
     void add_component(Component* component)
     {
@@ -92,7 +79,6 @@ public:
             qDebug()<<"GameObject " << m_name << " already has " << component->get_name() << " component";
             return;
         }
-        //m_components.insert(component->get_name(), component);
         m_components[component->get_name()] = component;
     }
 
@@ -139,8 +125,6 @@ public:
         m_parent = parent;
     }
 
-
-
     QMap <QString, Component*> get_all_components()
     {
         if(!m_components.empty())
@@ -151,12 +135,13 @@ signals:
     void name_changed(QString new_name);
 private:
     unsigned int m_id;
-    bool m_controlable;
     QString m_name;
     static unsigned int next_id;
     QMap <QString, Component*> m_components;
     GameObject* m_parent;
     QVector<GameObject*> m_children;
+    GameObjectStates* m_states;
+
 };
 
 #endif // GAMEOBJECT_H

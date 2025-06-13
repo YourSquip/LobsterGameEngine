@@ -8,8 +8,6 @@ class MapEditorSettings
 public:
     ~MapEditorSettings()
     {
-        //delete m_game;
-        // delete m_selected_game_obj;
     }
 
     static MapEditorSettings* get_instance()

@@ -9,6 +9,7 @@
 #include <QPixmap>
 #include <QImage>
 #include <QPushButton>
+#include <QCheckBox>
 #include <QFileDialog>
 
 #include "component.h"
@@ -43,97 +44,6 @@ protected:
     Component* m_component;
 };
 
-/*
-class PositionComponentInfoWidget:public ComponentInfoWidget
-{
-public:
-    PositionComponentInfoWidget(Component* component, QWidget* parent = nullptr):ComponentInfoWidget(component,parent)
-    {
-
-        qDebug()<<"PositionComponentInfoWidget";
-        m_position = dynamic_cast<Position*>(component);
-        x_line = new QLineEdit(QString::fromStdString(std::to_string(m_position->x())));
-        y_line = new QLineEdit(QString::fromStdString(std::to_string(m_position->y())));
-
-        x_label =  new QLabel("x:",this);
-        y_label =  new QLabel("y:",this);
-
-        QHBoxLayout* x_layout = new QHBoxLayout(this);
-        x_layout->addWidget(x_label);
-        x_layout->addWidget(x_line);
-
-        QHBoxLayout* y_layout = new QHBoxLayout(this);
-        y_layout->addWidget(y_label);
-        y_layout->addWidget(y_line);
-
-        m_layout->addLayout(x_layout);
-        m_layout->addLayout(y_layout);
-        this->show();
-
-        Position* pos = dynamic_cast<Position*>(m_component);
-       // connect(pos,pos->x_pos_changed,this,this->update_x_component_info);
-        //connect(pos,pos->y_pos_changed,this,this->update_y_component_info);
-        connect(x_line,x_line->textChanged,this,this->update_x_component);
-        connect(y_line,y_line->textChanged,this,this->update_y_component);
-    }
-
-    QString get_name()
-    {
-        return m_name->text();
-    }
-    void update_x_component_info(float x)
-    {
-        x_line->setText(QString::number(x));
-        qDebug()<<"PositionComponentInfoWidget: x_line->setText(QString::number(x));";
-    }
-    void update_y_component_info(float y)
-    {
-        y_line->setText(QString::number(y));
-        qDebug()<<"PositionComponentInfoWidget: y_line->setText(QString::number(y));";
-    }
-public slots:
-
-
-
-    void update_x_component()
-    {
-        m_position->set_x(x_line->text().toFloat());
-        qDebug()<<"update_x_component() slot";
-        qDebug()<<m_position->x();
-    }
-
-
-    void update_y_component()
-    {
-        m_position->set_y(y_line->text().toFloat());
-        qDebug()<<"update_y_component() slot";
-        qDebug()<<m_position->y();
-    }
-public:
-    ~PositionComponentInfoWidget()
-    {
-        delete x_label;
-        delete x_line;
-        delete y_label;
-        delete y_line;
-        //delete m_position;
-    }
-
-
-signals:
-    void new_x_in_line();
-    void new_y_in_line();
-
-
-private:
-    QLabel* x_label;
-    QLineEdit* x_line;
-
-    QLabel* y_label;
-    QLineEdit* y_line;
-    Position* m_position;
-};
-*/
 
 class SpriteComponentInfoWidget:public ComponentInfoWidget
 {
@@ -241,9 +151,6 @@ public:
     ~AudioComponentInfoWidget()
     {
         delete m_label;
-        //delete m_audio;
-        //delete m_sprite;
-        //delete m_open_pixmap_button;
     }
 
 public slots:
@@ -261,9 +168,6 @@ public slots:
     {
         m_audio = dynamic_cast<Audio*>(component);
         m_label->setText(m_audio->get_audio_path());
-        //m_audio
-        //m_pixmap->setPixmap(m_sprite->get_pixmap());
-        //emit pixmap_was_changed();
     }
     void play_audio()
     {
@@ -279,6 +183,9 @@ private:
     QLabel* m_audio_label;
     Audio* m_audio;
     QPushButton* m_open_audio_button;
+
+    QCheckBox* m_autoplay_check;
+    QCheckBox* m_play_when_interacted_check;
 
     QPushButton* m_play_audio_button;
     QPushButton* m_stop_audio_button;

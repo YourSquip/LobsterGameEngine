@@ -20,7 +20,6 @@ public:
     {
         this->setFlags(Qt::ItemIsEditable | Qt::ItemIsSelectable | Qt::ItemIsEnabled| Qt::ItemIsDragEnabled|  Qt::ItemIsDropEnabled);
         this->setIcon(0, QIcon(":/sprites/icons/object.png"));
-        //connect(m_game_object, m_game_object->name_changed, this, this->change_item_name);
     }
     GameObject* m_game_object;
 
@@ -58,9 +57,6 @@ public:
 
         m_new_object_bttn = new QPushButton("New Game Object");
         QObject::connect(m_new_object_bttn, &QPushButton::clicked, this, &GameObjectsTreeWidget::create_empty_object_in_tree);
-
-        //QObject::connect(, &QPushButton::clicked, this, &GameObjectsTreeWidget::create_empty_object_in_tree);
-        //QObject::connect(, &QPushButton::clicked, this, &GameObjectsTreeWidget::create_empty_object_in_tree);
 
         m_tree_widget->setHeaderHidden(true);
 
@@ -123,21 +119,7 @@ public:
         QObject::connect(m_tree_widget, &QTreeWidget::itemChanged, this, this->change_game_obj_name);
         return item;
     }
-    /*void dragEnterEvent(QDragEnterEvent *event){
-        m_dragged_item = get_selected_item();
-        this->dragEnterEvent(event);
-    }
 
-    void dropEvent(QDropEvent *event){
-        event->position();
-        if(m_dragged_item){
-            GameObjectTreeItem* dParent = static_cast<GameObjectTreeItem*>(m_dragged_item->parent());
-            if(dParent){
-                dParent->removeChild(m_dragged_item);
-                dParent->insertChild(0, m_dragged_item);
-            }
-        }
-    }*/
 signals:
 
     void item_selected(GameObject* game_object);
@@ -193,7 +175,6 @@ public slots:
     }
 signals:
     void object_added(GameObject* game_object);
-    //void game_obj_name_changed(QString new_name);
 
 private:
 
@@ -201,6 +182,5 @@ private:
     QPushButton* m_new_object_bttn;
     QTreeWidget* m_tree_widget;
     QVBoxLayout* m_layout;
-    //GameObjectTreeItem* m_dragged_item;
 };
 #endif // GAMEOBJECTSTREEWIDGET_H

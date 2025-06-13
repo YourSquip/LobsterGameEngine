@@ -25,39 +25,8 @@ public:
     Viewport(QWidget* parent = nullptr):QGraphicsView(parent)
     {
         m_curr_scene = new LevelGraphicsScene();
-        //m_show_grid_check = new QCheckBox("show grid",this);
         this->setScene(m_curr_scene);
-        //updater = new LevelUpdater(m_curr_scene);
-        //connect(updater,updater->changed_game_obj_x_pos,this,this->give_signal_of_changed_pos_x);
-        //connect(updater,updater->changed_game_obj_y_pos,this,this->give_signal_of_changed_pos_y);
-        //qDebug()<<"Viewport:connect(updater,updater->changed_game_obj_x_pos,this,this->give_signal_of_changed_pos_x);";
-        //QMediaPlayer* player = new QMediaPlayer();
-        //QAudioOutput* audioOutput = new QAudioOutput();
 
-        //player->setAudioOutput(audioOutput);
-        // ...
-        //player->setSource(QUrl::fromLocalFile("D:/QtProjects/LobsterGameEngine2.0/LobsterGameEngine/audio/title_music.mp3"));
-        //audioOutput->setVolume(50);
-        //player->play();
-        //m_tabs = new QTabWidget(parent);
-        /*QMap<QString, Level*> levels = Editor::get_instance()->get_game()->get_all_levels();
-        QMapIterator<QString, Level*> i(levels);
-        while (i.hasNext())
-        {
-            i.next();
-            qDebug()<<(i.key()) << ": " << i.value();
-            m_all_scenes.push_back(new LevelGraphicsScene(i.value()));
-        }
-
-        if(!m_all_scenes.empty())
-        {
-            m_curr_scene = m_all_scenes[0];
-        }
-        else
-        {
-            m_curr_scene = new LevelGraphicsScene();
-        }*/
-        //m_tabs->addTab(parent,"ass");
         this->show();
 
         qDebug()<<"Viewport constructor";
@@ -83,7 +52,7 @@ public slots:
             qDebug()<<"GAMEOBJECT IS NULL";
         }
         m_curr_scene->addItem(new GameObjectPixmapItem(game_object));
-        //m_curr_scene->get_level()->add_game_object(game_object);
+
         this->setScene(m_curr_scene);
         this->show();
         qDebug()<<"add object to current scene slot";
@@ -98,9 +67,7 @@ public slots:
         {
             m_curr_scene->set_show_grid(true);
         }
-        //m_curr_scene->update();
-        //this->setScene(m_curr_scene);
-        //this->show();
+
     }
     void object_changed_pixmap()
     {
@@ -122,7 +89,6 @@ signals:
     void changed_game_obj_y_pos(float y);
 private:
     LevelGraphicsScene* m_curr_scene;
-    //LevelUpdater* updater;
     QVector<LevelGraphicsScene*> m_all_scenes;
     QCheckBox* m_show_grid_check;
     QGraphicsScene* m_tiles_list;

@@ -79,20 +79,14 @@ private:
         m_layout->addLayout( m_map_editor_layout);
         m_layout->addWidget(m_game_object_info);
 
-        //connect(m_game_object_info->get_obj_name_line(), m_game_object_info->get_obj_name_line()->textChanged, m_game_objects_tree,m_game_objects_tree->change_name_from_info);
 
         connect(m_game_objects_tree,m_game_objects_tree->item_selected, m_game_object_info,m_game_object_info->show_obj_info);
         connect(m_game_objects_tree,m_game_objects_tree->object_added, m_viewport,m_viewport->add_object_to_curr_scene);
         connect(m_play_bttn,m_play_bttn->clicked, this,this->run_game);
         connect(m_stop_bttn,m_stop_bttn->clicked, this,this->stop_game);
-       // connect(m_viewport,m_viewport->changed_game_obj_x_pos, m_game_object_info, m_game_object_info->update_x);
-       // connect(m_viewport,m_viewport->changed_game_obj_y_pos, m_game_object_info, m_game_object_info->update_y);
-        //SpriteComponentInfoWidget* sprite_info = dynamic_cast<SpriteComponentInfoWidget*>(m_game_object_info->get_component_info_widget(QString::fromStdString("sprite")));
-        //connect(sprite_info->get_sprite(),sprite_info->get_sprite()->pixmap_was_changed,m_viewport,m_viewport->object_changed_pixmap);
-        //connect(m_game_objects_tree, m_game_objects_tree->object_added, m_viewport,m_viewport->add_object_to_curr_scene);
-        //connect(m_game_object_info, m_g, m_viewport,m_viewport->add_object_to_curr_scene);
+
     }
-    //GameObject* m_selected_object;
+
 public slots:
     void run_game()
     {
@@ -103,7 +97,6 @@ public slots:
         m_game_object_info->setDisabled(true);
         m_tile_list->setDisabled(true);
         m_editor_tools->setDisabled(true);
-        //m_play_bttn->setDisabled(true);
         QPushButton* m_stop_bttn;
     }
 
@@ -116,7 +109,6 @@ public slots:
         m_game_object_info->setEnabled(true);
         m_tile_list->setEnabled(true);
         m_editor_tools->setEnabled(true);
-        //m_play_bttn->setEnabled(true);
     }
 public:
     static EditorWidget* get_instance()
@@ -133,7 +125,6 @@ public:
     }
     ~EditorWidget()
     {
-        //delete m_editor;
         delete m_layout;
         delete m_game_objects_tree;
         delete m_game_object_info;

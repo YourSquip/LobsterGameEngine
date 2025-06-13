@@ -23,7 +23,6 @@ public:
             for(int y = 0; y < m_height*m_cell_size; y+= m_cell_size)
             {
                 MapTile* new_tile = new MapTile(x,y);
-                //this->addToGroup(new_tile->get_graphics());
                 row.push_back(new_tile);
             }
             m_maptiles.push_back(row);

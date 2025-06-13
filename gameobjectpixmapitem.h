@@ -25,6 +25,12 @@ public:
         this->setFlag(QGraphicsItem::ItemIsMovable,true);
         this->setFlag(QGraphicsItem::ItemIsFocusable,true);
         this->setAcceptDrops(true);
+        m_current_in_scene = false;
+    }
+
+    bool get_current_in_scene()
+    {
+        return m_current_in_scene;
     }
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override {
@@ -39,6 +45,7 @@ public:
             this->setFlag(QGraphicsItem::ItemIsMovable,true);
             this->setAcceptDrops(true);
             QGraphicsPixmapItem::mousePressEvent(event);
+            m_current_in_scene = true;
         }
         else
         {
@@ -63,9 +70,10 @@ public:
     {
         this->setFlag(QGraphicsItem::ItemIsMovable,true);
         this->setAcceptDrops(true);
-        if(Editor::get_instance()->game_running_state())
+        QGraphicsItem::keyPressEvent(event);
+        /*if(Editor::get_instance()->game_running_state())
         {
-            if(m_game_object->get_controlable())
+            if(m_game_object->get_states()->m_controlable)
             {
                 qreal x = this->pos().x();
                 qreal y = this->pos().y();
@@ -103,6 +111,11 @@ public:
                 }
                 QGraphicsItem::keyPressEvent(event);
             }
+
+            /*if(m_game_object->get_states()->m_can_interact)
+            {
+
+            }
         }
         else
         {
@@ -110,8 +123,13 @@ public:
             {
                 update_pixmap();
             }
-        }
+        }*/
 
+    }
+
+    GameObject* get_game_object()
+    {
+        return m_game_object;
     }
 
     void update_pixmap()
@@ -125,6 +143,7 @@ public:
 private:
     GameObject* m_game_object;
     QPixmap m_pixmap;
+    bool m_current_in_scene;
 };
 
 

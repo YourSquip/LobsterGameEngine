@@ -19,14 +19,11 @@ public:
     {
 
         qDebug()<<"LevelGraphicsScene constructor";
-        //m_level = level;
         m_level = new Level();
-        m_map = new Map(10,10);
-        m_grid = new Grid(10,10,32);
+        m_map = new Map(7,7);
+        m_grid = new Grid(7,7,32);
         m_grid_on = false;
-        //this->addItem(m_map);
         m_map->add_map_to_scene(this);
-        //this->addItem(m_grid);
 
         QVector<GameObjectPixmapItem*> row;
         for(auto game_object: m_level->get_all_game_objects())
@@ -39,8 +36,6 @@ public:
         }
         m_layers.push_back(row);
 
-
-        //this->show()
     }
     Level* get_level()
     {
@@ -105,8 +100,100 @@ public:
         delete m_level;
     }
 
+    bool do_item_intersects_with_item(GameObjectPixmapItem* item1, GameObjectPixmapItem* item2)
+    {
+        return item1->boundingRect().intersects(item2->boundingRect());
+    }
+
+    QVector<GameObjectPixmapItem*> get_all_intersected_objects(GameObjectPixmapItem* item1)
+    {
+        QVector<GameObjectPixmapItem*> intersected_items;
+        for(auto item: this->items())
+        {
+            GameObjectPixmapItem* game_item = dynamic_cast<GameObjectPixmapItem*>(item);
+            if(do_item_intersects_with_item(item1,game_item))
+            {
+                intersected_items.push_back(game_item);
+            }
+        }
+        return intersected_items;
+    }
+
+    void keyPressEvent(QKeyEvent *event) override
+    {
+        GameObjectPixmapItem* curr_item =  get_current_item();
+        curr_item->keyPressEvent(event);
+        if(Editor::get_instance()->game_running_state())
+        {
+            if(curr_item->get_game_object()->get_states()->m_controlable)
+            {
+                qreal x = curr_item->pos().x();
+                qreal y = curr_item->pos().y();
+                float velocity = 20;
+                float new_x = x;
+                float new_y = y;
+                if(event->key() == Qt::Key_W)
+                {
+                    new_x = x;
+                    new_y = y - velocity;
+                    curr_item->setPos(new_x, new_y);
+                    qDebug()<<"GameObjectPixmapItem: y_position_has_changed";
+
+                }
+                if(event->key() == Qt::Key_A)
+                {
+                    new_x = x - velocity;
+                    new_y = y;
+                    curr_item->setPos(new_x, new_y);
+                    qDebug()<<"GameObjectPixmapItem:x_position_has_changed";
+                }
+                if(event->key() == Qt::Key_S)
+                {
+                    new_x = x;
+                    new_y = y + velocity;
+                    curr_item->setPos(new_x, new_y);
+                    qDebug()<<"GameObjectPixmapItem:y_position_has_changed";
+                }
+                if(event->key() == Qt::Key_D)
+                {
+                    new_x = x + velocity;
+                    new_y = y;
+                    curr_item->setPos(new_x, new_y);
+                    qDebug()<<"GameObjectPixmapItem:x_position_has_changed";
+                }
+                //QGraphicsItem::keyPressEvent(event);
+            }
+        }
+        /*if(m_game_object->get_states()->m_can_interact)
+            {
+
+            }
+        }
+        else
+        {
+            if(event->key() == Qt::Key_Enter)
+            {
+                update_pixmap();
+            }
+        }*/
+        //QGraphicsScene::keyPressEvent(event);
+    }
+
+    GameObjectPixmapItem* get_current_item()
+    {
+        for(auto item: this->items())
+        {
+            GameObjectPixmapItem* game_item = dynamic_cast<GameObjectPixmapItem*>(item);
+            if(game_item->get_current_in_scene())
+            {
+                return game_item;
+            }
+        }
+    }
+
+    QVector<GameObjectPixmapItem*> get_all_controlable();
+
 private:
-    //QVector<QGraphicsPixmapItem>
     QVector<QVector<GameObjectPixmapItem*>> m_layers;
     Map* m_map;
     Grid* m_grid;
@@ -115,67 +202,6 @@ private:
 
 };
 
-/*
-class LevelUpdater: public QWidget
-{
-    Q_OBJECT
-public:
-    LevelGraphicsScene* m_scene;
-    LevelUpdater(LevelGraphicsScene* scene)
-    {
-        m_scene = scene;
-        m_scene->items();
-        qDebug()<<"LevelUpdater:constructor";
-        /*for(auto item: m_scene->items())
-        {
-            PixmapObjectUpdater* pixmap_updater = new PixmapObjectUpdater();
-            GameObjectPixmapItem* pixmap_item = dynamic_cast<GameObjectPixmapItem*>(item);
-            pixmap_item->add_updater();
-            connect(pixmap_item->get_updater(),pixmap_item->get_updater()->x_position_has_changed, this, this->give_signal_of_changed_pos_x);
-            connect(pixmap_item->get_updater(),pixmap_item->get_updater()->y_position_has_changed, this, this->give_signal_of_changed_pos_y);
 
-        }*/
-        /*if(!scene->get_layers().empty())
-        {
-            GameObject* new_obj = new GameObject();
-            m_scene->get_layer(0).push_back(new GameObjectPixmapItem(new_obj));
-            if(!scene->get_layer(0).empty())
-            {
-                for(int i = 0; i < scene->get_layer(0).size();i++)
-                {
-
-                    connect(scene->get_pixmap_item(0,i)->get_updater(),scene->get_pixmap_item(0,i)->get_updater()->x_position_has_changed, this, this->give_signal_of_changed_pos_x);
-                    connect(scene->get_pixmap_item(0,i)->get_updater(),scene->get_pixmap_item(0,i)->get_updater()->y_position_has_changed, this, this->give_signal_of_changed_pos_y);
-
-                }
-            }
-            else
-            {
-                qDebug()<<"LevelUpdater:scene->get_layer(0 is empty()";
-            }
-
-        }
-        else
-        {
-            qDebug()<<"LevelUpdater:scene->get_layers() is empty()";
-        }
-
-    }
-public slots:
-    void give_signal_of_changed_pos_x(float x)
-    {
-        qDebug()<<"LevelUpdater:give_signal_of_changed_pos_x";
-        emit changed_game_obj_x_pos(x);
-    }
-    void give_signal_of_changed_pos_y(float y)
-    {
-        qDebug()<<"LevelUpdater:give_signal_of_changed_pos_y";
-        emit changed_game_obj_y_pos(y);
-    }
-signals:
-    void changed_game_obj_x_pos(float x);
-    void changed_game_obj_y_pos(float y);
-
-};*/
 
 #endif // LEVELGRAPHICSSCENE_H

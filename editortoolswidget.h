@@ -50,7 +50,6 @@ public:
         m_layout->addWidget(m_move_tool_bttn);
 
         connect(m_show_grid_check_box,&QCheckBox::stateChanged, m_level_view,m_level_view->show_grid);
-        //connect(m_paint_brush_tool_bttn, );
         connect(m_paint_brush_tool_bttn,m_paint_brush_tool_bttn->clicked, this, take_paint_brush);
         connect(m_eraser_tool_bttn,m_eraser_tool_bttn->clicked, this, take_eraser);
         connect(m_coursor_tool_bttn,m_coursor_tool_bttn->clicked, this, take_coursor);
